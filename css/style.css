@@ -2912,7 +2912,10 @@ button {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 24px;
-  margin-top: 64px;
+  /* Separation between the embedded case-study's last card and this
+     closing bar. Collapses against .case-embed-frame's 40px margin-bottom,
+     so the effective gap is this value. */
+  margin-top: 48px;
   padding: 26px 0 18px;
   border-top: var(--border-w) solid var(--bh-black);
 }

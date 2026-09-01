@@ -977,12 +977,32 @@
         // and this measure-then-resize cycle reinforce each other into
         // runaway growth across the repeated settle-timer rechecks below —
         // found via FriendLi's export, whose hero uses `min-height:92vh`.
+        // Remember where the visitor is before we touch the frame height.
+        const anchorY = window.scrollY || window.pageYOffset || 0;
         frame.style.height = Math.max(window.innerHeight, 600) + 'px';
         const h = Math.max(
           doc.documentElement.scrollHeight,
           doc.body ? doc.body.scrollHeight : 0
         );
         if (h > 0) frame.style.height = h + 'px';
+        // Collapsing the frame above momentarily shrinks the whole page, so
+        // the browser clamps the outer scroll offset toward 0. Everything in
+        // this function is synchronous (no paint in between), so restoring the
+        // captured offset here means the visitor never sees the jump. Without
+        // it, a post-load settle-timer recheck — or a mobile URL-bar
+        // show/hide firing `resize` while someone reads mid-page — snapped
+        // the page back to the top.
+        if ((window.scrollY || window.pageYOffset || 0) !== anchorY) {
+          // Reading a layout property forces the outer document to reflow
+          // against the height we just restored, so its scroll range is
+          // current — otherwise scrollTo() clamps against the stale
+          // (collapsed) range and lands short.
+          void document.documentElement.scrollHeight;
+          // `behavior: 'instant'` overrides the global
+          // `html { scroll-behavior: smooth }` — otherwise the restore
+          // animates and the visitor watches the page fly back up.
+          window.scrollTo({ top: anchorY, left: 0, behavior: 'instant' });
+        }
       } catch (e) {
         // Should never happen (same-origin srcdoc), but never let a
         // measurement failure break the rest of the page.
@@ -1120,12 +1140,32 @@
         // and this measure-then-resize cycle reinforce each other into
         // runaway growth across the repeated settle-timer rechecks below —
         // found via FriendLi's export, whose hero uses `min-height:92vh`.
+        // Remember where the visitor is before we touch the frame height.
+        const anchorY = window.scrollY || window.pageYOffset || 0;
         frame.style.height = Math.max(window.innerHeight, 600) + 'px';
         const h = Math.max(
           doc.documentElement.scrollHeight,
           doc.body ? doc.body.scrollHeight : 0
         );
         if (h > 0) frame.style.height = h + 'px';
+        // Collapsing the frame above momentarily shrinks the whole page, so
+        // the browser clamps the outer scroll offset toward 0. Everything in
+        // this function is synchronous (no paint in between), so restoring the
+        // captured offset here means the visitor never sees the jump. Without
+        // it, a post-load settle-timer recheck — or a mobile URL-bar
+        // show/hide firing `resize` while someone reads mid-page — snapped
+        // the page back to the top.
+        if ((window.scrollY || window.pageYOffset || 0) !== anchorY) {
+          // Reading a layout property forces the outer document to reflow
+          // against the height we just restored, so its scroll range is
+          // current — otherwise scrollTo() clamps against the stale
+          // (collapsed) range and lands short.
+          void document.documentElement.scrollHeight;
+          // `behavior: 'instant'` overrides the global
+          // `html { scroll-behavior: smooth }` — otherwise the restore
+          // animates and the visitor watches the page fly back up.
+          window.scrollTo({ top: anchorY, left: 0, behavior: 'instant' });
+        }
       } catch (e) {
         // Should never happen (same-origin srcdoc), but never let a
         // measurement failure break the rest of the page.
@@ -1243,12 +1283,32 @@
         // and this measure-then-resize cycle reinforce each other into
         // runaway growth across the repeated settle-timer rechecks below —
         // found via FriendLi's export, whose hero uses `min-height:92vh`.
+        // Remember where the visitor is before we touch the frame height.
+        const anchorY = window.scrollY || window.pageYOffset || 0;
         frame.style.height = Math.max(window.innerHeight, 600) + 'px';
         const h = Math.max(
           doc.documentElement.scrollHeight,
           doc.body ? doc.body.scrollHeight : 0
         );
         if (h > 0) frame.style.height = h + 'px';
+        // Collapsing the frame above momentarily shrinks the whole page, so
+        // the browser clamps the outer scroll offset toward 0. Everything in
+        // this function is synchronous (no paint in between), so restoring the
+        // captured offset here means the visitor never sees the jump. Without
+        // it, a post-load settle-timer recheck — or a mobile URL-bar
+        // show/hide firing `resize` while someone reads mid-page — snapped
+        // the page back to the top.
+        if ((window.scrollY || window.pageYOffset || 0) !== anchorY) {
+          // Reading a layout property forces the outer document to reflow
+          // against the height we just restored, so its scroll range is
+          // current — otherwise scrollTo() clamps against the stale
+          // (collapsed) range and lands short.
+          void document.documentElement.scrollHeight;
+          // `behavior: 'instant'` overrides the global
+          // `html { scroll-behavior: smooth }` — otherwise the restore
+          // animates and the visitor watches the page fly back up.
+          window.scrollTo({ top: anchorY, left: 0, behavior: 'instant' });
+        }
       } catch (e) {
         // Should never happen (same-origin srcdoc), but never let a
         // measurement failure break the rest of the page.
@@ -1365,12 +1425,32 @@
         // and this measure-then-resize cycle reinforce each other into
         // runaway growth across the repeated settle-timer rechecks below —
         // found via FriendLi's export, whose hero uses `min-height:92vh`.
+        // Remember where the visitor is before we touch the frame height.
+        const anchorY = window.scrollY || window.pageYOffset || 0;
         frame.style.height = Math.max(window.innerHeight, 600) + 'px';
         const h = Math.max(
           doc.documentElement.scrollHeight,
           doc.body ? doc.body.scrollHeight : 0
         );
         if (h > 0) frame.style.height = h + 'px';
+        // Collapsing the frame above momentarily shrinks the whole page, so
+        // the browser clamps the outer scroll offset toward 0. Everything in
+        // this function is synchronous (no paint in between), so restoring the
+        // captured offset here means the visitor never sees the jump. Without
+        // it, a post-load settle-timer recheck — or a mobile URL-bar
+        // show/hide firing `resize` while someone reads mid-page — snapped
+        // the page back to the top.
+        if ((window.scrollY || window.pageYOffset || 0) !== anchorY) {
+          // Reading a layout property forces the outer document to reflow
+          // against the height we just restored, so its scroll range is
+          // current — otherwise scrollTo() clamps against the stale
+          // (collapsed) range and lands short.
+          void document.documentElement.scrollHeight;
+          // `behavior: 'instant'` overrides the global
+          // `html { scroll-behavior: smooth }` — otherwise the restore
+          // animates and the visitor watches the page fly back up.
+          window.scrollTo({ top: anchorY, left: 0, behavior: 'instant' });
+        }
       } catch (e) {
         // Should never happen (same-origin srcdoc), but never let a
         // measurement failure break the rest of the page.
@@ -1486,12 +1566,32 @@
       try {
         const doc = frame.contentDocument;
         if (!doc || !doc.documentElement) return;
+        // Remember where the visitor is before we touch the frame height.
+        const anchorY = window.scrollY || window.pageYOffset || 0;
         frame.style.height = Math.max(window.innerHeight, 600) + 'px';
         const h = Math.max(
           doc.documentElement.scrollHeight,
           doc.body ? doc.body.scrollHeight : 0
         );
         if (h > 0) frame.style.height = h + 'px';
+        // Collapsing the frame above momentarily shrinks the whole page, so
+        // the browser clamps the outer scroll offset toward 0. Everything in
+        // this function is synchronous (no paint in between), so restoring the
+        // captured offset here means the visitor never sees the jump. Without
+        // it, a post-load settle-timer recheck — or a mobile URL-bar
+        // show/hide firing `resize` while someone reads mid-page — snapped
+        // the page back to the top.
+        if ((window.scrollY || window.pageYOffset || 0) !== anchorY) {
+          // Reading a layout property forces the outer document to reflow
+          // against the height we just restored, so its scroll range is
+          // current — otherwise scrollTo() clamps against the stale
+          // (collapsed) range and lands short.
+          void document.documentElement.scrollHeight;
+          // `behavior: 'instant'` overrides the global
+          // `html { scroll-behavior: smooth }` — otherwise the restore
+          // animates and the visitor watches the page fly back up.
+          window.scrollTo({ top: anchorY, left: 0, behavior: 'instant' });
+        }
       } catch (e) {
         /* same-origin srcdoc — should never throw; never break the page if it does */
       }
