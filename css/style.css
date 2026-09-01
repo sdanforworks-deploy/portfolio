@@ -1,0 +1,2968 @@
+/* ==========================================================================
+   Dan Sungvornveshapan — Portfolio
+   Desk-and-drawer concept, Bauhaus visual language (v18)
+   ========================================================================== */
+
+:root {
+  /* Type pairing (v18.8, user-directed spec): Space Grotesk — a geometric
+     sans in the Bauhaus "Universal"/Swiss-modernist spirit — carries all
+     headings (H1/H2 bold 700, H3/sub-heads/section titles medium 500);
+     Inter Regular carries body/paragraph/UI copy for maximum readability.
+     Replaces the prior Montagu Slab + Orbit pairing (v18.2) with a more
+     "contemporary digital product" feel per the user's explicit brief,
+     rather than a literal 1920s-poster reproduction. IBM Plex Mono is
+     unchanged — still the technical/grid-label voice for eyebrows,
+     drawer labels, dates; not part of this request. */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Palette (v18.5 — Bauhaus museum poster): replaced the peach/navy/blue
+     trio wholesale with a cream/black/red palette sampled directly from
+     the user's reference poster ("bauhaus / die sammlung / museum für
+     gestaltung zürich"), per explicit user choice of full replacement.
+     Yellow is dropped entirely (every former --bh-yellow usage below was
+     repointed to black or red, chosen per-context). All new text/
+     background pairs re-verified at WCAG AA (4.5:1) via relative-
+     luminance contrast checks.
+
+     v18.9/v18.10: the drawer lip's wood tone (--wood-1, previously
+     #8a7350 — kept as "real desk material" through every earlier
+     palette round) was pulled into the palette too, per explicit user
+     direction. First tried equal to --bh-black (v18.9); user rejected
+     that on sight ("ไม่เอาสีดำ" — don't want black), so it's now equal
+     to --bh-red instead (v18.10) — the lip reads as a bold flat-red
+     Bauhaus surface, with the handle switched to black so it doesn't
+     disappear into a same-color lip (see .drawer-handle). --wood-2 was
+     only ever a leftover from the pre-v18 soft-gradient lip (the v18
+     flat restyle collapsed the lip to one solid fill) and had no live
+     usage — removed rather than repointed. */
+  --bg-page: #ece4de;
+  --bg-desk: #f2ece6;
+  --bg-desk-2: #e4dbd3;
+  --bg-panel: #f7f2ee;
+  --bg-panel-2: #efe7e0;
+  --bg-drawer: #f5efe8;
+  --wood-1: #dc351e;
+
+  --ink: #1a1a1a;
+  --ink-soft: #615c56;
+  --ink-faint: #6c6660;
+
+  --accent: #dc351e;
+  /* a11y v32: darkened from #c12e1b (4.55:1 on --bg-page — no headroom) to
+     #a02713 (~5.0:1) so red-as-text — the eyebrow, the hero accent word,
+     small red labels, and every red :hover state — clears WCAG AA 1.4.3
+     with margin. The bright --bh-red / --accent stays the poster fill hue. */
+  --accent-dark: #a02713;
+
+  /* Bauhaus primaries — flat fills only, always black-bordered. Red is
+     unified with --accent (poster's only accent hue); yellow removed. */
+  --bh-red: #dc351e;
+  --bh-black: #141414;
+
+  --line: rgba(26, 26, 26, 0.14);
+  --line-soft: rgba(26, 26, 26, 0.08);
+
+  /* Sharp geometry, not soft capsules: Bauhaus composition reads as
+     either hard rectangles or true circles, never the in-between
+     rounded-pill shape the previous "Liquid Glass" pass used
+     everywhere. True circles (dots, nav buttons) still use 50% inline. */
+  --radius-xl: 6px;
+  --radius-lg: 4px;
+  --radius-md: 3px;
+  --radius-sm: 2px;
+  --radius-pill: 6px;
+
+  /* Realistic ambient-light shadows (v18.22, user-directed: "ลดการใช้เส้น
+     ขอบแบบใหญ่ๆหนา เงาก็เปลี่ยนเป็นเงาแสงจริง" — thinner borders, real-light
+     shadows; recalibrated v18.23 to the exact two-layer recipe the user
+     supplied from a Figma reference — a tight contact shadow (X1 Y1 Blur
+     2.5, 59% black) plus a softer cast shadow (X4 Y4 Blur 9, 50% black) —
+     rather than the more diffuse, more vertically-lifted values guessed
+     in v18.22. `--shadow-soft` IS that recipe verbatim; every other tier
+     scales the same two-layer shape (tight near-shadow + a larger, softer
+     one) up or down from it so the whole site reads as one consistent
+     light source, without every element sharing literally one size. */
+  --shadow-xs: 1px 1px 2px 0 rgba(0, 0, 0, 0.50), 2px 2px 5px 0 rgba(0, 0, 0, 0.38);
+  --shadow-soft: 1px 1px 2.5px 0 rgba(0, 0, 0, 0.59), 4px 4px 9px 0 rgba(0, 0, 0, 0.50);
+  --shadow-tab: 1px 1px 2px 0 rgba(0, 0, 0, 0.55), 3px 3px 7px 0 rgba(0, 0, 0, 0.45);
+  --shadow-lift: 2px 2px 4px 0 rgba(0, 0, 0, 0.55), 8px 8px 18px 0 rgba(0, 0, 0, 0.42);
+  --shadow-hover: 3px 3px 6px 0 rgba(0, 0, 0, 0.52), 10px 10px 26px 0 rgba(0, 0, 0, 0.40);
+
+  --border-w: 1.5px;
+
+  --ease-drawer: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --header-h: 68px;
+  --tabs-h: 60px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Accessibility utilities (a11y v32 — from the WCAG 2.1 A/AA audit)
+   ========================================================================== */
+
+/* SC 2.4.7 — one high-contrast focus indicator for every interactive control.
+   Two-ring box-shadow (page-coloured inner + near-black outer) so it stays
+   visible on the warm paper, on the dark drawer bar, and on the red pills
+   alike; the transparent `outline` becomes the visible ring under Windows
+   forced-colors mode, where box-shadow is dropped. Zero-specificity :where()
+   so the three richer component rules further down still win. */
+:where(a[href], button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--bg-page), 0 0 0 4px var(--bh-black);
+  border-radius: 2px;
+}
+/* on dark grounds the inner ring should read against the dark, not the paper */
+.drawer-panel-outer :where(a, button, [tabindex]):focus-visible,
+.stage-fixed :where(a, button, [tabindex]):focus-visible {
+  box-shadow: 0 0 0 2px var(--bg-page), 0 0 0 4px var(--bg-page);
+}
+
+/* Visually-hidden but available to assistive tech (SC 1.3.1 / 4.1.3). */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* SC 2.4.1 Bypass Blocks — hidden until focused, then pinned top-left. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  transform: translateY(-160%);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--bh-black);
+  border: var(--border-w) solid var(--bh-black);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: transform 0.16s ease;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  box-shadow: 0 0 0 3px var(--bg-page), 0 0 0 5px var(--bh-black);
+}
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
+
+main {
+  position: relative;
+  display: block;
+}
+
+/* v18.12: the "main { display: block }" rule above is an author style, so
+   it beats the browser's default `[hidden] { display: none }` UA rule
+   regardless of specificity — the view router (js/script.js) toggles the
+   `hidden` attribute on #view-home / #view-projects / #view-experience to
+   show one "page" at a time, so without this override every view would
+   render stacked on top of each other at once. */
+main[hidden] { display: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Flat panel utility (was "Liquid Glass" — blur/translucency dropped     */
+/* since flat opaque color + a hard black rule is the Bauhaus device for  */
+/* separating a surface from what's behind it, not frosted blur).         */
+/* ---------------------------------------------------------------------- */
+
+.glass {
+  background: #fff;
+  border: 1px solid var(--bh-black);
+}
+
+.glass-panel {
+  background: var(--bg-panel);
+  border: var(--border-w) solid var(--bh-black);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Header                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 clamp(20px, 4vw, 56px);
+  background: var(--bg-page);
+  border-bottom: var(--border-w) solid var(--bh-black);
+}
+
+/* v18.13: the wordmark "DAN." was replaced with the user's own logo mark
+   image (assets/brand/logo-mark.webp, cropped to its alpha bounding box)
+   — .logo is now just a flex wrapper so the mark sits vertically centered
+   in the header regardless of its own image aspect ratio. */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-mark {
+  height: 30px;
+  width: auto;
+  display: block;
+  -webkit-user-drag: none;
+}
+
+.logo-link { text-decoration: none; color: inherit; }
+
+/* v18.35: groups the logo and the Projects/Experience nav together on the
+   header's left side (was: logo | nav | status-pill spread across the
+   full width via `.site-header`'s own `justify-content:space-between`,
+   which put the nav in the dead centre of the bar). Now `.site-header`
+   has just two flex children — this group and `.status-pill` — so
+   space-between pushes the pill to the far right and leaves the logo +
+   nav sitting together at the left. */
+.site-header-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 32px);
+}
+
+/* v18.11: header nav linking to the two standalone sub-pages (Projects,
+   Experience) that live outside the pinned desk-and-drawer sequence. */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.6vw, 14px);
+}
+
+/* v18.35: sized to the same 30px height as `.logo-mark` (24px at the
+   mobile breakpoint below, matching that breakpoint's own logo-mark
+   override) via `height` + `inline-flex` centering, rather than a
+   font-size guess — this is what "same size as the logo" can actually
+   mean given one is a fixed-height image and the other is text. Bumped
+   up from the previous small 11px status-pill-style label size so the
+   two read as comparable weight in the header, not one tiny label next
+   to a full-height mark. */
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.site-nav a:hover {
+  border-color: var(--bh-black);
+  background: var(--bg-panel);
+  color: var(--ink);
+}
+
+/* Marks the nav link for the page currently being viewed. */
+.site-nav a.is-current {
+  border-color: var(--bh-black);
+  background: var(--bh-black);
+  color: #fff;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bh-red);
+  border: 1px solid var(--bh-black);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desk sequence — pinned top-view desk; drawers slide open one at a time  */
+/* ---------------------------------------------------------------------- */
+
+/* .drawer-spacer elements give scroll distance to each drawer's
+   open → hold → close cycle. Their height is set by JS from the
+   measured content height of the matching .drawer-panel-outer. */
+.desk-sequence {
+  position: relative;
+}
+
+.drawer-spacer {
+  width: 100%;
+}
+
+.tail-spacer {
+  width: 100%;
+}
+
+/* The visual layer. JS toggles its `position` between absolute (before/
+   after the pinned sequence) and fixed (while pinned), and sets `top`
+   accordingly — see js/script.js `positionStage()`. It's a plain neutral
+   "tabletop" backdrop — the desk itself is the bounded card inside it. */
+.stage-fixed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--header-h));
+  overflow: hidden;
+  background: var(--bg-page);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Bauhaus poster backdrop (v18.2) — a grid of thin rules plus flat        */
+/* geometric shapes bleeding off the pinned stage's edges, sitting behind  */
+/* the desk frame the entire time the stage is pinned (all three drawers). */
+/* Every size/offset is clamp()'d off the viewport so it scales down       */
+/* smoothly rather than needing a separate mobile ruleset; `overflow:      */
+/* hidden` on both this layer and its parent `.stage-fixed` clips the      */
+/* intentional off-edge bleed. Flat fills, no borders — these read as      */
+/* large poster color fields behind the frame, distinct from the small     */
+/* bordered "sticker" corner shapes on `.desk-card` itself in front of it. */
+/* ---------------------------------------------------------------------- */
+
+.bauhaus-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-line { position: absolute; background: var(--bh-black); }
+
+.bg-line-v1 { top: 0; bottom: 0; left: 27%; width: 1px; opacity: 0.14; }
+.bg-line-v2 { top: 0; bottom: 0; left: 76%; width: 1px; opacity: 0.14; }
+.bg-line-h1 { left: 0; right: 0; top: clamp(56px, 8vh, 92px); height: 1px; opacity: 0.14; }
+
+.bg-line-bottom {
+  left: 8%;
+  right: 8%;
+  bottom: clamp(28px, 5vh, 56px);
+  height: 1px;
+  opacity: 0.4;
+}
+
+.bg-shape { position: absolute; border-radius: 50%; }
+
+.bg-circle-blue-top {
+  top: clamp(-140px, -12vw, -90px);
+  left: 56%;
+  width: clamp(140px, 16vw, 260px);
+  height: clamp(140px, 16vw, 260px);
+  background: var(--bh-black);
+}
+
+/* Sits in the thin strip between the header and the desk frame's own top
+   edge (frame's own top padding is only ~16-28px) — negative top lets it
+   poke up half-behind the header, same trick as the blue top circle, so
+   it reads as a corner accent rather than getting swallowed under the
+   opaque desk-card the moment it drifts a few px too low. */
+.bg-square-yellow-top {
+  top: clamp(-16px, -1.4vh, -6px);
+  left: 20%;
+  width: clamp(16px, 2vw, 26px);
+  height: clamp(16px, 2vw, 26px);
+  border-radius: 0;
+  background: var(--bh-red);
+}
+
+.bg-circle-red-left {
+  top: 26%;
+  left: clamp(-90px, -7vw, -50px);
+  width: clamp(90px, 10vw, 150px);
+  height: clamp(90px, 10vw, 150px);
+  background: var(--bh-red);
+}
+
+.bg-bar-red-right {
+  top: 6%;
+  right: clamp(-26px, -2vw, -14px);
+  width: clamp(24px, 2.8vw, 42px);
+  height: clamp(110px, 14vh, 190px);
+  border-radius: 0;
+  background: var(--bh-black);
+}
+
+.bg-block-blue-bl {
+  bottom: clamp(-70px, -6vw, -40px);
+  left: clamp(-90px, -6vw, -50px);
+  width: clamp(120px, 13vw, 190px);
+  height: clamp(150px, 17vh, 230px);
+  border-radius: 0;
+  background: var(--bh-black);
+}
+
+.bg-square-red-bottom {
+  bottom: clamp(-40px, -3vh, -18px);
+  left: 46%;
+  width: clamp(70px, 8vw, 130px);
+  height: clamp(70px, 8vw, 130px);
+  border-radius: 0;
+  background: var(--bh-red);
+}
+
+.bg-circle-yellow-br {
+  bottom: clamp(-150px, -13vw, -100px);
+  right: clamp(-110px, -9vw, -70px);
+  width: clamp(160px, 20vw, 290px);
+  height: clamp(160px, 20vw, 290px);
+  background: var(--bh-red);
+}
+
+.bg-dot-bottom {
+  bottom: calc(clamp(28px, 5vh, 56px) - 6px);
+  left: 36%;
+  width: 13px;
+  height: 13px;
+  background: var(--bh-black);
+}
+
+/* Centers and bounds the whole composition so the desk reads as one
+   object sitting on the page, with the drawer cabinet directly beneath
+   it — not as full-bleed panels filling the browser window. */
+.frame {
+  position: relative;
+  height: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vh, 28px) clamp(18px, 3.5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+/* The desk itself — a framed top-view photo, a fully independent card
+   (rounded on all four corners, its own shadow). It sits in a higher
+   stacking layer than the drawer cabinet below, so it visually overlaps
+   the drawer's top edge — two distinct objects stacked on each other,
+   not one fused shape. Bauhaus treatment: a hard black frame + flat
+   offset shadow instead of a soft ambient blur shadow; the photographic
+   gradient underneath stays (Bauhaus itself embraced photography — see
+   Moholy-Nagy — so a real top-down "photo" reads as consistent with the
+   style, not against it). */
+.desk-card {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  /* min-height, not height: on shorter viewports (common laptop heights
+     like 1366×768 or 1280×720) 44vh isn't always tall enough to fit the
+     intro column's real text height, and with a fixed height + this
+     card's own `overflow: hidden` (kept below for the decorative corner
+     shapes) that meant the CTA buttons got silently clipped off the
+     bottom — reported by the user with a screenshot. min-height keeps
+     the exact same size wherever 44vh already comfortably fits the
+     content (no visual change on normal/tall viewports) but lets the
+     box grow to fit its content on short ones instead of clipping it.
+     `deskCard.offsetHeight` is read live by JS (measure(), for the
+     desk's lift-out distance) rather than assumed, so a taller card
+     here is picked up automatically — no separate JS change needed. */
+  min-height: clamp(300px, 44vh, 440px);
+  /* padding-bottom used to be 0 — harmless back when the card's height
+     was fixed and always taller than its content, but now that height
+     is content-driven (min-height, above) that meant the CTA row's
+     bottom edge landed flush against the card's inner border with zero
+     breathing room the moment content determined the box's size —
+     reported by the user as "no gap like the top has". Mirrored to the
+     same clamp() as padding-top for a symmetric top/bottom margin. The
+     860px mobile query below already sets its own explicit
+     padding-bottom (stacked single-column layout, unaffected by this). */
+  padding: clamp(16px, 3vw, 32px) clamp(20px, 4vw, 40px);
+  border-radius: var(--radius-xl);
+  border: var(--border-w) solid var(--bh-black);
+  overflow: hidden;
+  will-change: transform;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(16px, 3vw, 40px);
+  background:
+    radial-gradient(120% 90% at 82% 6%, rgba(255,255,255,0.4), transparent 55%),
+    linear-gradient(165deg, var(--bg-desk) 0%, var(--bg-desk-2) 100%);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Small geometric cluster tucked in the desk's back corner — a circle,
+   a quarter-circle and a thin bar, the classic Bauhaus trio of forms.
+   Purely decorative, absolutely positioned so it never affects layout
+   height or the JS scroll-distance measurements. */
+.desk-card::before,
+.desk-card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.desk-card::before {
+  top: -42px;
+  left: -42px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bh-black);
+  border: var(--border-w) solid var(--bh-black);
+}
+
+.desk-card::after {
+  bottom: -22px;
+  left: -22px;
+  width: 40px;
+  height: 40px;
+  background: var(--bh-red);
+  border: 1px solid var(--bh-black);
+  transform: rotate(45deg);
+}
+
+.desk-objects {
+  /* v18.14: `position: relative` removed on purpose. This div still sits
+     in the grid (order: 2) and still reserves the same layout footprint
+     it always did — but it no longer traps its .obj children as an
+     absolute-positioning boundary. With no positioned ancestor of its
+     own, each .obj "escapes" up to the next one it finds: .desk-card
+     (which is position: relative). That's what lets objects be dragged
+     across the FULL desk card — including over the intro text/buttons
+     column — instead of only this narrow right-hand zone. See the .obj
+     comment below for how positions are now expressed. */
+  /* v18.13: floor raised 140px -> 220px so the tallest object (the
+     laptop, whose photo is nearly square — see .obj-laptop's width cap
+     below) can never be taller than this box itself at common desktop
+     viewport heights (900/864/800/768px all clear it). Drag-clamping
+     (js/script.js) can only keep an object *inside* a box that's
+     actually big enough to hold it — a container shorter than its
+     tallest child has no valid "fully inside" position to clamp to. */
+  height: clamp(220px, 26vh, 260px);
+  order: 2;
+}
+
+/* v18.14: objects are draggable (js/script.js, section "1b. Draggable desk
+   objects") across the ENTIRE `.desk-card` surface — the user can pick any
+   of the 5 up and set it down anywhere else on the desk, including over
+   the intro text/CTA column, but never outside the card's own frame (its
+   JS-computed clamp keeps every drag inside `.desk-card`). Once a drag has
+   happened, JS switches the object from this CSS top/left layout to
+   inline pixel `left`/`top` (still relative to `.desk-card`), so these
+   rules are really just each object's *starting* position/rotation — the
+   "arranged like a real desk" composition — not a permanent layout.
+   `touch-action: none` stops touchscreens from trying to scroll the page
+   when a drag starts on an object; `-webkit-user-drag: none` plus
+   `draggable="false"` in the HTML stop the browser's native "drag this
+   image" ghost from competing with the custom pointer-drag. */
+.obj {
+  position: absolute;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 20px rgba(6,24,36,0.28));
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.obj.is-dragging {
+  cursor: grabbing;
+  z-index: 10;
+  filter: drop-shadow(0 22px 28px rgba(6,24,36,0.4));
+}
+
+/* Starting composition: laptop anchors the back of the desk; the closed
+   notebook, open notebook, and mug cluster toward the front-left as a
+   loose "workspace" group; the pen rests diagonally across the open
+   notebook's page, on top of it (z-index) the way a real pen would.
+
+   v18.14: top/left percentages below are now relative to the FULL
+   `.desk-card` box (recalculated from real measured positions so the
+   resting arrangement looks identical to before) instead of the old,
+   narrow `.desk-objects` zone — right/bottom anchoring dropped since a
+   single top+left pair is simplest to keep in sync with the JS drag
+   math, which also measures against `.desk-card`. z-index values are
+   bumped by 1 across the board (was 1/2/2/2/3, now 2/3/3/3/4) so that
+   even after being dropped (i.e. NOT actively dragging, when z-index
+   falls back to these base values) every object still paints above
+   `.desk-intro` (z-index: 1) if it was left sitting over the text —
+   their relative order versus each other is unchanged, only their
+   floor relative to the intro text moved up. */
+.obj-laptop {
+  /* Max width trimmed 250px -> 210px (v18.13): the source photo is
+     nearly square (589x600), so at 250px wide it rendered ~255px tall —
+     taller than .desk-objects' own box at most desktop viewport heights,
+     which meant it could never be fully contained during a drag no
+     matter how the clamp math was written. 210px wide -> ~214px tall
+     comfortably fits the 220px+ floor above. */
+  width: clamp(150px, 18vw, 210px);
+  top: 6.92%;
+  left: 81%;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+
+.obj-notebook {
+  width: clamp(70px, 9vw, 118px);
+  top: 9.49%;
+  left: 50.73%;
+  transform: rotate(-13deg);
+  z-index: 3;
+}
+
+.obj-open-notebook {
+  width: clamp(96px, 12vw, 168px);
+  top: 29.49%;
+  left: 63.38%;
+  transform: rotate(-4deg);
+  z-index: 3;
+}
+
+.obj-mug {
+  width: clamp(44px, 5.5vw, 66px);
+  top: 53.33%;
+  left: 52.53%;
+  transform: rotate(-7deg);
+  z-index: 3;
+}
+
+.obj-pen {
+  width: clamp(26px, 3.2vw, 44px);
+  top: 34.1%;
+  left: 72.35%;
+  transform: rotate(-24deg);
+  z-index: 4;
+}
+
+.desk-intro {
+  order: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  margin: 0 0 10px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 4vw, 44px);
+  line-height: 1.04;
+  /* Slightly tight tracking on the large headline, per the type-scale
+     brief ("confident sizing, slightly tight tracking on large
+     headings") — a touch tighter than the old -0.005em. */
+  letter-spacing: -0.015em;
+  margin: 0 0 10px;
+  /* v18.8: name is now mixed-case (not all-caps, user request) and the
+     first/last name break is an explicit <br> in the markup — never
+     fracture the surname itself mid-word onto a 3rd line the way the
+     old break-word/hyphens setup did. If a narrow column ever can't fit
+     the surname at the clamp's minimum size, let it wrap as whole words
+     rather than splitting "Sungvornveshapan" in two. */
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+.hero-title .accent { color: var(--accent-dark); }
+
+.hero-role {
+  font-size: clamp(13px, 1.3vw, 16px);
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.hero-desc {
+  max-width: 44ch;
+  font-size: clamp(12.5px, 1.1vw, 14px);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Buttons: thin outline, soft real-light shadow. Hover LIFTS (v18.22 —
+   was a hard-shadow "press in" tuck; with a blurred shadow instead, the
+   physically correct read is the button rising slightly closer to the
+   light, shadow growing and softening). Active/press briefly settles back
+   down with a tighter shadow, the way a real raised surface would. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  border: var(--border-w) solid var(--bh-black);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+
+.btn-primary {
+  /* v18.5: --accent-dark (poster red, darkened for AA) carries white
+     button text at 5.72:1, well clear of the 4.5:1 threshold. */
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); background: #a12716; }
+.btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-xs); background: #a12716; }
+
+.btn-outline {
+  background: #fff;
+  color: var(--ink);
+}
+
+.btn-outline:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); background: var(--bg-panel); }
+.btn-outline:active { transform: translateY(0); box-shadow: var(--shadow-xs); background: var(--bg-panel); }
+
+/* ---------------------------------------------------------------------- */
+/* Drawer tab bar (segmented control) — lives directly in .frame, not      */
+/* inside .desk-card, so it stays put even while the desk card slides      */
+/* away as drawer 1 opens. Offsets = frame's own padding + the old         */
+/* nested offset, so it lands in the same visual spot as before the move.  */
+/* ---------------------------------------------------------------------- */
+
+.drawer-tabs {
+  position: absolute;
+  top: clamp(30px, 5.5vh, 50px);
+  right: clamp(34px, 7vw, 76px);
+  z-index: 20;
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  box-shadow: var(--shadow-tab);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.tab-btn {
+  position: relative;
+  z-index: 2;
+  padding: 10px 13px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-align: center;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-btn[aria-current="true"] { color: #fff; }
+
+.tab-short { display: none; }
+
+.tab-indicator {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: calc(100% - 12px);
+  /* Fallback size before JS measures the real buttons on load; JS then
+     sets exact width/transform per tab (see moveIndicatorTo in script.js) —
+     the columns aren't reliably equal thirds since the grid lets the
+     longer "03 · Experience & Contact" label grow its own column. */
+  width: calc(33.333% - 6.666px);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  transition: transform 0.45s var(--ease-drawer), width 0.45s var(--ease-drawer);
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Drawer cabinet — the drawer is a fully separate card (own rounded       */
+/* corners, own shadow) that lives BEHIND the desk in stacking order and   */
+/* pulls down and out from underneath it. .drawer-zone is just the         */
+/* (mostly invisible) clipping/travel area; .drawer-panel-outer is the     */
+/* actual visible drawer object.                                           */
+/* ---------------------------------------------------------------------- */
+
+.drawer-zone {
+  position: relative;
+  z-index: 1;
+  /* Height is set directly by JS every frame (0 when nothing is open,
+     growing as a drawer opens) — NOT flex:1. flex:1 always claimed the
+     full remaining space in .frame regardless of whether anything was
+     actually open, which left a tall empty gap between the desk and the
+     drawer whenever every drawer was tucked away. */
+  flex: 0 0 auto;
+  height: 0;
+  min-height: 0;
+  /* Overlaps up under the desk card above by a small constant amount, so
+     the desk visually covers the drawer's top edge and the two read as
+     flush, stacked objects — never a visible gap between them. This only
+     holds true at rest, though — see the translateY note below. */
+  margin-top: clamp(-32px, -3.4vh, -22px);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  /* js/script.js's updateIntro() applies the exact same translateY to this
+     element as it does to .desk-card, so the two always move together as
+     one rigid group once drawer 1 is fully open. A transform never reflows
+     a sibling's flex position — so if only .desk-card slid away, this
+     element's box would stay put and a growing gap would open between them
+     mid-scroll (the root cause behind several earlier "gap" bugs). Moving
+     both by the same amount keeps the margin-top overlap true throughout
+     the whole animation, not just before/after it. */
+  will-change: transform;
+  /* No background/shadow of its own — it's just a clipping viewport for
+     the sliding drawer panel, so it reads as the same page surface, not
+     a second card. */
+}
+
+.drawer-panel-outer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl);
+  border: var(--border-w) solid var(--bh-black);
+  overflow: hidden;
+  background: var(--bg-drawer);
+  box-shadow: var(--shadow-lift);
+  will-change: transform;
+  /* Closed = pulled fully up into the cabinet, hidden behind the desk
+     card above (and clipped by .drawer-zone's own overflow either way). */
+  transform: translateY(-106%);
+  pointer-events: none;
+}
+
+.drawer-panel-outer.is-active { pointer-events: auto; }
+
+/* The lip is the drawer's own front edge/rail — a strip sitting at the
+   BOTTOM of the drawer (the edge that travels furthest as it's pulled
+   out) with a handle, matching how a real drawer's front panel and
+   handle work. Originally a literal wood tone (kept unchanged through
+   the v18 Bauhaus restyle and every palette round since); pulled into
+   the palette itself per explicit user direction (v18.9: tried black,
+   rejected on sight; v18.10: settled on `--wood-1` = `--bh-red`) so the
+   lip now reads as a bold flat-red Bauhaus surface instead of standing
+   out as the one remaining "real material" color. The handle is black
+   (see .drawer-handle) so it stays visible against the red fill. */
+.drawer-lip {
+  flex-shrink: 0;
+  order: 2;
+  height: clamp(20px, 2.6vh, 28px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--wood-1);
+  border-top: var(--border-w) solid var(--bh-black);
+}
+
+.drawer-handle {
+  width: clamp(48px, 8vw, 72px);
+  height: 6px;
+  border-radius: var(--radius-sm);
+  /* v18.10: lip is now red (--wood-1), so the handle switched from red
+     to black — otherwise it would nearly vanish into a same-color lip
+     with only its border showing. Black-on-red reads as a deliberate
+     Bauhaus "slot", not an accident. */
+  background: var(--bh-black);
+  border: 1px solid var(--bh-black);
+}
+
+.drawer-viewport {
+  flex: 1;
+  overflow: hidden;
+}
+
+.drawer-content {
+  padding: clamp(18px, 3vw, 30px) clamp(18px, 3vw, 30px) 40px;
+  will-change: transform;
+}
+
+.drawer-panel {
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 4vw, 34px) clamp(22px, 4vw, 36px);
+  box-shadow: var(--shadow-soft);
+}
+
+.drawer-panel-tall { padding-bottom: clamp(30px, 5vw, 44px); }
+
+.drawer-panel-head {
+  /* Stacked, not a left/right row: the fixed tab bar sits in the top-right
+     corner of the whole stage at all times, and a badge flexed to the far
+     right of this row landed in that exact same spot once a drawer settled
+     open — hidden behind the tabs. Stacking the badge under the title
+     keeps it clear of the tabs regardless of viewport width or how long a
+     given drawer's title is. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.drawer-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  margin: 0 0 6px;
+}
+
+.drawer-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bh-black);
+  border: 1px solid var(--bh-black);
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.drawer-panel-divider {
+  height: 2px;
+  background: var(--bh-black);
+  margin: 22px 0;
+}
+
+.drawer-panel-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 68ch;
+}
+
+.sub-section + .sub-section { margin-top: 22px; }
+
+.sub-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 12px;
+}
+
+.sub-text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 74ch;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Drawer 01 — project stage                                               */
+/* ---------------------------------------------------------------------- */
+
+.project-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 34px 0 18px;
+  border-radius: var(--radius-lg);
+}
+
+.project-stage:focus-visible {
+  outline: 2px solid var(--bh-black);
+  outline-offset: 8px;
+}
+
+.stage-nav {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  /* v18.7: now that .carousel-stage no longer masks its overflow (v18.6),
+     the coverflow's side cards can visually extend into this button's
+     box. Since .stage-prev sits before .carousel-stage in the DOM, it
+     would otherwise paint underneath that overflow and read as "covered"
+     — lift both nav buttons into their own stacking context above it. */
+  position: relative;
+  z-index: 5;
+}
+
+.stage-nav:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); background: var(--bg-panel); }
+.stage-nav:disabled { opacity: 0.35; pointer-events: none; }
+
+/* 3D circular (coverflow) carousel — center card faces front, neighbors
+   recede in an arc to either side, all sharing one continuous perspective. */
+
+.carousel-stage {
+  position: relative;
+  flex: 1;
+  height: clamp(300px, 34vw, 400px);
+  perspective: 1600px;
+  /* v18.6: user asked to drop the edge fade (the side cards were fading
+     to transparent near the arrow buttons) — cards now stay fully opaque
+     all the way to the stage's own edge, consistent with the flat/hard-
+     edged Bauhaus poster look elsewhere (no soft gradients). */
+}
+
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.carousel-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(360px, 58vw);
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-lg);
+  border: var(--border-w) solid var(--bh-black);
+  overflow: hidden;
+  background: var(--bh-black);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: transform 0.6s var(--ease-drawer), opacity 0.6s var(--ease-drawer), box-shadow 0.6s ease;
+}
+
+.carousel-card:focus-visible {
+  outline: 2px solid var(--bh-red);
+  outline-offset: 2px;
+}
+
+.carousel-card.is-active {
+  cursor: default;
+  box-shadow: var(--shadow-lift);
+}
+
+.carousel-card:not(.is-active):hover { filter: brightness(1.12); }
+
+.carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.carousel-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 12, 20, 0.86) 0%, rgba(10, 12, 20, 0.1) 48%, rgba(10, 12, 20, 0.05) 62%, rgba(10, 12, 20, 0.32) 100%);
+  pointer-events: none;
+}
+
+.carousel-card-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: clamp(14px, 3vw, 22px);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+  pointer-events: none;
+}
+
+.carousel-card.is-active .carousel-card-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousel-card-title {
+  /* Sub-head tier per the v18.8 type spec: Space Grotesk Medium. */
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(16px, 2.1vw, 21px);
+  margin: 0 0 3px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.carousel-card-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.carousel-card-org {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  opacity: 0.88;
+  max-width: 72%;
+}
+
+.project-cta {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--bh-red);
+  border: 1px solid var(--bh-black);
+  box-shadow: var(--shadow-xs);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  pointer-events: auto;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-cta:hover { transform: scale(1.08); box-shadow: var(--shadow-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-card { transition: opacity 0.3s ease; }
+}
+
+/* v18.25: user-directed — turn the round, separately-outlined pagination
+   dots into touching rectangular segments housed inside one bordered pill
+   frame, matching the shape language of the site's own buttons (border +
+   shadow-xs + radius-pill) rather than reading as a loose row of circles. */
+.project-dots {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto 8px;
+  padding: 3px;
+  background: #fff;
+  border: var(--border-w) solid var(--bh-black);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-xs);
+}
+
+/* a11y v32: the visible tick stays a 16×8 bar (v18.25's user-directed shape),
+   but transparent padding lifts the focus / pointer target to 24×26 so it
+   meets WCAG 2.2 SC 2.5.8; `background-clip: content-box` keeps the fill on the
+   strip only, and the 8px transparent gutters replace the old drawn dividers.
+   The active tick is also *taller* (12px) — a non-colour cue for SC 1.4.1,
+   not just the red fill. */
+.project-dots button {
+  width: 16px;
+  height: 8px;
+  padding: 9px 4px;
+  box-sizing: content-box;
+  border-radius: 0;
+  background: var(--line);
+  background-clip: content-box;
+  transition: background 0.25s ease, height 0.15s ease;
+}
+
+.project-dots button.is-active {
+  background: var(--bh-red);
+  background-clip: content-box;
+  height: 12px;
+}
+
+/* v18.13: shortcut buttons inside Drawer 01 (Projects) and Drawer 03
+   (Experience & Contact) that jump straight to the matching standalone
+   view — reuse the same [data-view-link] mechanism as the header nav
+   (js/script.js binds every element with that attribute, not just <a>
+   tags), so no extra JS was needed. */
+.section-link-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.section-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.section-link-btn svg { flex-shrink: 0; transition: transform 0.15s ease; }
+
+.section-link-btn:hover {
+  background: var(--bh-black);
+  color: #fff;
+}
+
+.section-link-btn:hover svg { transform: translateX(2px); }
+
+/* ---------------------------------------------------------------------- */
+/* Drawer 02 — process list, pills, languages                              */
+/* ---------------------------------------------------------------------- */
+
+.process-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.process-list li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+/* Each step number sits in its own small bordered tile — a Bauhaus grid
+   numeral — rotating through the three accent fills so the list reads
+   as a deliberate color rhythm rather than four identical rows. */
+.process-index {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--ink);
+  border: 1px solid var(--bh-black);
+}
+
+.process-list li:nth-child(2) .process-index { background: var(--bh-red); }
+.process-list li:nth-child(3) .process-index { background: var(--accent-dark); color: #fff; }
+.process-list li:nth-child(4) .process-index { background: #fff; color: var(--bh-black); }
+
+.process-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+
+.process-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  border: 1px solid var(--bh-black);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.lang-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.lang-card {
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: #fff;
+  border: 1px solid var(--bh-black);
+}
+
+.lang-name { font-weight: 600; font-size: 14px; margin: 0 0 10px; }
+
+.lang-bar {
+  height: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel-2);
+  border: 1px solid var(--bh-black);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.lang-bar span {
+  display: block;
+  height: 100%;
+  background: var(--bh-red);
+}
+
+.lang-level {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Drawer 03 — timeline & contact                                          */
+/* ---------------------------------------------------------------------- */
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+/* Direct-child combinator (not a bare descendant selector) — v18.11 adds
+   an optional nested <ul class="timeline-desc-list"> of bullet points
+   inside a timeline row's description on the standalone Experience page;
+   without the `>` here, those inner <li>s would also pick up this row's
+   grid/border styling. */
+.timeline > li {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--bh-black);
+}
+
+.timeline > li:last-child { border-bottom: none; }
+
+.timeline-desc-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.timeline-desc-list li { padding: 2px 0; }
+
+.timeline-date {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.timeline-role { font-weight: 600; font-size: 15px; margin: 0 0 2px; }
+
+.timeline-org {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin: 0 0 6px;
+}
+
+/* v18.13: .timeline-desc (a one-line description under each role) is no
+   longer used — the Career Timeline on Home was trimmed to role/date/org
+   only, with a "View Full Experience" button linking to the standalone
+   page's fuller .timeline-desc-list bullets instead. Rule removed. */
+
+.contact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: #fff;
+  border: 1px solid var(--bh-black);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.contact-row:hover { transform: translateY(-2px); box-shadow: var(--shadow-xs); background: var(--bg-panel); }
+
+.contact-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bh-red);
+  border: 1px solid var(--bh-black);
+  flex-shrink: 0;
+}
+
+.contact-row > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-key {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.contact-value { font-size: 14.5px; font-weight: 600; }
+
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.site-footer {
+  padding: 40px clamp(20px, 4vw, 56px) 56px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  border-top: var(--border-w) solid var(--bh-black);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsive                                                              */
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .frame {
+    padding: clamp(12px, 2.4vh, 20px) clamp(12px, 3vw, 24px);
+  }
+  .desk-card {
+    grid-template-columns: 1fr;
+    padding-top: 72px;
+    padding-bottom: 16px;
+    gap: 12px;
+    height: auto;
+    /* The desktop rule now sets min-height (see above); reset it here so
+       mobile keeps sizing purely to its (already single-column, already
+       auto-height) content instead of inheriting a 300px+ floor. */
+    min-height: 0;
+  }
+  .desk-objects {
+    /* v18.13: floor raised 120px -> 160px, same reasoning as the desktop
+       rule above — on narrow phones the laptop's width sits at its own
+       150px floor (18vw is tiny below ~860px), rendering ~153px tall. */
+    height: clamp(160px, 36vw, 200px);
+  }
+  /* v18.14: single-column mobile layout stacks .desk-intro ABOVE
+     .desk-objects, so top/left % here are re-measured against the full
+     (taller, narrower) mobile `.desk-card` box — same resting look as
+     before, just expressed in the new full-card coordinate space so
+     dragging can reach the whole card on mobile too. */
+  .obj-laptop { top: 65.9%; left: 52.78%; }
+  .obj-notebook { top: 67.05%; left: 5.56%; }
+  .obj-open-notebook { top: 80.76%; left: 28.61%; }
+  .obj-mug { top: 89.71%; left: 7.22%; }
+  .obj-pen { top: 81.52%; left: 46.39%; }
+
+  /* Full-width row above the intro text instead of overlapping it. */
+  .drawer-tabs {
+    top: 10px;
+    left: clamp(14px, 3vw, 28px);
+    right: clamp(14px, 3vw, 28px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .tab-btn { font-size: 11.5px; padding: 10px 8px; }
+
+  /* The tab bar is a full-width row up here on mobile (unlike desktop's
+     small top-right pill), so it sits directly over where the drawer's
+     label/title normally start. Push the content's top padding down so
+     the heading always clears the tab bar's bottom edge with a comfortable
+     buffer, whatever drawer is open. Desktop is untouched — this rule only
+     exists inside this max-width:860px query. */
+  .drawer-content { padding-top: clamp(94px, 23vw, 116px); }
+
+  .timeline > li { grid-template-columns: 1fr; gap: 6px; }
+}
+
+@media (max-width: 560px) {
+  :root { --header-h: 60px; }
+  .logo-mark { height: 24px; }
+  .site-header-left { gap: 12px; }
+  .status-pill span:not(.status-dot) { display: none; }
+  .site-nav { gap: 2px; }
+  /* v18.35: kept in step with `.logo-mark`'s own 24px override just above,
+     same reasoning as the desktop rule — height matches the logo, not a
+     font-size guess. */
+  /* a11y v32: 24px was exactly on the SC 2.5.8 floor with no margin — lifted
+     to a 34px tap target (visual type unchanged, extra height is padding). */
+  .site-nav a { height: 34px; padding: 0 9px; font-size: 10px; letter-spacing: 0.04em; }
+  .project-stage { gap: 6px; }
+  .stage-nav { width: 38px; height: 38px; }
+  .carousel-stage { height: clamp(220px, 62vw, 300px); }
+  .carousel-card { width: min(280px, 68vw); }
+
+  .tab-full { display: none; }
+  .tab-short { display: inline; font-size: 14px; }
+  .tab-btn { padding: 12px 6px; }
+
+  /* Full shorthand resets top padding too, so re-assert the tab-bar
+     clearance from the 860px query right after it (same reasoning as
+     there — the tab bar is taller still at this width). */
+  .drawer-content { padding: 16px 16px 32px; }
+  .drawer-content { padding-top: clamp(94px, 23vw, 116px); }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Reduced motion — the pinned drawer-scrub sequence is replaced with a    */
+/* plain stacked page: desk intro, then the three drawers one after       */
+/* another in normal document flow, fully open and readable, no scroll-   */
+/* jacking or sliding transforms. JS also skips attaching the scroll/pin  */
+/* listeners entirely when this media query matches.                      */
+/* ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .desk-sequence { display: none; }
+  .tail-spacer { display: none; }
+
+  .stage-fixed {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 32px;
+  }
+
+  /* The Bauhaus backdrop's shapes are positioned/clipped against
+     `.stage-fixed`'s own pinned box above — once that box goes static
+     with overflow:visible, the same absolute offsets would float loose
+     and could bleed out of the document horizontally. Simplest safe fix:
+     the reduced-motion fallback already drops every other decorative
+     flourish (pin, slide, lift) in favor of a plain readable stack, so
+     drop this one too rather than re-deriving its geometry for a static
+     layout. */
+  .bauhaus-bg { display: none; }
+
+  .frame {
+    display: block;
+    height: auto;
+  }
+
+  .desk-card {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding-top: clamp(24px, 5vw, 48px);
+    padding-bottom: clamp(20px, 4vw, 32px);
+    border-radius: var(--radius-xl);
+  }
+
+  .desk-intro {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  .drawer-tabs {
+    position: sticky;
+    top: 12px;
+    margin: 20px 0 0 auto;
+    width: max-content;
+  }
+
+  .drawer-zone {
+    height: auto;
+    overflow: visible;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .drawer-panel-outer {
+    position: static;
+    inset: auto;
+    height: auto;
+    border-radius: var(--radius-xl);
+    transform: none !important;
+    pointer-events: auto !important;
+    margin: 20px 0 0;
+  }
+
+  .drawer-viewport { overflow: visible; }
+
+  .drawer-content { transform: none !important; }
+
+  .btn, .stage-nav, .contact-row, .tab-indicator, .carousel-card {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Standalone sub-pages (v18.11) — "All Projects" and "Full Experience",  */
+/* linked from the header nav. These are normal top-to-bottom documents,  */
+/* NOT part of the pinned desk-and-drawer scroll sequence — no JS scroll  */
+/* engine runs here at all. They reuse the same flat Bauhaus panels,      */
+/* pills, timeline and contact-row components the drawers already use,   */
+/* just laid out in plain document flow inside `.static-page`.           */
+/* ---------------------------------------------------------------------- */
+
+.static-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 56px) 0;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+}
+
+.page-intro {
+  max-width: 62ch;
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 40px;
+}
+
+/* --- "All Projects" grid --- */
+
+/* Category jump nav — a row of pill buttons under the intro that scroll to each
+   `.projects-group` section (wired in js/script.js, no hash change). */
+.projects-catnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 clamp(36px, 5vw, 52px);
+}
+
+.projects-catnav-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.projects-catnav-btn:hover,
+.projects-catnav-btn:focus-visible {
+  background: var(--bh-black);
+  color: #fff;
+}
+
+/* The grid is split into labelled category groups (UX/UI, exhibition, brand).
+   Each group keeps its own `.projects-grid`; `.projects-groups` just stacks the
+   groups with breathing room. The grid uses `auto-fill` (not `auto-fit`) so a
+   card is always one column wide — a partly-filled last row, or a group with a
+   single card like Brand Identity, keeps normal card size instead of stretching
+   to fill the row. */
+.projects-groups {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(44px, 6vw, 76px);
+  padding-bottom: 72px;
+}
+
+/* keep a jumped-to group clear of the sticky site header */
+.projects-group {
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+
+.projects-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 clamp(18px, 2.2vw, 26px);
+  padding-bottom: 12px;
+  border-bottom: var(--border-w) solid var(--bh-black);
+}
+
+.projects-group-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(17px, 2.3vw, 24px);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.projects-group-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(18px, 2.4vw, 28px);
+  padding-bottom: 72px;
+}
+
+/* inside a category group the bottom padding lives on `.projects-groups` */
+.projects-group .projects-grid {
+  padding-bottom: 0;
+}
+
+.project-card-full {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: var(--border-w) solid var(--bh-black);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-card-full:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.project-card-full img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-bottom: var(--border-w) solid var(--bh-black);
+}
+
+.project-card-full-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.project-card-full-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  margin: 0;
+}
+
+.project-card-full-org {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+  min-height: 1.4em;
+}
+
+.project-card-full-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--bh-red);
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-pill);
+  padding: 8px 12px;
+  text-decoration: none;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-card-full-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* --- "Full Experience" page: profile photo + education + timeline + skills + contact --- */
+
+/* v18.13: a small photo + name/role intro card at the top of the
+   standalone Experience page — the one place on the site with a real
+   photo of Dan rather than desk objects or project covers. */
+.profile-card { margin-bottom: 40px; }
+
+.profile-card-inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 28px);
+}
+
+.profile-photo {
+  width: clamp(96px, 14vw, 140px);
+  height: clamp(96px, 14vw, 140px);
+  object-fit: cover;
+  object-position: 50% 22%;
+  border: var(--border-w) solid var(--bh-black);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.profile-card-body { min-width: 0; }
+
+@media (max-width: 560px) {
+  .profile-card-inner { flex-direction: column; align-items: flex-start; text-align: left; }
+}
+
+.edu-card { margin-bottom: 40px; }
+
+.edu-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.edu-card-meta {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+.static-page .sub-section { margin-bottom: 40px; }
+
+.static-page .site-footer { margin-top: 24px; }
+
+/* ---------------------------------------------------------------------- */
+/* Project case-study pages (v18.16) — one `.static-page.case-study` view */
+/* per project (`view-project-<slug>`), reusing the same static-page/     */
+/* drawer-panel/pill/badge vocabulary as the grid and Experience pages    */
+/* above rather than inventing a new visual language. Content on every    */
+/* one of these pages is real, sourced from the project's own PDF case-   */
+/* study export — see the build notes for how each was extracted.        */
+/* ---------------------------------------------------------------------- */
+
+.case-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.case-back:hover { color: var(--accent-dark); transform: translateX(-2px); }
+
+.case-back svg { transform: rotate(180deg); flex-shrink: 0; }
+
+.case-hero { margin-bottom: 28px; }
+
+.case-tags { margin-top: 6px; }
+
+/* The lead image right under the hero intro — a bigger, single "cover"
+   shot (usually the same still used for the small carousel/grid thumb,
+   or a dedicated cover render for projects that got one) rather than
+   part of the in-body image galleries below. */
+.case-cover {
+  margin: 0 0 40px;
+  border-radius: var(--radius-lg);
+  border: var(--border-w) solid var(--bh-black);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  background: var(--bh-black);
+}
+
+.case-cover img { width: 100%; display: block; }
+
+/* CMCC-Chance embeds the user's own hand-built case-study page verbatim
+   (full HTML document, its own fonts/colors/layout) inside a same-origin
+   srcdoc iframe rather than reskinning it into the site's Bauhaus theme —
+   see setupCmccFrame() in script.js. The iframe is given no internal
+   scroll (scrolling="no", height set exactly to its content height by JS)
+   and breaks out of the .static-page content column to run full-bleed,
+   since the embedded page has its own margins/max-width already. */
+.case-embed-frame {
+  display: block;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-bottom: 40px;
+  border: 0;
+  background: #fff;
+}
+
+/* The embedded page's own `.topbar` is `position:sticky`, but that's
+   scoped to *its own* document — since the iframe has no internal scroll
+   (it's sized to its full content height, see above), the outer page is
+   what's actually scrolling, and CSS position:sticky/fixed cannot stick
+   an element inside a non-scrolling iframe to the browser's real
+   viewport. So this bar is a real, parent-level element that sits
+   directly beneath the site's own sticky `.site-header` and genuinely
+   sticks to the viewport as the page scrolls; the CMCC content's own
+   in-flow topbar is hidden via a CSS override injected into its
+   `<template>` content (`.topbar{display:none}`) so it isn't shown
+   twice. Clicking a link here is handled by setupCmccFrame() in
+   script.js, which reads the target's position straight out of the
+   iframe's `contentDocument` (same-origin) and scrolls the outer page. */
+.case-embed-topbar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 39;
+  width: 100vw;
+  /* Cancel .static-page's top padding so the bar sits flush against the
+     main site header at rest (it already pins to `top: var(--header-h)`
+     once stuck, so this makes the at-rest and stuck positions identical —
+     no gap, no jump). Non-embed case studies keep the padding for their
+     `.case-back` link; only the pages that carry this bar lose it. */
+  margin-top: calc(0px - clamp(40px, 6vw, 64px));
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e3e7f0;
+}
+
+.case-embed-topbar-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Zero-height, unstyled — purely a scroll-position marker for the
+   IntersectionObserver in script.js. Sits exactly where `.case-back`
+   used to live (top of the CMCC page, before the sticky bar), so "the
+   sentinel has scrolled out of view" means "the sticky bar is now
+   genuinely stuck to the viewport top". */
+.cmcc-sticky-sentinel { height: 0; }
+
+.case-embed-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Reuses `.case-back`'s look (mono, uppercase, small) so it reads as the
+   same control the other 6 case-study pages use, just relocated into
+   this page's sticky bar. Hidden once the bar is stuck (`.is-stuck`,
+   toggled by the sentinel above) — scrolled deep into the case study,
+   "leave to All Projects" stops being the useful action; "CMCC-Chance"
+   becomes a back-to-top button in its place instead. */
+.case-embed-topbar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  flex: none;
+  transition: color 0.15s ease;
+}
+
+.case-embed-topbar-back:hover { color: var(--accent-dark); }
+.case-embed-topbar-back svg { transform: rotate(180deg); flex-shrink: 0; }
+
+.case-embed-topbar.is-stuck .case-embed-topbar-back { display: none; }
+
+.case-embed-topbar-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: #0b1020;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.case-embed-topbar.is-stuck .case-embed-topbar-brand:hover { color: var(--accent-dark); }
+
+.case-embed-topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.8vw, 24px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.case-embed-topbar-nav::-webkit-scrollbar { display: none; }
+
+.case-embed-topbar-nav a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 12.5px;
+  color: #5b6480;
+  text-decoration: none;
+  white-space: nowrap;
+  flex: none;
+}
+
+.case-embed-topbar-nav a:hover { color: var(--accent-dark); }
+
+/* "Sections" toggle — injected by script.js into every .case-embed-topbar,
+   only visible below the breakpoint where the 8 jump-links stop fitting on
+   the bar alongside the back-link + brand (they were overlapping the brand
+   text on phones). Above the breakpoint it stays display:none and the nav
+   renders inline as a horizontal strip exactly as before. */
+.case-embed-topbar-toggle { display: none; }
+
+@media (max-width: 760px) {
+  .case-embed-topbar-inner { gap: 12px; position: relative; }
+
+  .case-embed-topbar-left { flex: 1 1 auto; min-width: 0; }
+  .case-embed-topbar-brand {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .case-embed-topbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid #d7dbe6;
+    border-radius: var(--radius-pill);
+    padding: 6px 11px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .case-embed-topbar-toggle svg { transition: transform 0.2s ease; flex: none; }
+  .case-embed-topbar.nav-open .case-embed-topbar-toggle svg { transform: rotate(180deg); }
+  .case-embed-topbar-toggle:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+
+  /* nav becomes a full-width drop-down panel anchored to the bar
+     (.case-embed-topbar is position:sticky, i.e. a containing block) */
+  .case-embed-topbar-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-height: 0;
+    background: #ffffff;
+    border-bottom: 1px solid #e3e7f0;
+    transition: max-height 0.22s ease;
+  }
+  .case-embed-topbar.nav-open .case-embed-topbar-nav {
+    max-height: 72vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 24px rgba(11, 16, 32, 0.12);
+  }
+  .case-embed-topbar-nav a {
+    padding: 12px clamp(20px, 4vw, 40px);
+    font-size: 14px;
+    border-top: 1px solid #eef1f6;
+  }
+  .case-embed-topbar-nav > a:first-child { border-top: 0; }
+}
+
+.case-section .drawer-panel-desc { margin-top: 2px; }
+
+/* Per-section image gallery — most sections carry 1-4 supporting images
+   pulled straight from the project's case-study PDF. `auto-fit` with a
+   generous min lets a single image go full-width while multiple images
+   settle into an even grid, without a separate "1 vs many" class. */
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.case-gallery.is-single { grid-template-columns: 1fr; }
+
+.case-gallery img {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+  border: var(--border-w) solid var(--bh-black);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Process-timeline chips (v18.17) — a horizontal phase-by-phase strip
+   (name + duration) connected by a single rule, pulled directly from a
+   project's own "Process Timeline" graphic in its source PDF instead of
+   being narrated as a run-on sentence of phase names and week counts. */
+.case-timeline {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 10px;
+  margin: 20px 0 4px;
+  padding-top: 4px;
+}
+
+.case-timeline::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: var(--bh-black);
+  z-index: 0;
+}
+
+.case-timeline-chip {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.case-timeline-pill {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1.25;
+  padding: 9px 10px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--bh-black);
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-sm);
+}
+
+.case-timeline-chip:nth-child(even) .case-timeline-pill {
+  background: var(--bh-red);
+  border-color: var(--bh-black);
+}
+
+.case-timeline-duration {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .case-timeline::before { display: none; }
+  .case-timeline { flex-direction: column; align-items: stretch; gap: 10px; }
+  .case-timeline-chip { flex: 0 0 auto; flex-direction: row; text-align: left; gap: 12px; }
+  .case-timeline-pill { flex: 1 1 auto; min-width: 0; }
+}
+
+/* Numbered stage cascade (v18.17) — the "how I worked" stages (e.g.
+   Research / Design / Launch) as short bulleted tiles instead of a dense
+   paragraph, staggered on desktop to echo the diagonal layout of the
+   source PDF's own stage graphic. */
+.case-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 20px;
+  margin-top: 22px;
+}
+
+.case-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.case-step:nth-child(2) { margin-top: 26px; }
+.case-step:nth-child(3) { margin-top: 52px; }
+
+.case-step-index {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--ink);
+  border: 1px solid var(--bh-black);
+}
+
+.case-step:nth-child(2) .case-step-index { background: var(--bh-red); }
+.case-step:nth-child(3) .case-step-index { background: var(--accent-dark); }
+
+.case-step-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  margin: 4px 0 6px;
+}
+
+.case-step-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.case-step-list li { margin-bottom: 2px; }
+
+@media (max-width: 760px) {
+  .case-steps { grid-template-columns: 1fr; gap: 18px; }
+  .case-step:nth-child(2), .case-step:nth-child(3) { margin-top: 0; }
+}
+
+/* Simplified user-flow diagram (v18.18) — condensed from a project's full
+   screen-by-screen Figma flow file (often 100+ nodes) down to its core
+   path: entry, an auth/decision branch, the main hub, another branch,
+   then through to completion. Plain HTML boxes + arrow connectors, no
+   diagram library, so it always matches the page's own flat black/red
+   box language and never needs a screenshot of the messy original. */
+.case-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 20px 0 4px;
+}
+
+.case-flow-node {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  padding: 11px 18px;
+  min-width: 150px;
+  color: #fff;
+  background: var(--bh-black);
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-sm);
+}
+
+.case-flow-node.is-accent { background: var(--bh-red); }
+
+.case-flow-node.is-sub {
+  position: relative;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 7px 12px;
+  margin-top: 22px;
+  background: var(--bg-panel);
+  color: var(--ink-soft);
+  border-color: var(--ink-faint);
+}
+
+/* A short connecting line from a branch column's primary node down to
+   its own secondary/sub node (e.g. "Sign Up" -> "Terms & Conditions"),
+   so every node-to-node relationship on the diagram is a drawn line, not
+   just spacing. */
+.case-flow-node.is-sub::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  width: 2px;
+  height: 22px;
+  background: var(--ink-faint);
+  transform: translateX(-50%);
+}
+
+.case-flow-node.is-placeholder {
+  visibility: hidden;
+}
+
+.case-flow-arrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  color: var(--ink-faint);
+}
+
+/* The vertical "shaft" every arrow connector draws behind its chevron,
+   so consecutive nodes read as a continuous line rather than floating
+   boxes with a gap between them. */
+.case-flow-arrow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--ink-faint);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.case-flow-arrow svg { position: relative; z-index: 1; }
+
+/* Fork/merge connectors bracket a `.case-flow-branch` row: a single line
+   in, splitting to each column's center; a mirrored pair of lines out,
+   converging back to one. Drawn as an SVG stretched to the row's own
+   width (not the viewport) via preserveAspectRatio="none", with
+   non-scaling-stroke so the 2px line weight stays constant even though
+   the box is stretched non-uniformly. Both branches on this page have
+   equal-height columns (a hidden `.is-placeholder` pads the shorter one)
+   so the fork/merge points land exactly at each column's top/bottom. */
+.case-flow-connector {
+  width: 100%;
+  max-width: 360px;
+  height: 22px;
+  color: var(--ink-faint);
+}
+
+.case-flow-connector svg { display: block; }
+.case-flow-connector line {
+  stroke: currentColor;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-flow-branch {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.case-flow-branch-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.case-flow-branch-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+
+.case-flow-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 0;
+}
+
+.case-flow-aside-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.case-flow-aside-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 460px;
+}
+
+.case-flow-aside-pills .pill { font-size: 11px; padding: 5px 10px; }
+
+@media (max-width: 560px) {
+  .case-flow-branch { gap: 14px; }
+  .case-flow-node { min-width: 120px; font-size: 12px; padding: 10px 12px; }
+}
+
+/* Typography specimen + color-swatch palette (v18.17) — a project's own
+   "Design System" page (a big glyph + font name, a row of named/hex
+   color chips) rendered as real swatches instead of a sentence like
+   "a color system built around Rigel Blue (#002FCF), Gray (#D5D5D5)...". */
+.case-type-specimen {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 18px 0;
+  padding: 16px 18px;
+  border: var(--border-w) solid var(--bh-black);
+  background: var(--bg-panel-2);
+}
+
+.case-type-glyph {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.case-type-name {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+}
+
+.case-type-weights {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 4px 0 0;
+}
+
+.case-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.case-swatch { width: 86px; }
+
+.case-swatch-chip {
+  width: 100%;
+  height: 54px;
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-sm);
+}
+
+.case-swatch-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  margin: 6px 0 0;
+}
+
+.case-swatch-hex {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+  text-transform: uppercase;
+}
+
+.case-swatch-pct {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  margin: 1px 0 0;
+}
+
+/* Persona cards (v18.21) — used across the non-CMCC case studies wherever
+   a source PDF names distinct user types with real needs/pain-points
+   data, rather than folding that into a dense paragraph. */
+.case-personas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.case-persona {
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  border-top: 3px solid var(--bh-black);
+  box-shadow: var(--shadow-xs);
+}
+
+.case-personas .case-persona:nth-child(2) { border-top-color: var(--bh-red); }
+.case-personas .case-persona:nth-child(3) { border-top-color: var(--accent-dark); }
+
+.case-persona-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  margin: 0;
+}
+
+.case-persona-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 3px 0 12px;
+}
+
+.case-persona-row { margin-top: 10px; }
+.case-persona-row:first-of-type { margin-top: 0; }
+
+.case-persona-row-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 4px;
+}
+
+.case-persona-row ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.case-persona-row ul li { margin-bottom: 2px; }
+
+/* Numbered feature list (v18.21) — flexible-count version of the numbered
+   circle+title+desc language established by .case-step, used where a
+   source project lists its own numbered feature/system set (often 4-5
+   items) rather than exactly the 3-stage Research/Design/Launch shape. */
+.case-feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px 20px;
+  margin-top: 14px;
+}
+
+.case-feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.case-feature-index {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--ink);
+  border: 1px solid var(--bh-black);
+}
+
+.case-feature-list .case-feature:nth-child(2n) .case-feature-index { background: var(--bh-red); }
+
+.case-feature-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  margin: 3px 0 3px;
+}
+
+.case-feature-desc {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Real-number data bars (v18.21) — for source material with literal
+   area/percentage figures (e.g. a spatial zoning breakdown) rather than
+   qualitative content; a plain proportional bar reads faster than a
+   sentence of "X m², Y%" fragments. */
+.case-stats {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.case-stat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.case-stat-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12.5px;
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.case-stat-bar-track {
+  flex: 1 1 auto;
+  height: 10px;
+  background: #ececef;
+  min-width: 40px;
+}
+
+.case-stat-bar-fill { height: 100%; background: var(--bh-black); }
+.case-stats .case-stat:nth-child(2n) .case-stat-bar-fill { background: var(--bh-red); }
+
+.case-stat-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  width: 108px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+@media (max-width: 560px) {
+  .case-stat { flex-wrap: wrap; }
+  .case-stat-label { width: 100%; }
+  .case-stat-bar-track { order: 3; width: 100%; flex-basis: 100%; }
+  .case-stat-value { width: auto; margin-left: auto; }
+}
+
+/* Expanded Design System sub-components (v18.20) — a source project's own
+   design-system export usually covers more than a font + a handful of
+   base colors: a full type scale (named tiers, not just the family), a
+   tonal color ramp, semantic color tokens (Surface/Text/Border), and
+   component states (buttons, inputs, badges). These render that fuller
+   picture where the source material has it, reusing the flat black-
+   bordered panel language already established for `.case-*`. */
+
+.case-subhead {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  margin: 26px 0 4px;
+}
+
+.case-subhead:first-of-type { margin-top: 4px; }
+
+/* Named type-scale tiers — sample text sized to show relative hierarchy.
+   Sizes are an illustrative scale (largest-to-smallest matching the
+   source's own tier order), not a claim of the source's exact px/line-
+   height values where those weren't legible in the supplied reference. */
+.case-type-scale {
+  display: grid;
+  gap: 0;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.case-type-scale-row {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.case-type-scale-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  min-width: 84px;
+  flex-shrink: 0;
+}
+
+.case-type-scale-sample {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+}
+
+/* Tonal color ramp strip */
+.case-ramp { margin-top: 20px; }
+
+.case-ramp-track {
+  display: flex;
+  border: 1px solid var(--bh-black);
+  overflow: hidden;
+}
+
+.case-ramp-step { flex: 1 1 0; height: 42px; }
+
+.case-ramp-labels {
+  display: flex;
+  margin-top: 6px;
+}
+
+.case-ramp-labels span {
+  flex: 1 1 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-faint);
+}
+
+/* Semantic color tokens — Surface / Text / Border */
+.case-tokens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 24px;
+  margin-top: 14px;
+}
+
+.case-token-col-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12.5px;
+  margin: 0 0 8px;
+}
+
+.case-token-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.case-token-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--bh-black);
+  flex-shrink: 0;
+}
+
+.case-token-name {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  word-break: break-word;
+}
+
+@media (max-width: 700px) {
+  .case-tokens { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* Component states — buttons, checkboxes, inputs, status badges, all
+   rendered as rounded chips (deliberately breaking from this site's own
+   sharp Bauhaus radius) since these represent the SOURCE project's own
+   rounded UI kit, not this portfolio site's interface. */
+.case-components {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 14px;
+}
+
+.case-component-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.case-component-group-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.case-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.case-chip {
+  font-family: var(--font-body, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.case-chip.is-primary { background: #0F173A; color: #fff; }
+.case-chip.is-primary-off { background: #D5D5D5; color: #9a9a9a; }
+.case-chip.is-outline { background: #fff; color: #0F173A; border-color: #0F173A; }
+.case-chip.is-muted { background: #ececef; color: #a3a3a8; }
+
+.case-chip.is-badge {
+  font-size: 10.5px;
+  padding: 5px 12px;
+}
+
+.case-chip.is-input {
+  border-radius: 999px;
+  border: 1.5px solid #cfd3da;
+  background: #fff;
+  color: #9a9a9a;
+  padding: 9px 16px;
+}
+
+.case-chip.is-input-filled { color: #0F173A; }
+.case-chip.is-input-error { border-color: #c1291e; color: #c1291e; }
+
+.case-nav-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 44px 0 16px;
+  padding-top: 28px;
+  border-top: 2px solid var(--bh-black);
+}
+
+@media (max-width: 560px) {
+  .case-nav-footer { justify-content: flex-start; }
+}
+
+/* Closing signature bar — the single, identical footer on every case-study
+   view (v32): project name + context on the left, a "Back to top" control on
+   the right, over one hairline rule. Each embedded doc's own <footer> is
+   hidden inside its iframe so this is the only footer that shows. */
+.case-outro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 64px;
+  padding: 26px 0 18px;
+  border-top: var(--border-w) solid var(--bh-black);
+}
+
+.case-outro-id {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.case-outro-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.case-outro-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.case-outro-top {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--bh-black);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.case-outro-top span { transition: transform 0.15s ease; }
+.case-outro-top:hover,
+.case-outro-top:focus-visible { background: var(--bh-black); color: #fff; }
+.case-outro-top:hover span { transform: translateY(-2px); }
+
+@media (max-width: 560px) {
+  .case-outro { align-items: flex-start; }
+}
