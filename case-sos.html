@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOS &mdash; Safety of School &mdash; UX/UI Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Afacad:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F5F5F5; font-family: 'Afacad', sans-serif; }
+  a { color: #20448B; text-decoration: underline; }
+  a:hover { color: #7EA4EF; }
+  ::selection { background: #B6DEFF; }
+</style>
+<style>.dc-topnav{display:none!important}</style>
+<style>footer{display:none!important}</style><style>/*dc-mobile-responsive*/
+@media (max-width:820px){
+  [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+  [style*="display:flex"],[style*="display: flex"]{flex-wrap:wrap !important;}
+  img{max-width:100% !important;height:auto !important;}
+  h1,h2,h3,h4,p,div,span,li,a{overflow-wrap:break-word;}
+}
+@media (max-width:640px){
+  [style*="px 100px"],[style*="px 80px"],[style*="0 100px"]{padding-left:22px !important;padding-right:22px !important;}
+  [style*="150px 100px"],[style*="140px 100px"],[style*="0 100px 150px"]{padding-top:60px !important;padding-bottom:60px !important;}
+  [style*="font-size:76px"],[style*="font-size:72px"],[style*="font-size:68px"],[style*="font-size:64px"],[style*="font-size:60px"],[style*="font-size: 76px"],[style*="font-size: 64px"]{font-size:42px !important;}
+  [style*="font-size:56px"],[style*="font-size:52px"],[style*="font-size:48px"],[style*="font-size: 48px"]{font-size:34px !important;}
+}</style>
+</head>
+<body>
+<div style="background:#F5F5F5;color:#181F3A;overflow-x:hidden;">
+
+  <!-- NAV -->
+  <nav class="dc-topnav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(11,15,30,0.88);backdrop-filter:blur(14px);">
+    <a href="#top" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <span style="width:34px;height:34px;border-radius:100px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <img src="assets/projects/case/sos/logo-2.png" alt="SOS mark" style="width:24px;height:24px;display:block;" />
+      </span>
+      <span style="font-size:18px;font-weight:700;color:#FFFFFF;">SOS · Safety of School</span>
+    </a>
+    <div style="display:flex;gap:26px;align-items:center;">
+      <a href="#overview" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">Overview</a>
+      <a href="#problem" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">Problem</a>
+      <a href="#flow" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">User flow</a>
+      <a href="#system" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">Design system</a>
+      <a href="#screens" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">Screens</a>
+      <a href="#dark" style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.7);text-decoration:none;">Dark mode</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="top" style="display:grid;grid-template-columns:1fr 1fr;min-height:760px;background:#0B0F1E;">
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:90px 80px;box-sizing:border-box;">
+      <div style="font-size:20px;font-weight:600;letter-spacing:0.14em;color:#B6DEFF;text-transform:uppercase;margin-bottom:22px;">UX / UI Case Study</div>
+      <h1 style="margin:0;font-size:132px;line-height:0.92;font-weight:700;color:#FFFFFF;letter-spacing:-0.01em;">SOS</h1>
+      <div style="font-size:40px;font-weight:600;color:#7EA4EF;margin-top:12px;">Safety of School</div>
+      <p style="max-width:480px;margin:28px 0 0;font-size:22px;line-height:1.5;color:rgba(255,255,255,0.82);font-weight:500;">A mobile app that helps parents watch over a child's location and respond fast in an emergency — with a way for strangers to help even if they've never opened the app.</p>
+      <div style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;max-width:480px;">
+        <span style="padding:10px 22px;border-radius:100px;border:1px solid rgba(255,255,255,0.35);color:#FFFFFF;font-size:18px;font-weight:600;">Branding</span>
+        <span style="padding:10px 22px;border-radius:100px;border:1px solid rgba(255,255,255,0.35);color:#FFFFFF;font-size:18px;font-weight:600;">Logo</span>
+        <span style="padding:10px 22px;border-radius:100px;border:1px solid rgba(255,255,255,0.35);color:#FFFFFF;font-size:18px;font-weight:600;">UI Design</span>
+        <span style="padding:10px 22px;border-radius:100px;border:1px solid rgba(255,255,255,0.35);color:#FFFFFF;font-size:18px;font-weight:600;">Flowchart</span>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;background:#A8BEEA;">
+      <img src="assets/projects/case/sos/list-iphone-14-on-tripod-mockup-1.png" alt="SOS Kids List screen" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;" />
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section id="overview" style="padding:150px 100px 110px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:90px;align-items:start;">
+      <div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">01 — Overview</div>
+        <h2 style="margin:0;font-size:52px;line-height:1.1;font-weight:700;color:#181F3A;">Keeping kids safe, and parents at ease</h2>
+      </div>
+      <p style="margin:12px 0 0;font-size:26px;line-height:1.6;color:rgba(24,31,58,0.72);font-weight:500;">SOS is an application for parents to take care of their children's safety. It gives them a way to check a child's location, including during an emergency. When a child gets lost, well-wishers who aren't part of the SOS system can still help — by contacting the parent through a channel that appears after scanning the child's NFC tag.</p>
+    </div>
+    <div style="max-width:1280px;margin:80px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E2E2E2;border-radius:20px;overflow:hidden;">
+      <div style="background:#FFFFFF;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(24,31,58,0.45);margin-bottom:10px;">Platform</div>
+        <div style="font-size:21px;font-weight:600;color:#181F3A;">iOS · Mobile app</div>
+      </div>
+      <div style="background:#FFFFFF;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(24,31,58,0.45);margin-bottom:10px;">Category</div>
+        <div style="font-size:21px;font-weight:600;color:#181F3A;">Child safety &amp; location</div>
+      </div>
+      <div style="background:#FFFFFF;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(24,31,58,0.45);margin-bottom:10px;">Deliverables</div>
+        <div style="font-size:21px;font-weight:600;color:#181F3A;">Branding, logo, flowchart, UI</div>
+      </div>
+      <div style="background:#FFFFFF;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(24,31,58,0.45);margin-bottom:10px;">Hardware</div>
+        <div style="font-size:21px;font-weight:600;color:#181F3A;">NFC child tag</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM & GOALS -->
+  <section id="problem" style="padding:140px 100px;background:#FFFFFF;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">02 — Problem &amp; goals</div>
+      <h2 style="margin:0 0 64px;font-size:52px;font-weight:700;color:#181F3A;max-width:820px;">A lost child is a race against time</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div style="background:#F5F5F5;border-radius:20px;padding:44px;border-top:0;">
+          <div style="font-size:26px;font-weight:700;color:#C01D1D;margin-bottom:18px;">The problem</div>
+          <p style="margin:0 0 16px;font-size:20px;line-height:1.6;color:rgba(24,31,58,0.72);font-weight:500;">Parents have no single place to see where their children are during school hours, and no fast way to raise an alarm when one of them goes missing.</p>
+          <p style="margin:0;font-size:20px;line-height:1.6;color:rgba(24,31,58,0.72);font-weight:500;">And the people most likely to find a lost child — passersby, shop staff, other parents — have no way to reach the family.</p>
+        </div>
+        <div style="background:#F5F5F5;border-radius:20px;padding:44px;">
+          <div style="font-size:26px;font-weight:700;color:#1DC072;margin-bottom:18px;">Design goals</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="font-size:20px;line-height:1.5;color:rgba(24,31,58,0.78);font-weight:500;">Show every child's status at a glance, with one clear state per child.</div>
+            <div style="font-size:20px;line-height:1.5;color:rgba(24,31,58,0.78);font-weight:500;">Make the emergency path reachable in one tap from anywhere in the app.</div>
+            <div style="font-size:20px;line-height:1.5;color:rgba(24,31,58,0.78);font-weight:500;">Let a stranger help without installing anything — scan the tag, reach the parent.</div>
+            <div style="font-size:20px;line-height:1.5;color:rgba(24,31,58,0.78);font-weight:500;">Keep the tone calm and gentle, even in the worst moment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section style="padding:150px 100px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div id="features" style="scroll-margin-top:96px;font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">03 — Key features</div>
+      <h2 style="margin:0 0 64px;font-size:52px;font-weight:700;color:#181F3A;max-width:760px;">What SOS does</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#E7E7E7;border-radius:20px;overflow:hidden;">
+        <div style="background:#FFFFFF;padding:48px;">
+          <div style="font-size:28px;font-weight:700;color:#181F3A;margin-bottom:14px;">Tag &amp; locate</div>
+          <p style="margin:0;font-size:20px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;">Every child wears an NFC tag that shares a live location, with an emergency signal that calls for immediate help.</p>
+        </div>
+        <div style="background:#FFFFFF;padding:48px;">
+          <div style="font-size:28px;font-weight:700;color:#181F3A;margin-bottom:14px;">Peace of mind</div>
+          <p style="margin:0;font-size:20px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;">Parents can specify and follow a child's location the moment an emergency situation comes up.</p>
+        </div>
+        <div style="background:#FFFFFF;padding:48px;">
+          <div style="font-size:28px;font-weight:700;color:#181F3A;margin-bottom:14px;">Direct contact</div>
+          <p style="margin:0;font-size:20px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;">Parents can contact a child's tag directly, to communicate with the child in real time.</p>
+        </div>
+        <div style="background:#FFFFFF;padding:48px;">
+          <div style="font-size:28px;font-weight:700;color:#181F3A;margin-bottom:14px;">Community rescue</div>
+          <p style="margin:0;font-size:20px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;">Announces and informs people nearby, asking for assistance when a child needs to be found.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS / FLOWCHART -->
+  <section id="flow" style="padding:150px 100px;background:#FFFFFF;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">04 — User flow</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;max-width:760px;">Mapping the full user flow</h2>
+      <p style="margin:0 0 56px;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;max-width:820px;">From sign up and tag registration, through the emergency and rescue paths, to notifications and dark mode — every screen a parent, a child's tag, or a passing well-wisher can reach.</p>
+      <div style="background:#FFFFFF;border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(24,31,58,0.08);">
+        <img src="assets/projects/case/sos/flow1-1.png" alt="SOS user flow diagram" style="width:100%;height:auto;display:block;border-radius:8px;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM: COLOR -->
+  <section id="system" style="padding:150px 100px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">05 — Design system</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;">Color</h2>
+      <p style="margin:0 0 56px;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;max-width:820px;">A calm cobalt blue anchors the interface, resting on a light neutral base — with small, deliberate bursts of status color: green for safe, orange for warning, red for danger.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <div style="background:#7EA4EF;border-radius:16px;padding:28px 24px;">
+          <div style="font-size:22px;font-weight:700;color:#FFFFFF;">Light Cobalt Blue</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px;">20% · #7EA4EF</div>
+        </div>
+        <div style="background:#20448B;border-radius:16px;padding:28px 24px;">
+          <div style="font-size:22px;font-weight:700;color:#FFFFFF;">Dark Cornflower Blue</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px;">10% · #20448B</div>
+        </div>
+        <div style="background:#F5F5F5;border-radius:16px;padding:28px 24px;border:1px solid #E7E7E7;">
+          <div style="font-size:22px;font-weight:700;color:#181F3A;">Light Gray</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(24,31,58,0.55);margin-top:4px;">60% · #F5F5F5</div>
+        </div>
+        <div style="background:#1DC072;border-radius:16px;padding:28px 24px;">
+          <div style="font-size:22px;font-weight:700;color:#FFFFFF;">Green (Crayola)</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px;">3.3% · #1DC072</div>
+        </div>
+        <div style="background:#FFA740;border-radius:16px;padding:28px 24px;">
+          <div style="font-size:22px;font-weight:700;color:#FFFFFF;">Yellow Orange</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px;">3.3% · #FFA740</div>
+        </div>
+        <div style="background:#C01D1D;border-radius:16px;padding:28px 24px;">
+          <div style="font-size:22px;font-weight:700;color:#FFFFFF;">Carnelian</div>
+          <div style="font-size:17px;font-weight:600;color:rgba(255,255,255,0.85);margin-top:4px;">3.3% · #C01D1D</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM: TYPOGRAPHY -->
+  <section style="padding:0 100px 150px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:0.8fr 1.2fr;gap:80px;align-items:center;">
+      <div>
+        <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">Design system · Typography</div>
+        <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;">Typography</h2>
+        <p style="margin:0;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;">One typeface carries the whole interface, leaning on weight rather than variety to set hierarchy.</p>
+      </div>
+      <div style="display:flex;gap:24px;align-items:stretch;flex-wrap:wrap;">
+        <div style="background:#7EA4EF;border-radius:20px;width:220px;height:220px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span style="font-size:110px;font-weight:700;color:#000000;line-height:1;">Aa</span>
+        </div>
+        <div style="flex:1;min-width:280px;display:flex;flex-direction:column;justify-content:center;gap:18px;">
+          <div>
+            <div style="font-size:30px;font-weight:700;color:#181F3A;">Afacad</div>
+            <div style="font-size:18px;font-weight:600;color:rgba(24,31,58,0.55);margin-top:2px;">Medium · SemiBold · Bold</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <span style="padding:8px 16px;border-radius:100px;background:#FFFFFF;font-size:16px;font-weight:600;color:#181F3A;">Menu</span>
+            <span style="padding:8px 16px;border-radius:100px;background:#FFFFFF;font-size:16px;font-weight:600;color:#181F3A;">Button</span>
+            <span style="padding:8px 16px;border-radius:100px;background:#FFFFFF;font-size:16px;font-weight:600;color:#181F3A;">Status</span>
+            <span style="padding:8px 16px;border-radius:100px;background:#FFFFFF;font-size:16px;font-weight:600;color:#181F3A;">Set Location</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM: LOGO -->
+  <section style="padding:0 100px 150px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">Design system · Logo</div>
+      <h2 style="margin:0 0 64px;font-size:52px;font-weight:700;color:#181F3A;">Logo</h2>
+      <div style="display:flex;flex-direction:column;gap:56px;">
+        <div style="display:grid;grid-template-columns:1fr 0.85fr;gap:60px;align-items:center;">
+          <p style="margin:0;font-size:22px;line-height:1.6;color:#20448B;font-weight:600;">The design is based on the word "SOS," which serves as both the concept and the name of the application. The design emphasizes simplicity and gentleness.</p>
+          <img src="assets/projects/case/sos/logo-1.png" alt="SOS full lockup" style="width:100%;max-width:420px;height:auto;justify-self:center;" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;height:60px;border-radius:100px;overflow:hidden;">
+            <div style="width:70%;min-width:0;background:#000000;display:flex;align-items:center;justify-content:center;gap:10px;">
+              <span style="font-size:17px;font-weight:700;color:#FFFFFF;">#000000</span>
+              <span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.7);">70 %</span>
+            </div>
+            <div style="width:10%;min-width:0;background:#181F3A;"></div>
+            <div style="width:10%;min-width:0;background:#FCE0B4;"></div>
+            <div style="width:10%;min-width:0;background:#B6DEFF;"></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+            <span style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;background:#FFFFFF;font-size:14px;font-weight:600;color:#181F3A;"><span style="width:12px;height:12px;border-radius:100px;background:#181F3A;"></span>#181F3A · 10 %</span>
+            <span style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;background:#FFFFFF;font-size:14px;font-weight:600;color:#181F3A;"><span style="width:12px;height:12px;border-radius:100px;background:#FCE0B4;"></span>#FCE0B4 · 10 %</span>
+            <span style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:100px;background:#FFFFFF;font-size:14px;font-weight:600;color:#181F3A;"><span style="width:12px;height:12px;border-radius:100px;background:#B6DEFF;"></span>#B6DEFF · 10 %</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:220px 1fr;gap:60px;align-items:center;">
+          <img src="assets/projects/case/sos/logo-2.png" alt="SOS logo mark" style="width:100%;height:auto;" />
+          <p style="margin:0;font-size:22px;line-height:1.6;color:#20448B;font-weight:600;">The center of the "O" serving as the most eye-catching focal point. This is achieved by developing the idea of an outstretched hand offering help.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM: COMPONENTS -->
+  <section style="padding:0 100px 150px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">Design system · Components</div>
+      <h2 style="margin:0 0 64px;font-size:52px;font-weight:700;color:#181F3A;">Components</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+        <div style="background:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:19px;font-weight:700;color:#181F3A;">Buttons</div>
+          <img src="assets/projects/case/sos/button.png" alt="Button states" style="width:100%;height:auto;" />
+        </div>
+        <div style="background:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:19px;font-weight:700;color:#181F3A;">Tab bar</div>
+          <img src="assets/projects/case/sos/frame-46254.png" alt="Tab bar states" style="width:100%;height:auto;" />
+        </div>
+        <div style="background:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:19px;font-weight:700;color:#181F3A;">Status</div>
+          <img src="assets/projects/case/sos/status-1.png" alt="Status pills" style="width:100%;height:auto;" />
+        </div>
+        <div style="background:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:19px;font-weight:700;color:#181F3A;">Contact actions</div>
+          <img src="assets/projects/case/sos/frame-45335.png" alt="Call, message, emergency buttons" style="width:100%;height:auto;" />
+        </div>
+        <div style="background:#FFFFFF;border-radius:20px;padding:36px;grid-column:span 2;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:19px;font-weight:700;color:#181F3A;">Safe area</div>
+          <img src="assets/projects/case/sos/frame-45337-1.png" alt="Safe area map card" style="width:100%;max-width:420px;height:auto;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS: ONBOARDING -->
+  <section id="screens" style="padding:150px 100px;background:#FFFFFF;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">06 — Key screens</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;max-width:760px;">Onboarding &amp; child registration</h2>
+      <p style="margin:0 0 64px;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;max-width:820px;">To use the service, a parent signs in, then registers each child: personal details, a safe area on the map, and a safe distance — before the tag connects and starts reporting location.</p>
+      <figure style="margin:0 0 64px;display:flex;flex-direction:column;gap:16px;">
+        <img src="assets/projects/case/sos/iphone-15-pro-1.png" alt="Sign in and register" style="width:100%;height:auto;display:block;" />
+        <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Sign in / register</figcaption>
+      </figure>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;align-items:end;">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-1-1.png" alt="Create child's tag - basic info" style="width:100%;height:auto;display:block;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Child's details</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-1-2.png" alt="Create child's tag - safe area" style="width:100%;height:auto;display:block;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Set safe area</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-1-3.png" alt="Create child's tag - completed form" style="width:100%;height:auto;display:block;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Safe distance &amp; photos</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-1-4.png" alt="Connecting child's tag" style="width:100%;height:auto;display:block;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Connect the tag</figcaption>
+        </figure>
+      </div>
+      <div style="max-width:1280px;margin:56px auto 0;">
+        <img src="assets/projects/case/sos/group-45074.png" alt="Tag connected, then the emergency list" style="width:100%;height:auto;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS: HOME / CHILDREN / EMERGENCY -->
+  <section style="padding:150px 100px;background:#F5F5F5;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">Key screens · Home &amp; emergency</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;max-width:760px;">Home, children list &amp; emergency</h2>
+      <p style="margin:0 0 64px;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;max-width:820px;">The home feed surfaces every child at a glance. Emergency mode takes over the moment a child needs help, and every detail — location, contact, timing — sits one tap away.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:36px;align-items:center;">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/01.png" alt="Home screen" style="width:100%;height:320px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Home — news feed, your kids, activity</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/02-iphone-15-pro-mockup-with-white-rock.png" alt="Children list screen" style="width:100%;height:320px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Children list — one status per child</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/001.png" alt="Emergency screen" style="width:100%;height:320px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Emergency — yours and nearby</figcaption>
+        </figure>
+      </div>
+      <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:36px;align-items:end;margin-top:64px;">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/02-iphone-15-pro-mockup-with-white-rock-1.png" alt="Nearby child detail sheet" style="width:100%;height:360px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Nearby child — last location, contact parent</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-5.png" alt="Child detail with status update" style="width:100%;height:360px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Child detail — update status</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-6-2.png" alt="Danger warning alert" style="width:100%;height:360px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Alert — child outside the safe zone</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS: MAP / CHAT -->
+  <section style="padding:150px 100px;background:#FFFFFF;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">Key screens · Map &amp; rescue</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#181F3A;max-width:760px;">Map &amp; rescue chat</h2>
+      <p style="margin:0 0 64px;font-size:22px;line-height:1.55;color:rgba(24,31,58,0.68);font-weight:500;max-width:820px;">The map monitors every child at once and flags anyone outside their safe zone. Rescue chat opens once a well-wisher reaches out, so parents can coordinate help directly.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;align-items:end;">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-6-1.png" alt="Map screen" style="width:100%;height:400px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Map — all children, safe zones drawn</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/iphone-15-pro-mockup-6-1-1.png" alt="Map with emergency" style="width:100%;height:400px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Map — focused on a child in danger</figcaption>
+        </figure>
+        <figure style="margin:0;display:flex;flex-direction:column;gap:16px;">
+          <img src="assets/projects/case/sos/iphone-16-pro-mockup-v1-front-view-1.png" alt="Rescue chat" style="width:100%;height:400px;object-fit:contain;" />
+          <figcaption style="font-size:16px;font-weight:600;color:rgba(24,31,58,0.55);text-align:center;">Rescue chat — messages from finders</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK MODE -->
+  <section id="dark" style="padding:150px 100px;background:#181F3A;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:700;letter-spacing:0.14em;color:#7EA4EF;text-transform:uppercase;margin-bottom:18px;">07 — Dark mode</div>
+      <h2 style="margin:0 0 20px;font-size:52px;font-weight:700;color:#FFFFFF;max-width:760px;">Built for low light too</h2>
+      <p style="margin:0 0 64px;font-size:22px;line-height:1.55;color:rgba(255,255,255,0.68);font-weight:500;max-width:820px;">Every status color, card, and map still reads clearly against a dark base — for late nights and long pickup lines.</p>
+      <div style="display:flex;gap:32px;justify-content:center;align-items:end;flex-wrap:wrap;">
+        <img src="assets/projects/case/sos/01-2.png" alt="Dark mode emergency and children list" style="max-height:560px;width:auto;" />
+        <img src="assets/projects/case/sos/02-iphone-15-pro-mockup-with-white-rock-2.png" alt="Dark mode home screen" style="max-height:560px;width:auto;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section style="padding:150px 100px;background:#FFFFFF;">
+    <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:90px;align-items:start;">
+      <div>
+        <div id="reflection" style="scroll-margin-top:96px;font-size:18px;font-weight:700;letter-spacing:0.14em;color:#20448B;text-transform:uppercase;margin-bottom:18px;">08 — Reflection</div>
+        <h2 style="margin:0;font-size:52px;line-height:1.1;font-weight:700;color:#181F3A;">What the project taught me</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:32px;">
+        <div>
+          <div style="font-size:24px;font-weight:700;color:#181F3A;margin-bottom:10px;">Status is the whole interface</div>
+          <p style="margin:0;font-size:20px;line-height:1.6;color:rgba(24,31,58,0.7);font-weight:500;">Safe, warning, danger, lost, found — once each state had a single color and a single pill, every screen in the app could be read in a second. Building that status set first made the rest of the UI fall into place.</p>
+        </div>
+        <div>
+          <div style="font-size:24px;font-weight:700;color:#181F3A;margin-bottom:10px;">Designing for a non-user</div>
+          <p style="margin:0;font-size:20px;line-height:1.6;color:rgba(24,31,58,0.7);font-weight:500;">The person who finds a lost child has never seen this app. Routing them through an NFC scan into a single contact channel kept that path short enough to work without onboarding.</p>
+        </div>
+        <div>
+          <div style="font-size:24px;font-weight:700;color:#181F3A;margin-bottom:10px;">Calm under pressure</div>
+          <p style="margin:0;font-size:20px;line-height:1.6;color:rgba(24,31,58,0.7);font-weight:500;">Emergency screens are tempting to make loud. Keeping red reserved for genuine danger, on a soft cobalt and light gray base, let the alarm read clearly without making the everyday app feel anxious.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+
+</div>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault();
+    var id = (a.getAttribute('href') || '').slice(1);
+    var t = id ? document.getElementById(id) : null;
+    var embedded = false;
+    try { embedded = window.parent && window.parent !== window; } catch (_) {}
+    if (embedded) {
+      try {
+        var fe = window.frameElement;
+        var base = (window.parent.pageYOffset || window.parent.scrollY || 0) + (fe ? fe.getBoundingClientRect().top : 0);
+        var y = (id && t) ? base + t.getBoundingClientRect().top - 96 : base;
+        window.parent.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        return;
+      } catch (_) {}
+    }
+    if (!id) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+</script>
+<a href="index.html#projects" id="__back_to_portfolio" style="position:fixed;bottom:18px;left:18px;z-index:2147483647;display:inline-flex;align-items:center;gap:8px;font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f2f0e9;background:rgba(15,15,14,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:11px 18px 9px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)">&#8592; All projects</a>
+<!-- dc-section-nav (injected — main-site-style top nav: back-link + this page's sections, scroll-spied) -->
+<script>
+(function(){
+  if(document.getElementById('dc-secnav'))return;
+  var SKIP={top:1,hero:1,intro:1,home:1};
+  var ACR={ui:'UI',ux:'UX',ia:'IA',cv:'CV',faq:'FAQ',api:'API'};
+
+  // pages with too many sections for a nav bar — show a curated subset.
+  // entry is an id (keeps its own label) or [id, 'Custom label'] (merged group).
+  var CURATE={
+    'case-uplatform.html':[
+      ['objective','Overview'],['moodboard','Direction'],'wireframes',
+      ['system','System'],['entry','UI'],['handoff','Handoff']
+    ],
+    'case-cmcc-chance.html':[
+      'context','problem','process',['ia','Flow & IA'],
+      ['system','Design System'],['mobile','UI'],'testing'
+    ],
+    'case-whx-korea.html':          [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Identity'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-kseafood-popup.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-olive-flounder.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-k-food-night.html':       [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Venue'],['s07','Design'],['s08','Outcome']],
+    'case-trafs-kseafood.html':     [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','System'],['s07','Design'],['s08','Outcome']]
+  };
+  function curate(els){
+    var key=(location.pathname.split('/').pop()||'').toLowerCase();
+    var spec=CURATE[key]; if(!spec)return els;
+    var byId={}; els.forEach(function(e){ byId[e.id]=e; });
+    var out=[];
+    spec.forEach(function(row){
+      var arr=Array.isArray(row), id=arr?row[0]:row, el=byId[id];
+      if(!el)return;
+      if(arr) el.setAttribute('data-screen-label',row[1]);
+      out.push(el);
+    });
+    return out.length>=2?out:els;
+  }
+  var FONT="600 12px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+  var CSS=[
+    '#dc-secnav{position:fixed;top:0;left:0;right:0;z-index:2147483200;display:flex;align-items:center;justify-content:space-between;gap:20px;',
+      'padding:clamp(14px,2.4vw,28px) clamp(20px,6vw,120px);pointer-events:none;mix-blend-mode:difference;color:#fff;font:'+FONT+';letter-spacing:.16em;text-transform:uppercase}',
+    '#dc-secnav a{color:inherit;text-decoration:none}',
+    '#dc-secnav .dc-sn-back{pointer-events:auto;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;flex:none;position:relative;padding:4px 0}',
+    '#dc-secnav .dc-sn-back svg{width:13px;height:13px;flex:none}',
+    '#dc-secnav ol{pointer-events:auto;list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:clamp(12px,2vw,30px);overflow-x:auto;scrollbar-width:none;max-width:72vw}',
+    '#dc-secnav ol::-webkit-scrollbar{display:none}',
+    '#dc-secnav ol a{position:relative;display:block;padding:5px 0;white-space:nowrap;opacity:.5;transition:opacity .2s ease}',
+    '#dc-secnav ol a:hover{opacity:1}',
+    '#dc-secnav ol a.on{opacity:1}',
+    '#dc-secnav .dc-sn-back::after,#dc-secnav ol a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .38s cubic-bezier(0.16,1,0.3,1)}',
+    '#dc-secnav .dc-sn-back:hover::after,#dc-secnav ol a:hover::after,#dc-secnav ol a.on::after{transform:scaleX(1);transform-origin:left}',
+    '#dc-secnav .dc-sn-menu{display:none}',
+    'html{scroll-padding-top:66px}',
+    '#__back_to_portfolio{display:none!important}',
+    '#dc-secnav{transition:color .3s ease,background-color .3s ease}',
+    // frosted once the hero has scrolled away (scroll handler adds .scrolled)
+    '#dc-secnav.scrolled{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.86);',
+      '-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+    '#dc-secnav.scrolled ol a{opacity:.45}#dc-secnav.scrolled ol a.on{opacity:1}',
+    // ---- MOBILE: the cramped scrolling row becomes a dropdown menu ----
+    '@media (max-width:720px){',
+      '#dc-secnav{font-size:11px;letter-spacing:.09em;padding-left:16px;padding-right:16px;gap:10px}',
+      '#dc-secnav .dc-sn-back span{display:none}',
+      // toggle button showing the current section + a chevron
+      '#dc-secnav .dc-sn-menu{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;flex:none;',
+        'max-width:56vw;background:none;border:0;margin:0;padding:6px 0;cursor:pointer;',
+        'font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}',
+      '#dc-secnav .dc-sn-cur{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '#dc-secnav .dc-sn-menu svg{width:11px;height:11px;flex:none;transition:transform .2s ease}',
+      '#dc-secnav.open .dc-sn-menu svg{transform:rotate(180deg)}',
+      // opening (or scrolling) frosts the bar so the panel reads on any page
+      '#dc-secnav.open{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.92);',
+        '-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+      // the <ol> is now a dropdown panel anchored under the bar
+      '#dc-secnav ol{position:absolute;top:calc(100% - 2px);right:clamp(12px,4vw,18px);left:auto;',
+        'flex-direction:column;align-items:stretch;gap:0;padding:5px;max-width:min(78vw,300px);',
+        'max-height:min(68vh,440px);overflow-y:auto;overflow-x:visible;mask-image:none;-webkit-mask-image:none;',
+        'background:rgba(252,251,248,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);',
+        'border:1px solid rgba(17,17,16,.1);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.2);',
+        'opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;',
+        'transition:opacity .18s ease,transform .18s ease}',
+      '#dc-secnav.open ol{opacity:1;transform:none;pointer-events:auto}',
+      '#dc-secnav ol a{color:#141413;opacity:.55;padding:11px 13px 10px;border-radius:9px;white-space:normal}',
+      '#dc-secnav ol a::after{display:none}',
+      '#dc-secnav ol a.on{opacity:1;background:rgba(17,17,16,.06)}',
+    '}',
+    '@media print{#dc-secnav{display:none}}'
+  ].join('');
+
+  function injectCSS(){
+    if(document.getElementById('dc-secnav-css'))return;
+    var st=document.createElement('style'); st.id='dc-secnav-css'; st.textContent=CSS;
+    (document.head||document.documentElement).appendChild(st);
+  }
+
+  function collect(){
+    var s=[].slice.call(document.querySelectorAll('section[id]'))
+      .filter(function(e){return !SKIP[String(e.id).toLowerCase()];});
+    if(s.length>=2)return s;
+    // packed pages have no <section> wrappers — fall back to h2s, only when they
+    // read like section names (short, few words, no sentence punctuation)
+    var hs=[].slice.call(document.querySelectorAll('h2')).filter(function(h){
+      var t=h.textContent.trim();
+      return h.offsetParent!==null && t.length>1 && t.length<=26
+        && t.split(/\s+/).length<=3 && !/[.:!?,;]$/.test(t);
+    });
+    return (hs.length>=2 && hs.length<=12)?hs:null;
+  }
+
+  function titlecase(id){
+    if(id.length<=3)return id.toUpperCase();
+    return id.split(/[-_\s]+/).map(function(w){
+      return ACR[w.toLowerCase()]||(w.charAt(0).toUpperCase()+w.slice(1));
+    }).join(' ');
+  }
+  function label(el){
+    var l=el.getAttribute('data-screen-label'); if(l)return l;
+    if(/^H[1-6]$/.test(el.tagName))return el.textContent.trim();
+    var id=String(el.id);
+    if(/^(s|sec|section|dcs|part|block)?[-_]?\d+$/i.test(id)){
+      var h=el.querySelector('h2,h3');
+      if(h){ var ht=h.textContent.trim(); if(ht.length>1 && ht.length<=40) return ht; }
+    }
+    return titlecase(id);
+  }
+
+  function backHref(){
+    var b=document.getElementById('__back_to_portfolio');
+    return (b && b.getAttribute('href')) || 'index.html#projects';
+  }
+
+  function build(els){
+    els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
+    injectCSS();
+    var ex=document.querySelector('.dc-topnav'); if(ex) ex.style.display='none';
+
+    var nav=document.createElement('nav'); nav.id='dc-secnav'; nav.setAttribute('aria-label','Case study navigation');
+
+    var back=document.createElement('a');
+    back.className='dc-sn-back'; back.href=backHref();
+    back.innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All projects</span>';
+    nav.appendChild(back);
+
+    // mobile-only toggle: shows the current section + a chevron, opens the panel
+    var menu=document.createElement('button');
+    menu.className='dc-sn-menu'; menu.type='button'; menu.setAttribute('aria-label','Jump to section');
+    menu.innerHTML='<span class="dc-sn-cur"></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var curLabel=menu.querySelector('.dc-sn-cur');
+    menu.addEventListener('click',function(e){ e.stopPropagation(); nav.classList.toggle('open'); });
+    nav.appendChild(menu);
+
+    var ol=document.createElement('ol');
+    var items=els.map(function(el){
+      var a=document.createElement('a'); a.href='#'+el.id; a.textContent=label(el);
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        nav.classList.remove('open');
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+        try{history.replaceState(null,'','#'+el.id);}catch(_){}
+        lockUntil=Date.now()+800;
+        setActive(items[idxOf(el)]);
+      });
+      var li=document.createElement('li'); li.appendChild(a); ol.appendChild(li);
+      return {a:a,el:el};
+    });
+    nav.appendChild(ol);
+    document.body.appendChild(nav);
+
+    // tap outside closes the panel
+    document.addEventListener('click',function(e){
+      if(nav.classList.contains('open') && !nav.contains(e.target)) nav.classList.remove('open');
+    });
+
+    var raf,cur,lockUntil=0;
+    function idxOf(el){ for(var i=0;i<items.length;i++) if(items[i].el===el) return i; return 0; }
+    function setActive(pick){
+      if(pick===cur)return; cur=pick;
+      items.forEach(function(it){ it.a.classList.toggle('on',it===pick); });
+      if(pick) curLabel.textContent = pick.a.textContent;
+      // desktop only: nudge the active chip into view if the row overflows
+      if(pick && window.innerWidth>720){
+        var a=pick.a, l=a.offsetLeft, r=l+a.offsetWidth, vl=ol.scrollLeft, vr=vl+ol.clientWidth;
+        if(l<vl+16) ol.scrollTo({left:Math.max(0,l-16),behavior:'smooth'});
+        else if(r>vr-16) ol.scrollTo({left:r-ol.clientWidth+16,behavior:'smooth'});
+      }
+    }
+    var frosted=false;
+    function sync(){
+      if(window.innerWidth>720) nav.classList.remove('open');   // never stuck open on desktop
+      var past=window.scrollY>window.innerHeight*0.85;
+      if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
+      if(Date.now()<lockUntil)return;
+      var y=window.scrollY+90, pick=items[0];
+      items.forEach(function(it){ if(it.el.getBoundingClientRect().top+window.scrollY<=y) pick=it; });
+      if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) pick=items[items.length-1];
+      setActive(pick);
+    }
+    addEventListener('scroll',function(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
+    addEventListener('resize',sync);
+    sync();
+  }
+
+  var tries=0;
+  (function boot(){
+    if(document.getElementById('dc-secnav'))return;
+    var els=collect();
+    if(!els){ if(++tries<20) setTimeout(boot,250); return; }
+    build(curate(els));
+  })();
+})();
+</script>
+</body>
+</html>

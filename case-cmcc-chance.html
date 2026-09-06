@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CMCC-Chance — UX/UI Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--rigel:#002FCF;--navy:#0F173A;--ink:#0B1020;--gray:#D5D5D5;--paper:#FFFFFF;--mist:#F4F6FB;--muted:#5B6480;--line:#E3E7F0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Sarabun,system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3,h4,.mono{font-family:'Space Grotesk',sans-serif}
+a{color:var(--rigel);text-decoration:none;border-bottom:1px solid rgba(0,47,207,.3)}
+a:hover{color:var(--navy);border-bottom-color:var(--navy)}
+img{display:block;max-width:100%}
+.wrap{max-width:1160px;margin:0 auto;padding:0 40px}
+.eyebrow{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--rigel);font-weight:600;margin:0 0 20px}
+section{padding:110px 0;border-top:1px solid var(--line)}
+section.dark{background:var(--navy);color:#fff;border-top:none}
+section.dark .eyebrow{color:#7E9BFF}
+section.dark .lead,section.dark .muted{color:#A9B4D4}
+h2{font-size:clamp(30px,3.4vw,46px);line-height:1.12;letter-spacing:-.02em;font-weight:600;margin:0 0 22px}
+h3{font-size:20px;letter-spacing:-.01em;margin:0 0 8px;font-weight:600}
+.lead{font-size:20px;line-height:1.6;color:var(--muted);max-width:64ch;margin:0}
+.muted{color:var(--muted)}
+.small{font-size:14px;line-height:1.55}
+/* nav */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:24px}
+.topbar .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.topnav{display:flex;gap:26px;flex-wrap:nowrap}
+.topnav a{font-size:13px;color:var(--muted);border:none;font-family:'Space Grotesk',sans-serif}
+.topnav a:hover{color:var(--rigel)}
+/* hero */
+.hero{background:var(--navy);color:#fff;padding:0;border:none;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center;padding:88px 0 88px}
+.hero h1{font-size:clamp(38px,4.2vw,62px);line-height:1.06;letter-spacing:-.03em;font-weight:600;margin:0 0 26px;max-width:16ch}
+.hero h1 em{font-style:normal;color:#7E9BFF}
+.hero p{font-size:18px;line-height:1.6;color:#B6C0DC;max-width:44ch;margin:0}
+.hero .eyebrow{letter-spacing:.13em;font-size:12px;margin:0 0 22px}
+.hero-logo{height:36px;margin-bottom:30px;opacity:.95}
+.hero-shot{align-self:center}
+.hero-shot img{width:100%;border-radius:14px}
+.factbar{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.14);border-top:1px solid rgba(255,255,255,.14)}
+.factbar div{background:var(--navy);padding:26px 22px 34px}
+.factbar div:first-child{padding-left:0}
+.factbar dt{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7E9BFF;margin:0 0 8px}
+.factbar dd{margin:0;font-size:16px;font-weight:500;color:#fff}
+/* layout helpers */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.split{display:grid;grid-template-columns:340px 1fr;gap:72px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:28px}
+.figure{margin:44px 0 0}
+.figure img{border-radius:12px;border:1px solid var(--line)}
+.figure.plain img{border:none;border-radius:0}
+figcaption{font-size:13px;color:var(--muted);margin-top:14px;font-family:'Space Grotesk',sans-serif}
+/* cards */
+.card{background:var(--mist);border-radius:14px;padding:30px}
+.card.line{background:#fff;border:1px solid var(--line)}
+.num{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--rigel);letter-spacing:.08em;margin-bottom:14px}
+ul.ticks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+ul.ticks li{padding-left:22px;position:relative;font-size:16px}
+ul.ticks li:before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:2px;background:var(--rigel)}
+section.dark ul.ticks li:before{background:#7E9BFF}
+/* timeline */
+.timeline{display:grid;grid-template-columns:1.6fr 4fr 1.6fr 2.4fr 2fr;gap:10px;margin-top:52px}
+.tl{background:var(--mist);border-radius:10px;padding:20px 18px;border-top:3px solid var(--rigel)}
+.tl:nth-child(2){border-top-color:#002FCF}
+.tl:nth-child(3){border-top-color:#3B62E0}
+.tl:nth-child(4){border-top-color:#6C8BF0}
+.tl:nth-child(5){border-top-color:#A9BCF7}
+.tl .w{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em}
+.tl .n{font-size:13px;color:var(--muted);line-height:1.4;margin-top:4px}
+/* phase list */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
+.phases>div{background:#fff;padding:30px}
+/* design system */
+.swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:8px}
+.sw{border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+section.dark .sw{border-color:rgba(255,255,255,.28)}
+section.dark .sw .chip{box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.sw .chip{height:88px}
+.sw .meta{padding:12px 12px 14px;font-family:'Space Grotesk',sans-serif;font-size:12px}
+.sw .meta b{display:block;font-size:13px;font-weight:600;margin-bottom:2px}
+.sw .meta span{color:var(--muted);letter-spacing:.04em}
+.typespec{border:1px solid var(--line);border-radius:14px;padding:32px 34px;margin-top:8px;color:var(--ink)}
+.typespec .spec{font-family:'DB Heavent','DB HeaventRounded',Sarabun,system-ui,sans-serif;color:var(--navy)}
+.typerow{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:14px 0;border-bottom:1px solid var(--line)}
+.typerow:last-child{border-bottom:none}
+.typerow .tag{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+/* gallery */
+.gal{display:grid;gap:22px;margin-top:52px}
+.gal.g3{grid-template-columns:repeat(3,1fr)}
+.gal.g2{grid-template-columns:repeat(2,1fr)}
+.gal figure{margin:0}
+.gal img{border-radius:12px}
+.shot{background:var(--mist);border-radius:14px;padding:22px;display:flex;align-items:center;justify-content:center}
+.shot img{border-radius:8px}
+section.dark .shot{background:#EEF1F8;border:1px solid rgba(255,255,255,.35)}
+section.dark .gal figcaption{color:#C3CCE6}
+#system .gal figure{display:flex;flex-direction:column;height:100%}
+#system .gal .shot{flex:1;min-height:280px;padding:26px}
+#system .gal .shot img{max-height:100%;width:auto;object-fit:contain}
+#system .gal figcaption{margin-top:auto;padding-top:14px}
+#mobile .gal .shot{padding:0;overflow:hidden;aspect-ratio:3/4}
+#mobile .gal .shot img{width:190%;max-width:none;flex:none}
+/* metrics / learnings */
+.learn{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:14px;overflow:hidden;margin-top:52px}
+.learn>div{background:var(--navy);padding:34px}
+.learn h3{color:#fff}
+.learn p{margin:0;color:#A9B4D4;font-size:16px}
+footer{background:var(--ink);color:#8C97B8;padding:64px 0;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer b{color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:600;display:block;font-size:16px;margin-bottom:4px}
+@media(max-width:1020px){.topnav{display:none}}
+@media(max-width:900px){
+.wrap{padding:0 22px}section{padding:72px 0}
+.hero-grid,.cols,.cols3,.split,.gal.g3,.gal.g2,.learn,.phases{grid-template-columns:1fr;gap:36px}
+.factbar{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr 1fr}
+.swatches{grid-template-columns:repeat(3,1fr)}
+}
+
+.topbar{display:none}
+</style>
+<style>footer{display:none!important}</style><style>/*dc-mobile-responsive*/
+@media (max-width:820px){
+  [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+  [style*="display:flex"],[style*="display: flex"]{flex-wrap:wrap !important;}
+  img{max-width:100% !important;height:auto !important;}
+  h1,h2,h3,h4,p,div,span,li,a{overflow-wrap:break-word;}
+}
+@media (max-width:640px){
+  [style*="px 100px"],[style*="px 80px"],[style*="0 100px"]{padding-left:22px !important;padding-right:22px !important;}
+  [style*="150px 100px"],[style*="140px 100px"],[style*="0 100px 150px"]{padding-top:60px !important;padding-bottom:60px !important;}
+  [style*="font-size:76px"],[style*="font-size:72px"],[style*="font-size:68px"],[style*="font-size:64px"],[style*="font-size:60px"],[style*="font-size: 76px"],[style*="font-size: 64px"]{font-size:42px !important;}
+  [style*="font-size:56px"],[style*="font-size:52px"],[style*="font-size:48px"],[style*="font-size: 48px"]{font-size:34px !important;}
+}</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><div class="brand">CMCC-Chance</div><nav class="topnav"><a href="#context">Context</a><a href="#process">Process</a><a href="#ia">Flow &amp; IA</a><a href="#system">Design System</a><a href="#mobile">Mobile</a><a href="#desktop">Desktop</a><a href="#backoffice">Back Office</a><a href="#testing">Testing</a></nav></div></div>
+
+<header class="hero" data-screen-label="Hero">
+<div class="wrap">
+<div class="hero-grid">
+<div>
+<img class="hero-logo" src="assets/projects/case/cmcc-chance-v2/img-p0-2.webp" alt="CMCC logo">
+<p class="eyebrow" style="color:#7E9BFF">UX/UI Design Internship · FYNNCORP Capital Group</p>
+<h1>A single platform for Thailand's capital market <em>case competition</em></h1>
+<p>CMCC-Chance is a web-app platform that carries competitors from application and team forming, through case upload and task management, all the way to the award announcement.</p>
+</div>
+<div class="hero-shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-1.webp" alt="CMCC-Chance mobile app on device"></div>
+</div>
+<dl class="factbar">
+<div><dt>Role</dt><dd>UX/UI Design Intern</dd></div>
+<div><dt>Duration</dt><dd>15 weeks</dd></div>
+<div><dt>Platforms</dt><dd>Mobile · Desktop · Back Office</dd></div>
+<div><dt>Team</dt><dd>Senior UX/UI Designer, PM</dd></div>
+<div><dt>Deliverables</dt><dd>Design system, 3 UI sets</dd></div>
+</dl>
+</div>
+</header>
+
+
+<section id="context" data-screen-label="Context">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">01 — Context</p>
+<h2>What is CMCC</h2>
+</div>
+<div class="stack">
+<p class="lead">Capital Market Case Competition (CMCC) is the first and only capital market case competition in Thailand. It gives interested youth an opportunity to unlock their potential and express their creativity, while contributing to the development of Thailand's capital market.</p>
+<p class="muted">The competition runs each year across multiple rounds, from open application to a final pitch in front of industry judges. Everything around it — registrations, teams, case submissions, scoring — was handled outside a single system.</p>
+<figure class="figure"><img src="assets/projects/case/cmcc-chance-v2/img-p0-3.webp" alt="CMCC competition event"><figcaption>CMCC on stage — the offline experience the platform had to support.</figcaption></figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="problem" data-screen-label="Problem">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">02 — The brief</p>
+<h2>One journey, many disconnected steps</h2>
+</div>
+<div class="stack">
+<p class="lead">The project was assigned to me as an intern, supervised by a Senior UX/UI Designer and scheduled against a timeline set by the team's project manager.</p>
+<div class="cols">
+<div class="card"><div class="num">FOR COMPETITORS</div><h3>A route with no map</h3><p class="small muted" style="margin:0">Applying, finding teammates, tracking what is due next and where to submit the case all live in different places. Students lose track of the stage they are in.</p></div>
+<div class="card"><div class="num">FOR ORGANISERS</div><h3>No single source of truth</h3><p class="small muted" style="margin:0">Applicant data, team composition, submissions and scores need to be read, compared and acted on in one place — including on desktop, during judging.</p></div>
+</div>
+<div>
+<h3>Design goal</h3>
+<p class="muted" style="margin:0">Make the whole competition legible: at any moment, a competitor should know what stage they are in, what is expected of them, and what happens next — and an organiser should be able to see the same picture across every team.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="process" data-screen-label="Process">
+<div class="wrap">
+<p class="eyebrow">03 — Process</p>
+<h2>15 weeks, three platforms</h2>
+<p class="lead">Mobile came first and absorbed most of the schedule; desktop and back office were derived from the same design system once the mobile patterns were validated.</p>
+<div class="timeline">
+<div class="tl"><div class="w">1w</div><div class="n">Research</div></div>
+<div class="tl"><div class="w">8w</div><div class="n">UI Design — Mobile</div></div>
+<div class="tl"><div class="w">1w</div><div class="n">Testing — Mobile</div></div>
+<div class="tl"><div class="w">3w</div><div class="n">UI Design — Desktop</div></div>
+<div class="tl"><div class="w">2w</div><div class="n">UI Design — Back Office</div></div>
+</div>
+<div class="phases">
+<div><div class="num">PHASE 1</div><h3>Research</h3><ul class="ticks"><li>Branding study</li><li>Use case research</li></ul></div>
+<div><div class="num">PHASE 2</div><h3>Design</h3><ul class="ticks"><li>Create design system</li><li>Wireframing</li><li>Create design components</li><li>UI design</li></ul></div>
+<div><div class="num">PHASE 3</div><h3>Launch</h3><ul class="ticks"><li>UAT (User Acceptance Testing)</li><li>Feedback</li><li>Final test</li></ul></div>
+</div>
+</div>
+</section>
+
+<section id="ia" data-screen-label="Flow and IA">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">04 — UX flowcharts</p>
+<h2>Mapping every state before drawing a screen</h2>
+</div>
+<div class="stack">
+<p class="lead">The flow was documented with a shared notation so engineering, PM and design read the same diagram: pages, sub-pages, windows, page contents, buttons and sub-actions, plus the text, inputs, cards and social entry points attached to each.</p>
+<div class="card line">
+<div class="num">NOTATION</div>
+<div class="cols" style="gap:32px">
+<ul class="ticks"><li>Page / Sub page / Window</li><li>Page contents</li><li>Button / Sub button (action)</li></ul>
+<ul class="ticks"><li>Text / Text box</li><li>Input field / Card</li><li>Action / Social media</li></ul>
+</div>
+</div>
+</div>
+</div>
+<figure class="figure"><img src="assets/projects/case/cmcc-chance-v2/img-p0-6.webp" alt="CMCC-Chance UX flowchart covering the full competitor journey"><figcaption>Full-journey flowchart: application, team forming, case upload, task management and awards.</figcaption></figure>
+</div>
+</section>
+
+<section id="system" class="dark" data-screen-label="Design System">
+<div class="wrap">
+<p class="eyebrow">05 — Design system</p>
+<h2>Components and design as the template for every screen</h2>
+<p class="lead">One system served all three platforms. Type and colour were fixed first, then components were built so mobile, desktop and back office could be produced in parallel without drifting.</p>
+
+<h3 style="margin:64px 0 18px;color:#fff">Colour system</h3>
+<div class="swatches">
+<div class="sw"><div class="chip" style="background:#002FCF"></div><div class="meta" style="background:#fff"><b>Rigel Blue</b><span>#002FCF</span></div></div>
+<div class="sw"><div class="chip" style="background:#0F173A"></div><div class="meta" style="background:#fff"><b>Dark Blue</b><span>#0F173A</span></div></div>
+<div class="sw"><div class="chip" style="background:#D5D5D5"></div><div class="meta" style="background:#fff"><b>Gray</b><span>#D5D5D5</span></div></div>
+<div class="sw"><div class="chip" style="background:linear-gradient(135deg,#F2F2F2,#C9C9C9)"></div><div class="meta" style="background:#fff"><b>Silver</b><span>Gradient</span></div></div>
+<div class="sw"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid var(--line)"></div><div class="meta" style="background:#fff"><b>Light</b><span>#FFFFFF</span></div></div>
+<div class="sw"><div class="chip" style="background:#000000"></div><div class="meta" style="background:#fff"><b>Darkness</b><span>#000000</span></div></div>
+</div>
+
+<div class="cols" style="margin-top:64px;align-items:start">
+<div>
+<h3 style="color:#fff">Typography</h3>
+<p class="muted small" style="margin:0 0 18px">DB Heavent — Regular / Medium / Bold. One family, three weights, scaled into a named type ramp per platform.</p>
+<div class="typespec" style="background:#fff;border:none">
+<div class="typerow"><span class="spec" style="font-size:34px;font-weight:700;letter-spacing:-.01em">DisplayLg</span><span class="tag">Display · Bold</span></div>
+<div class="typerow"><span class="spec" style="font-size:26px;font-weight:700">HeadingLg</span><span class="tag">Heading · Bold</span></div>
+<div class="typerow"><span class="spec" style="font-size:21px;font-weight:500">TitleLg</span><span class="tag">Title · Medium</span></div>
+<div class="typerow"><span class="spec" style="font-size:17px;font-weight:400">BodyLg — the workhorse size</span><span class="tag">Body · Regular</span></div>
+<div class="typerow"><span class="spec" style="font-size:15px;font-weight:400;color:var(--muted)">Description &amp; Caption</span><span class="tag">Support · Regular</span></div>
+</div>
+</div>
+<div>
+<h3 style="color:#fff">Documented in full</h3>
+<p class="muted small" style="margin:0 0 18px">Every step of the ramp is specified with size, line-height and weight, per platform, so build had no ambiguity.</p>
+<div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-7.webp" alt="Typography specification sheet" style="max-height:520px;width:auto"></div>
+</div>
+</div>
+
+<div style="margin-top:64px">
+<h3 style="color:#fff">Components</h3>
+<p class="muted small" style="margin:0 0 8px">Buttons, inputs, OTP entry, team cards and task rows — each with default, filled, selected and disabled states.</p>
+<div class="gal g3" style="margin-top:26px">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-10.webp" alt="Input field states"></div><figcaption>Input fields — empty, filled, active, error</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-12.webp" alt="OTP and time picker components"></div><figcaption>OTP and time selection</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-11.webp" alt="Team card component states"></div><figcaption>Team cards — selectable list rows</figcaption></figure>
+</div>
+<div class="gal g2" style="margin-top:22px">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-13.webp" alt="Task row component"></div><figcaption>Task rows — pending state</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-14.webp" alt="Task row completed state"></div><figcaption>Task rows — completed state</figcaption></figure>
+</div>
+</div>
+</div>
+</section>
+
+<section id="mobile" data-screen-label="Mobile UI">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">06 — UI design</p>
+<h2>Mobile</h2>
+</div>
+<div class="stack">
+<p class="lead">The mobile app is where competitors live. The home screen puts the four things they act on — My Team, CMCC Timeline, Tasks and CMCC Socials — one tap from launch, with talent acquisition below.</p>
+<ul class="ticks"><li>Login &amp; sign up, including OTP verification and password reset</li><li>Home screen, menu and notifications</li><li>Team creation and joining an existing team</li><li>Case upload and task management</li></ul>
+</div>
+</div>
+<div class="gal g3">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-17.webp" alt="Landing page screen"></div><figcaption>Landing Page</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-16.webp" alt="Sign in screen"></div><figcaption>Sign in</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-15.webp" alt="Create account screen"></div><figcaption>Create account</figcaption></figure>
+</div>
+<div class="gal g3" style="margin-top:22px">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-19.webp" alt="Home screen"></div><figcaption>Home</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-20.webp" alt="Home screen with menu open"></div><figcaption>Menu</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-21.webp" alt="Notification screen"></div><figcaption>Notification</figcaption></figure>
+</div>
+<figure class="figure"><img src="assets/projects/case/cmcc-chance-v2/img-p0-25.webp" alt="Overview of all mobile screens"><figcaption>The full mobile set, produced over eight weeks.</figcaption></figure>
+</div>
+</section>
+
+<section id="desktop" data-screen-label="Desktop UI">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">07 — UI design</p>
+<h2>Desktop</h2>
+</div>
+<div class="stack">
+<p class="lead">Desktop reuses the same components at a wider measure, for the moments that need room: reading a submitted case, filling long forms, and reviewing a team side by side.</p>
+<ul class="ticks"><li>Same type ramp and colour tokens, re-scaled for desktop</li><li>Two-column layouts for form plus context</li><li>Case reading view with the brief kept in sight</li></ul>
+</div>
+</div>
+<div class="gal g2">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-26.webp" alt="Desktop sign in"></div><figcaption>Sign in</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-27.webp" alt="Desktop registration"></div><figcaption>Registration</figcaption></figure>
+</div>
+<div class="gal g2" style="margin-top:22px">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-29.webp" alt="My Team desktop view"></div><figcaption>My Team</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-30.webp" alt="Create team desktop view"></div><figcaption>Create team</figcaption></figure>
+</div>
+<figure class="figure plain"><img src="assets/projects/case/cmcc-chance-v2/img-p0-28.webp" alt="Create Account page on laptop"><figcaption>Create Account</figcaption></figure>
+</div>
+</section>
+
+<section id="backoffice" data-screen-label="Back Office UI">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">08 — UI design</p>
+<h2>Back office</h2>
+</div>
+<div class="stack">
+<p class="lead">Two weeks to give organisers the view competitors never see: applicants, teams, submissions and scores in one dashboard, dense by intent.</p>
+<ul class="ticks"><li>Overview dashboard with counts per competition stage</li><li>Applicant and team management tables</li><li>Submission review and final round voting</li></ul>
+</div>
+</div>
+<figure class="figure"><img src="assets/projects/case/cmcc-chance-v2/img-p0-37.webp" alt="Back office dashboard"><figcaption>Back office dashboard — stage counts and distribution across the applicant pool.</figcaption></figure>
+<div class="gal g2" style="margin-top:22px">
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-38.webp" alt="Back office management table"></div><figcaption>Team management</figcaption></figure>
+<figure><div class="shot"><img src="assets/projects/case/cmcc-chance-v2/img-p0-39.webp" alt="Back office team detail"></div><figcaption>Team detail</figcaption></figure>
+</div>
+</div>
+</section>
+
+<section id="testing" data-screen-label="Testing">
+<div class="wrap">
+<div class="split">
+<div>
+<p class="eyebrow">09 — Testing &amp; feedback</p>
+<h2>UAT, feedback, final test</h2>
+</div>
+<div class="stack">
+<p class="lead">Mobile went into user acceptance testing at the end of week ten, before desktop and back office were started — so what testing surfaced could be fixed once, in the system, instead of three times in three UI sets.</p>
+<div class="cols3" style="gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden">
+<div style="background:#fff;padding:28px"><div class="num">01</div><h3>UAT</h3><p class="small muted" style="margin:0">Testers ran the full competitor journey against the mobile prototype.</p></div>
+<div style="background:#fff;padding:28px"><div class="num">02</div><h3>Feedback</h3><p class="small muted" style="margin:0">Issues logged with the supervising designer and PM, then resolved at component level.</p></div>
+<div style="background:#fff;padding:28px"><div class="num">03</div><h3>Final test</h3><p class="small muted" style="margin:0">Re-run after fixes, sign-off before handoff to the build team.</p></div>
+</div>
+<p class="small muted" style="margin:0">Tester counts and the issue log from UAT sit in the internal project record.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="dark" data-screen-label="Learnings">
+<div class="wrap">
+<p class="eyebrow">10 — What I took away</p>
+<h2>Lessons from the first real product</h2>
+<div class="learn">
+<div><h3>Build the system before the screens</h3><p>Eight weeks of mobile screens went quickly because type, colour and components were settled first. Desktop and back office then cost three and two weeks instead of starting over.</p></div>
+<div><h3>Flowcharts are a shared language</h3><p>A notated flow that PM and engineering could read removed most of the questions before they were asked, and made the scope of each screen obvious.</p></div>
+<div><h3>Test before you multiply</h3><p>Running UAT on mobile before opening desktop meant fixes landed in one place. Testing after all three would have tripled the rework.</p></div>
+<div><h3>Design inside a real timeline</h3><p>Working to a PM's schedule with a senior reviewer changed how I prioritised: finish what unblocks the next person, document the rest.</p></div>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+<div><b>CMCC-Chance</b>UX/UI Design Internship — FYNNCORP Capital Group</div>
+<div><a href="#" style="color:#8C97B8;border:none">Back to top ↑</a></div>
+</div>
+</footer>
+
+
+<script>
+(function(){
+  function scrollParentToRect(targetTop){
+    try {
+      var frame = window.frameElement;
+      if(!frame){ return false; }
+      var parentWin = window.parent;
+      var frameRect = frame.getBoundingClientRect();
+      var currentScroll = parentWin.scrollY || parentWin.pageYOffset || 0;
+      var absoluteTop = currentScroll + frameRect.top + targetTop;
+      parentWin.scrollTo({ top: absoluteTop, behavior: 'smooth' });
+      return true;
+    } catch(e) { return false; }
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(href === null) return;
+    e.preventDefault();
+    if(href === '#' || href.length <= 1){
+      if(!scrollParentToRect(0)) window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    var id = href.slice(1);
+    var target = document.getElementById(id);
+    if(!target) return;
+    var targetTop = target.getBoundingClientRect().top;
+    if(!scrollParentToRect(targetTop)) target.scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+</script>
+<a href="index.html#projects" id="__back_to_portfolio" style="position:fixed;bottom:18px;left:18px;z-index:2147483647;display:inline-flex;align-items:center;gap:8px;font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f2f0e9;background:rgba(15,15,14,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:11px 18px 9px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)">&#8592; All projects</a>
+<!-- dc-section-nav (injected — main-site-style top nav: back-link + this page's sections, scroll-spied) -->
+<script>
+(function(){
+  if(document.getElementById('dc-secnav'))return;
+  var SKIP={top:1,hero:1,intro:1,home:1};
+  var ACR={ui:'UI',ux:'UX',ia:'IA',cv:'CV',faq:'FAQ',api:'API'};
+
+  // pages with too many sections for a nav bar — show a curated subset.
+  // entry is an id (keeps its own label) or [id, 'Custom label'] (merged group).
+  var CURATE={
+    'case-uplatform.html':[
+      ['objective','Overview'],['moodboard','Direction'],'wireframes',
+      ['system','System'],['entry','UI'],['handoff','Handoff']
+    ],
+    'case-cmcc-chance.html':[
+      'context','problem','process',['ia','Flow & IA'],
+      ['system','Design System'],['mobile','UI'],'testing'
+    ],
+    'case-whx-korea.html':          [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Identity'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-kseafood-popup.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-olive-flounder.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-k-food-night.html':       [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Venue'],['s07','Design'],['s08','Outcome']],
+    'case-trafs-kseafood.html':     [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','System'],['s07','Design'],['s08','Outcome']]
+  };
+  function curate(els){
+    var key=(location.pathname.split('/').pop()||'').toLowerCase();
+    var spec=CURATE[key]; if(!spec)return els;
+    var byId={}; els.forEach(function(e){ byId[e.id]=e; });
+    var out=[];
+    spec.forEach(function(row){
+      var arr=Array.isArray(row), id=arr?row[0]:row, el=byId[id];
+      if(!el)return;
+      if(arr) el.setAttribute('data-screen-label',row[1]);
+      out.push(el);
+    });
+    return out.length>=2?out:els;
+  }
+  var FONT="600 12px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+  var CSS=[
+    '#dc-secnav{position:fixed;top:0;left:0;right:0;z-index:2147483200;display:flex;align-items:center;justify-content:space-between;gap:20px;',
+      'padding:clamp(14px,2.4vw,28px) clamp(20px,6vw,120px);pointer-events:none;mix-blend-mode:difference;color:#fff;font:'+FONT+';letter-spacing:.16em;text-transform:uppercase}',
+    '#dc-secnav a{color:inherit;text-decoration:none}',
+    '#dc-secnav .dc-sn-back{pointer-events:auto;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;flex:none;position:relative;padding:4px 0}',
+    '#dc-secnav .dc-sn-back svg{width:13px;height:13px;flex:none}',
+    '#dc-secnav ol{pointer-events:auto;list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:clamp(12px,2vw,30px);overflow-x:auto;scrollbar-width:none;max-width:72vw}',
+    '#dc-secnav ol::-webkit-scrollbar{display:none}',
+    '#dc-secnav ol a{position:relative;display:block;padding:5px 0;white-space:nowrap;opacity:.5;transition:opacity .2s ease}',
+    '#dc-secnav ol a:hover{opacity:1}',
+    '#dc-secnav ol a.on{opacity:1}',
+    '#dc-secnav .dc-sn-back::after,#dc-secnav ol a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .38s cubic-bezier(0.16,1,0.3,1)}',
+    '#dc-secnav .dc-sn-back:hover::after,#dc-secnav ol a:hover::after,#dc-secnav ol a.on::after{transform:scaleX(1);transform-origin:left}',
+    '#dc-secnav .dc-sn-menu{display:none}',
+    'html{scroll-padding-top:66px}',
+    '#__back_to_portfolio{display:none!important}',
+    '#dc-secnav{transition:color .3s ease,background-color .3s ease}',
+    // frosted once the hero has scrolled away (scroll handler adds .scrolled)
+    '#dc-secnav.scrolled{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.86);',
+      '-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+    '#dc-secnav.scrolled ol a{opacity:.45}#dc-secnav.scrolled ol a.on{opacity:1}',
+    // ---- MOBILE: the cramped scrolling row becomes a dropdown menu ----
+    '@media (max-width:720px){',
+      '#dc-secnav{font-size:11px;letter-spacing:.09em;padding-left:16px;padding-right:16px;gap:10px}',
+      '#dc-secnav .dc-sn-back span{display:none}',
+      // toggle button showing the current section + a chevron
+      '#dc-secnav .dc-sn-menu{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;flex:none;',
+        'max-width:56vw;background:none;border:0;margin:0;padding:6px 0;cursor:pointer;',
+        'font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}',
+      '#dc-secnav .dc-sn-cur{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '#dc-secnav .dc-sn-menu svg{width:11px;height:11px;flex:none;transition:transform .2s ease}',
+      '#dc-secnav.open .dc-sn-menu svg{transform:rotate(180deg)}',
+      // opening (or scrolling) frosts the bar so the panel reads on any page
+      '#dc-secnav.open{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.92);',
+        '-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+      // the <ol> is now a dropdown panel anchored under the bar
+      '#dc-secnav ol{position:absolute;top:calc(100% - 2px);right:clamp(12px,4vw,18px);left:auto;',
+        'flex-direction:column;align-items:stretch;gap:0;padding:5px;max-width:min(78vw,300px);',
+        'max-height:min(68vh,440px);overflow-y:auto;overflow-x:visible;mask-image:none;-webkit-mask-image:none;',
+        'background:rgba(252,251,248,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);',
+        'border:1px solid rgba(17,17,16,.1);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.2);',
+        'opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;',
+        'transition:opacity .18s ease,transform .18s ease}',
+      '#dc-secnav.open ol{opacity:1;transform:none;pointer-events:auto}',
+      '#dc-secnav ol a{color:#141413;opacity:.55;padding:11px 13px 10px;border-radius:9px;white-space:normal}',
+      '#dc-secnav ol a::after{display:none}',
+      '#dc-secnav ol a.on{opacity:1;background:rgba(17,17,16,.06)}',
+    '}',
+    '@media print{#dc-secnav{display:none}}'
+  ].join('');
+
+  function injectCSS(){
+    if(document.getElementById('dc-secnav-css'))return;
+    var st=document.createElement('style'); st.id='dc-secnav-css'; st.textContent=CSS;
+    (document.head||document.documentElement).appendChild(st);
+  }
+
+  function collect(){
+    var s=[].slice.call(document.querySelectorAll('section[id]'))
+      .filter(function(e){return !SKIP[String(e.id).toLowerCase()];});
+    if(s.length>=2)return s;
+    // packed pages have no <section> wrappers — fall back to h2s, only when they
+    // read like section names (short, few words, no sentence punctuation)
+    var hs=[].slice.call(document.querySelectorAll('h2')).filter(function(h){
+      var t=h.textContent.trim();
+      return h.offsetParent!==null && t.length>1 && t.length<=26
+        && t.split(/\s+/).length<=3 && !/[.:!?,;]$/.test(t);
+    });
+    return (hs.length>=2 && hs.length<=12)?hs:null;
+  }
+
+  function titlecase(id){
+    if(id.length<=3)return id.toUpperCase();
+    return id.split(/[-_\s]+/).map(function(w){
+      return ACR[w.toLowerCase()]||(w.charAt(0).toUpperCase()+w.slice(1));
+    }).join(' ');
+  }
+  function label(el){
+    var l=el.getAttribute('data-screen-label'); if(l)return l;
+    if(/^H[1-6]$/.test(el.tagName))return el.textContent.trim();
+    var id=String(el.id);
+    if(/^(s|sec|section|dcs|part|block)?[-_]?\d+$/i.test(id)){
+      var h=el.querySelector('h2,h3');
+      if(h){ var ht=h.textContent.trim(); if(ht.length>1 && ht.length<=40) return ht; }
+    }
+    return titlecase(id);
+  }
+
+  function backHref(){
+    var b=document.getElementById('__back_to_portfolio');
+    return (b && b.getAttribute('href')) || 'index.html#projects';
+  }
+
+  function build(els){
+    els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
+    injectCSS();
+    var ex=document.querySelector('.dc-topnav'); if(ex) ex.style.display='none';
+
+    var nav=document.createElement('nav'); nav.id='dc-secnav'; nav.setAttribute('aria-label','Case study navigation');
+
+    var back=document.createElement('a');
+    back.className='dc-sn-back'; back.href=backHref();
+    back.innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All projects</span>';
+    nav.appendChild(back);
+
+    // mobile-only toggle: shows the current section + a chevron, opens the panel
+    var menu=document.createElement('button');
+    menu.className='dc-sn-menu'; menu.type='button'; menu.setAttribute('aria-label','Jump to section');
+    menu.innerHTML='<span class="dc-sn-cur"></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var curLabel=menu.querySelector('.dc-sn-cur');
+    menu.addEventListener('click',function(e){ e.stopPropagation(); nav.classList.toggle('open'); });
+    nav.appendChild(menu);
+
+    var ol=document.createElement('ol');
+    var items=els.map(function(el){
+      var a=document.createElement('a'); a.href='#'+el.id; a.textContent=label(el);
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        nav.classList.remove('open');
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+        try{history.replaceState(null,'','#'+el.id);}catch(_){}
+        lockUntil=Date.now()+800;
+        setActive(items[idxOf(el)]);
+      });
+      var li=document.createElement('li'); li.appendChild(a); ol.appendChild(li);
+      return {a:a,el:el};
+    });
+    nav.appendChild(ol);
+    document.body.appendChild(nav);
+
+    // tap outside closes the panel
+    document.addEventListener('click',function(e){
+      if(nav.classList.contains('open') && !nav.contains(e.target)) nav.classList.remove('open');
+    });
+
+    var raf,cur,lockUntil=0;
+    function idxOf(el){ for(var i=0;i<items.length;i++) if(items[i].el===el) return i; return 0; }
+    function setActive(pick){
+      if(pick===cur)return; cur=pick;
+      items.forEach(function(it){ it.a.classList.toggle('on',it===pick); });
+      if(pick) curLabel.textContent = pick.a.textContent;
+      // desktop only: nudge the active chip into view if the row overflows
+      if(pick && window.innerWidth>720){
+        var a=pick.a, l=a.offsetLeft, r=l+a.offsetWidth, vl=ol.scrollLeft, vr=vl+ol.clientWidth;
+        if(l<vl+16) ol.scrollTo({left:Math.max(0,l-16),behavior:'smooth'});
+        else if(r>vr-16) ol.scrollTo({left:r-ol.clientWidth+16,behavior:'smooth'});
+      }
+    }
+    var frosted=false;
+    function sync(){
+      if(window.innerWidth>720) nav.classList.remove('open');   // never stuck open on desktop
+      var past=window.scrollY>window.innerHeight*0.85;
+      if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
+      if(Date.now()<lockUntil)return;
+      var y=window.scrollY+90, pick=items[0];
+      items.forEach(function(it){ if(it.el.getBoundingClientRect().top+window.scrollY<=y) pick=it; });
+      if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) pick=items[items.length-1];
+      setActive(pick);
+    }
+    addEventListener('scroll',function(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
+    addEventListener('resize',sync);
+    sync();
+  }
+
+  var tries=0;
+  (function boot(){
+    if(document.getElementById('dc-secnav'))return;
+    var els=collect();
+    if(!els){ if(++tries<20) setTimeout(boot,250); return; }
+    build(curate(els));
+  })();
+})();
+</script>
+</body>
+</html>

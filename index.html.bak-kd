@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Dan Sungvornveshapan — Digital Design & Experience</title>
+<meta name="description" content="Dan Sungvornveshapan — UX/UI & Experience Designer (3D). A motion-driven portfolio: interfaces, systems and built environments." />
+<link rel="icon" href="assets/brand/favicon.png" type="image/png" sizes="512x512" />
+<link rel="icon" href="assets/brand/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css?v=35" />
+</head>
+<body class="intro-lock">
+
+<!-- ============================ INTRO CLIP (plays after the 000-100 loader) === -->
+<div class="intro" id="intro" aria-hidden="true">
+  <video class="intro-video" id="introVideo" muted playsinline preload="auto">
+    <source src="assets/bg/intro.mp4" type="video/mp4" />
+  </video>
+  <button class="intro-skip" id="introSkip" type="button" data-cursor>Skip intro</button>
+</div>
+
+<!-- ============================ LOADING ============================ -->
+<div class="loader negative" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <span class="loader-label">Dan&nbsp;Sungvornveshapan</span>
+    <span class="loader-count" id="loaderCount">000</span>
+  </div>
+  <div class="loader-bar"><span id="loaderBar"></span></div>
+</div>
+
+<!-- ============================ CURSOR ============================ -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a href="#home" class="nav-logo" data-cursor>
+    <span class="nav-logo-mark">DS</span>
+    <span class="nav-logo-name">Dan&nbsp;Sungvornveshapan</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#work" data-cursor>Work</a>
+    <a href="#about" data-cursor>About</a>
+    <a href="#contact" data-cursor>Contact</a>
+  </nav>
+</header>
+
+<main id="scroll">
+
+  <!-- ---------- HERO ---------- -->
+  <section class="hero" id="home">
+    <div class="hero-upper">
+      <p class="hero-meta">
+        <span>UX/UI &amp; Experience Designer&nbsp;(3D)</span>
+        <span>Portfolio&nbsp;— 2026</span>
+      </p>
+      <h1 class="hero-head">
+        <span class="line"><span class="line-in">Digital</span></span>
+        <span class="line"><span class="line-in">Design <em>&amp;</em></span></span>
+        <span class="line"><span class="line-in">Experience</span></span>
+      </h1>
+    </div>
+
+    <!-- solid surface that rides up over the bottom of the clip -->
+    <div class="hero-lower negative">
+      <div class="hero-lower-inner">
+        <p class="hero-note">
+          First-Class Honours, Exhibition &amp; Experience Design,<br />
+          Chulalongkorn University.
+        </p>
+        <p class="hero-name">
+          <span class="line"><span class="line-in"><span class="ch">D</span><span class="ch">a</span><span class="ch">n</span></span></span>
+          <span class="line"><span class="line-in"><span class="ch">S</span><span class="ch">u</span><span class="ch">n</span><span class="ch">g</span><span class="ch">v</span><span class="ch">o</span><span class="ch">r</span><span class="ch">n</span><span class="ch">v</span><span class="ch">e</span><span class="ch">s</span><span class="ch">h</span><span class="ch">a</span><span class="ch">p</span><span class="ch">a</span><span class="ch">n</span></span></span>
+        </p>
+        <span class="hero-scroll" data-cursor>
+          <span class="hero-scroll-dot"></span> Scroll to explore
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- everything below the hero sits on solid paper, covering the fixed clip ---------- -->
+  <div class="rest">
+
+  <!-- ---------- ABOUT ---------- -->
+  <section class="about" id="about">
+    <p class="section-tag reveal"><span>01</span> About</p>
+    <p class="about-lede reveal">
+      <span class="reveal-word">I</span> <span class="reveal-word">design</span>
+      <span class="reveal-word">across</span> <span class="reveal-word">the</span>
+      <span class="reveal-word">digital</span> <span class="reveal-word">&amp;</span>
+      <span class="reveal-word">the</span> <span class="reveal-word">physical</span> —
+      <span class="reveal-word">connecting</span> <span class="reveal-word">interface</span>
+      <span class="reveal-word">systems</span> <span class="reveal-word">and</span>
+      <span class="reveal-word">built</span> <span class="reveal-word">environments</span>
+      <span class="reveal-word">with</span> <span class="reveal-word">UX</span>
+      <span class="reveal-word">research,</span> <span class="reveal-word">3D</span>
+      <span class="reveal-word">craft</span> <span class="reveal-word">and</span>
+      <span class="reveal-word">visual</span> <span class="reveal-word">design</span>
+      <span class="reveal-word">at</span> <span class="reveal-word">the</span>
+      <span class="reveal-word">core.</span>
+    </p>
+    <figure class="about-portrait reveal">
+      <img src="assets/portrait.png" alt="Dan Sungvornveshapan" width="1145" height="1374" loading="lazy" />
+    </figure>
+    <div class="about-grid reveal">
+      <div>
+        <p class="about-k">Focus</p>
+        <p class="about-v"><span>UX Research</span><span>Journey Mapping</span><span>UI &amp; Design Systems</span><span>Experience Design</span><span>Spatial &amp; 3D</span></p>
+      </div>
+      <div>
+        <p class="about-k">Tools</p>
+        <p class="about-v"><span>Figma</span><span>SketchUp</span><span>Enscape</span><span>Photoshop</span><span>Illustrator</span><span>After Effects</span></p>
+      </div>
+      <div>
+        <p class="about-k">Based</p>
+        <p class="about-v"><span>Bangkok, Thailand</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- SELECTED WORK (negative band) ---------- -->
+  <section class="work negative" id="work">
+    <p class="section-tag reveal"><span>02</span> Selected Work</p>
+
+    <article class="work-item reveal" data-index="01">
+      <a class="work-media" href="#work" data-cursor="View" aria-label="CMCC-Chance — view case study">
+        <span class="browser">
+          <span class="browser-bar"><i></i><i></i><i></i><span class="browser-url">cmcc-chance.app</span></span>
+          <span class="browser-shot" style="background-image:url('assets/projects/cmcc-chance.webp')"></span>
+        </span>
+      </a>
+      <div class="work-body">
+        <span class="work-no">01</span>
+        <h2 class="work-title">CMCC&#8209;Chance</h2>
+        <p class="work-desc">A decision-support platform for a capital-market case competition — turning a dense investment-banking brief into a guided, confident flow.</p>
+        <p class="work-scope"><span>UX/UI</span><span>Product Design</span><span>Prototyping</span></p>
+        <a class="work-link" href="#work" data-cursor>View case study <span>&#8594;</span></a>
+      </div>
+    </article>
+
+    <article class="work-item reveal" data-index="02">
+      <a class="work-media" href="#work" data-cursor="View" aria-label="UPLATFORM — view case study">
+        <span class="browser">
+          <span class="browser-bar"><i></i><i></i><i></i><span class="browser-url">uplatform.io</span></span>
+          <span class="browser-shot" style="background-image:url('assets/projects/uplatform.jpg')"></span>
+        </span>
+      </a>
+      <div class="work-body">
+        <span class="work-no">02</span>
+        <h2 class="work-title">UPLATFORM</h2>
+        <p class="work-desc">A real-time IoT platform for education and research — dashboards, device management and a design system that scales across data types.</p>
+        <p class="work-scope"><span>UX Research</span><span>UI Design</span><span>Design System</span></p>
+        <a class="work-link" href="#work" data-cursor>View case study <span>&#8594;</span></a>
+      </div>
+    </article>
+
+    <article class="work-item reveal" data-index="03">
+      <a class="work-media" href="#work" data-cursor="View" aria-label="Thrive — view case study">
+        <span class="browser">
+          <span class="browser-bar"><i></i><i></i><i></i><span class="browser-url">thrive.care</span></span>
+          <span class="browser-shot" style="background-image:url('assets/projects/thrive.jpg')"></span>
+        </span>
+      </a>
+      <div class="work-body">
+        <span class="work-no">03</span>
+        <h2 class="work-title">Thrive</h2>
+        <p class="work-desc">&ldquo;Grow together, heal together.&rdquo; A wellbeing app built around gentle daily rituals, shared progress and a calm, legible interface.</p>
+        <p class="work-scope"><span>Concept</span><span>UX/UI</span><span>Branding</span></p>
+        <a class="work-link" href="#work" data-cursor>View case study <span>&#8594;</span></a>
+      </div>
+    </article>
+
+    <article class="work-item reveal" data-index="04">
+      <a class="work-media" href="#work" data-cursor="View" aria-label="A Journey — view case study">
+        <span class="browser">
+          <span class="browser-bar"><i></i><i></i><i></i><span class="browser-url">a-journey.exhibition</span></span>
+          <span class="browser-shot" style="background-image:url('assets/projects/a-journey.webp')"></span>
+        </span>
+      </a>
+      <div class="work-body">
+        <span class="work-no">04</span>
+        <h2 class="work-title">A Journey</h2>
+        <p class="work-desc">An exhibition and spatial experience — narrative wayfinding, 3D-modelled sets and a route that carries visitors through the story.</p>
+        <p class="work-scope"><span>Experience Design</span><span>3D</span><span>Spatial</span></p>
+        <a class="work-link" href="#work" data-cursor>View case study <span>&#8594;</span></a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ---------- CONTACT ---------- -->
+  <section class="contact" id="contact">
+    <p class="section-tag reveal"><span>03</span> Contact</p>
+    <a class="contact-cta reveal" href="mailto:sdan.forworks@gmail.com" data-cursor="Say hi">
+      Let&rsquo;s build<br />something<span class="contact-cta-em"> good.</span>
+    </a>
+    <div class="contact-grid reveal">
+      <div>
+        <p class="about-k">Email</p>
+        <a class="contact-line" href="mailto:sdan.forworks@gmail.com" data-cursor>sdan.forworks@gmail.com</a>
+      </div>
+      <div>
+        <p class="about-k">Phone</p>
+        <a class="contact-line" href="tel:+66990797010" data-cursor>+66 099 079 7010</a>
+      </div>
+      <div>
+        <p class="about-k">Résumé</p>
+        <a class="contact-line" href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor>Download CV (PDF)</a>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <span>Designed &amp; built by Dan Sungvornveshapan - ideas, works &amp; things in my drawer.</span>
+      <span>&copy; 2026</span>
+    </footer>
+  </section>
+
+  </div><!-- /.rest -->
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="js/main.js?v=35"></script>
+</body>
+</html>

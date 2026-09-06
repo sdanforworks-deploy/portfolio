@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le'rum — Brand Identity Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f5f1e8;      /* light ground */
+    --paper-2:#efe8d9;    /* light ground, alt */
+    --ink:#171310;        /* dark ground + primary text */
+    --ink-2:#211b16;      /* dark ground, alt */
+    --accent:#6a4326;     /* single accent — brand brown family */
+    --on-dark:#efe7d7;
+    --on-dark-dim:#b3a793;
+    --on-light:#2b2118;
+    --on-light-dim:#6d6152;
+    --line-dark:rgba(239,231,215,.16);
+    --line-light:rgba(43,33,24,.16);
+    --wrap:1100px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--on-light);
+    font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  img{display:block;max-width:100%}
+  h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:500;margin:0}
+  p{margin:0 0 1em}
+  a{color:inherit}
+
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+  section{padding:clamp(72px,11vw,140px) 0;border-top:1px solid var(--line-light)}
+  .dark{background:var(--ink);color:var(--on-dark);border-top:none}
+  .dark h1,.dark h2,.dark h3,.dark h4{color:var(--on-dark)}
+  .dark-2{background:var(--ink-2)}
+  .paper-2{background:var(--paper-2)}
+
+  .kicker{
+    font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 22px;
+  }
+  .dark .kicker{color:#c99b6e}
+
+  /* ---------- sticky pill nav (hidden inside the site embed) ---------- */
+  .pillnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(23,19,16,.9);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .pillnav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:56px;gap:20px}
+  .pillnav .brand{font-family:'Playfair Display',serif;font-size:18px;color:var(--on-dark);text-decoration:none;font-style:italic}
+  .pillnav nav{display:flex;gap:clamp(10px,1.6vw,22px);overflow-x:auto;scrollbar-width:none}
+  .pillnav nav::-webkit-scrollbar{display:none}
+  .pillnav nav a{font-size:12.5px;color:var(--on-dark-dim);text-decoration:none;white-space:nowrap;letter-spacing:.03em}
+  .pillnav nav a:hover{color:var(--on-dark)}
+  section[id]{scroll-margin-top:96px}
+
+  /* ---------- hero ---------- */
+  .hero{background:#33322e;color:var(--on-dark);padding:clamp(44px,7vw,96px) 0 0;border-top:none}
+  .hero-grid{
+    display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(24px,5vw,72px);align-items:center;
+    margin:clamp(22px,3.5vw,40px) 0 clamp(40px,6vw,72px);
+  }
+  .hero-grid h1{
+    font-weight:400;font-size:clamp(52px,10vw,148px);line-height:.92;letter-spacing:-.01em;margin:0 0 .34em;
+  }
+  .hero-grid .premise{
+    font-size:clamp(16px,1.9vw,21px);max-width:36ch;color:var(--on-dark);margin:0;
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:400;line-height:1.42;
+  }
+  .hero-mark-wrap{margin:0}
+  .hero-mark{width:100%;max-width:440px;margin-left:auto;border-radius:8px;opacity:.98}
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:26px;align-items:start}
+    .hero-mark{max-width:300px;margin:4px 0 0}
+  }
+
+  /* concept cards (04) */
+  .concept-cards{margin-top:clamp(30px,5vw,52px)}
+  .ccard{background:#fbf7ee;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;padding-bottom:18px}
+  .ccard-vis{background:#fff;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:20px;border-bottom:1px solid rgba(43,33,24,.1)}
+  .ccard-vis img{max-width:100%;max-height:148px;width:auto;object-fit:contain}
+  .ccard-swatches{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;padding:0;aspect-ratio:4/3}
+  .ccard-swatches span{display:block;min-height:64px}
+  .ccard h4{font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;color:#2b2118;margin:15px 18px 6px}
+  .ccard p{margin:0 18px;font-size:12.5px;line-height:1.5;color:#6d6152}
+
+  /* identity system (05) — single column, everything aligned to one measure */
+  .system-list{margin-top:clamp(30px,5vw,52px)}
+  @media(min-width:760px){.system-list{grid-template-columns:1fr 1fr;gap:22px clamp(32px,4vw,56px)}}
+  .system-visuals{display:grid;gap:clamp(24px,4vw,40px);margin-top:clamp(24px,3.5vw,40px)}
+
+  .meta{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,44px);
+    border-top:1px solid var(--line-dark);padding:26px 0 clamp(56px,9vw,110px);
+  }
+  .meta dt{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-dim);margin:0 0 8px}
+  .meta dd{margin:0;font-size:14px;line-height:1.55;color:var(--on-dark)}
+  @media(max-width:720px){.meta{grid-template-columns:1fr 1fr}}
+
+  /* ---------- stats band ---------- */
+  .stats{background:var(--ink);color:var(--on-dark);padding:clamp(40px,6vw,64px) 0;border-top:none}
+  .stats .row{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,3vw,40px);text-align:center}
+  .stats .num{font-family:'Playfair Display',serif;font-size:clamp(38px,6vw,64px);line-height:1;color:var(--on-dark)}
+  .stats .cap{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-dark-dim);margin-top:10px}
+  @media(max-width:640px){.stats .row{grid-template-columns:1fr 1fr;gap:32px 16px}}
+
+  /* ---------- shared section pieces ---------- */
+  .sec-head{display:flex;gap:20px;align-items:baseline;margin:0 0 clamp(36px,5vw,60px);border-bottom:1px solid var(--line-light);padding-bottom:18px}
+  .dark .sec-head{border-color:var(--line-dark)}
+  .sec-num{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--accent);flex:none}
+  .dark .sec-num{color:#c99b6e}
+  .sec-head h2{font-size:clamp(28px,3.6vw,46px);font-weight:500;line-height:1.08}
+
+  .lead{font-size:clamp(19px,2.3vw,26px);line-height:1.4;font-family:'Playfair Display',serif;max-width:32ch}
+  .pullquote{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:400;
+    font-size:clamp(24px,3.4vw,40px);line-height:1.3;max-width:24ch;margin:0 0 clamp(40px,6vw,64px);
+    border-left:2px solid var(--accent);padding-left:clamp(20px,3vw,40px);
+  }
+  .dark .pullquote{border-color:#c99b6e}
+
+  /* pull-quote beside an atmosphere image — fills the empty column next to
+     the quote in §01 / §02 without adding more copy */
+  .quote-media{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(28px,4vw,56px);align-items:stretch;margin:0 0 clamp(40px,6vw,64px);
+  }
+  .quote-media .pullquote{max-width:34ch;margin:0}
+  .quote-media .mood{margin:0;min-height:300px}
+  .quote-media .mood img{width:100%;height:100%;object-fit:cover;border-radius:4px;display:block}
+  @media(max-width:820px){
+    .quote-media{grid-template-columns:1fr;gap:24px}
+    .quote-media .pullquote{max-width:28ch}
+    .quote-media .mood{min-height:0}
+    .quote-media .mood img{height:auto;max-height:380px}
+  }
+
+  .body-col{max-width:60ch;font-size:16.5px;line-height:1.75;color:var(--on-light-dim)}
+  .dark .body-col{color:var(--on-dark-dim)}
+
+  .goals{display:grid;gap:22px;margin-top:clamp(36px,5vw,56px)}
+  .goal{display:grid;grid-template-columns:44px 1fr;gap:18px;border-top:1px solid var(--line-light);padding-top:16px}
+  .dark .goal{border-color:var(--line-dark)}
+  .goal .g-n{font-family:'Playfair Display',serif;font-size:20px;color:var(--accent)}
+  .dark .goal .g-n{color:#c99b6e}
+  .goal p{margin:0;font-size:15.5px;line-height:1.6}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:start}
+  @media(max-width:820px){.grid-2{grid-template-columns:1fr}}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,24px)}
+  @media(max-width:820px){.grid-4{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.grid-4{grid-template-columns:1fr}}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,30px)}
+  @media(max-width:820px){.grid-3{grid-template-columns:1fr}}
+
+  /* even gallery — mixed-aspect images (photos, portrait labels, circle badges)
+     forced into a uniform grid: every card the same height, a fixed-height
+     media box (contain, never cropped), captions bottom-aligned across the row */
+  .gallery-even{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,32px)}
+  @media(max-width:720px){.gallery-even{grid-template-columns:1fr}}
+  .gallery-even .card{display:flex;flex-direction:column;height:100%}
+  .gallery-even .card > img{width:100%;height:clamp(210px,24vw,300px);object-fit:contain;object-position:center}
+  .gallery-even .card > figcaption{margin-top:auto;padding-top:16px}
+
+  .part{border-top:1px solid var(--line-light);padding-top:16px}
+  .dark .part{border-color:var(--line-dark)}
+  .part h4{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:.02em;margin:0 0 8px}
+  .part p{margin:0;font-size:14px;line-height:1.55;color:var(--on-light-dim)}
+  .dark .part p{color:var(--on-dark-dim)}
+
+  /* named audience / positioning cards */
+  .named{border-top:1px solid var(--line-light);padding-top:18px}
+  .dark .named{border-color:var(--line-dark)}
+  .named h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 8px}
+  .named p{margin:0;font-size:15px;line-height:1.6;color:var(--on-light-dim)}
+  .dark .named p{color:var(--on-dark-dim)}
+
+  /* figures */
+  figure{margin:0}
+  .card{
+    background:#fff;border:1px solid var(--line-light);border-radius:4px;
+    padding:clamp(20px,3vw,44px);
+  }
+  .dark .card{background:#fbf7ee;border-color:transparent}
+  .card.on-charcoal{background:#33322e;border-color:transparent}
+  .card img{width:100%;height:auto;object-fit:contain}
+  .card.pad-tight{padding:clamp(14px,2vw,22px)}
+  figcaption{font-size:13px;line-height:1.55;color:var(--on-light-dim);margin-top:14px;max-width:66ch}
+  .dark figcaption{color:var(--on-dark-dim)}
+  .bleed{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+  .bleed img{width:100%;height:auto}
+  .bleed figcaption{margin:14px auto 0;max-width:var(--wrap);padding:0 clamp(20px,5vw,56px)}
+
+  /* colour legend (real HTML) */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:560px){.swatches{grid-template-columns:1fr 1fr}}
+  .sw{border:1px solid var(--line-light);border-radius:4px;overflow:hidden}
+  .dark .sw{border-color:var(--line-dark)}
+  .sw .chip{aspect-ratio:3/2}
+  .sw .lab{padding:10px 12px;font-size:12px}
+  .sw .lab b{display:block;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:2px}
+  .sw .lab span{color:var(--on-light-dim);font-variant-numeric:tabular-nums}
+  .dark .sw .lab span{color:var(--on-dark-dim)}
+
+  /* step row */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,24px);margin-bottom:clamp(40px,6vw,64px)}
+  @media(max-width:720px){.steps{grid-template-columns:1fr 1fr}}
+  .step{border-top:1px solid var(--line-dark);padding-top:14px}
+  .step .s-n{font-family:'Playfair Display',serif;font-size:30px;color:#c99b6e;line-height:1}
+  .step .s-t{font-size:14.5px;margin-top:8px}
+  .step p{font-size:13px;color:var(--on-dark-dim);margin:6px 0 0;line-height:1.55}
+
+  .stack{display:grid;gap:clamp(28px,4vw,52px)}
+  .take{border-top:1px solid var(--line-dark);padding-top:18px}
+  .take h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(21px,2.6vw,30px);line-height:1.2;margin:0 0 10px}
+  .take p{margin:0;font-size:15.5px;line-height:1.65;color:var(--on-dark-dim)}
+
+  /* footer */
+  footer{background:var(--ink);color:var(--on-dark-dim);padding:44px 0 64px;border-top:1px solid var(--line-dark)}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:14px 36px;align-items:baseline;font-size:13.5px}
+  footer .f-name{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--on-dark)}
+  footer a{margin-left:auto;color:var(--on-dark-dim);text-decoration:none}
+  footer a:hover{color:var(--on-dark)}
+</style>
+<style>.pillnav{display:none!important}</style>
+<style>footer{display:none!important}</style><style>/*dc-mobile-responsive*/
+@media (max-width:820px){
+  [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+  [style*="display:flex"],[style*="display: flex"]{flex-wrap:wrap !important;}
+  img{max-width:100% !important;height:auto !important;}
+  h1,h2,h3,h4,p,div,span,li,a{overflow-wrap:break-word;}
+}
+@media (max-width:640px){
+  [style*="px 100px"],[style*="px 80px"],[style*="0 100px"]{padding-left:22px !important;padding-right:22px !important;}
+  [style*="150px 100px"],[style*="140px 100px"],[style*="0 100px 150px"]{padding-top:60px !important;padding-bottom:60px !important;}
+  [style*="font-size:76px"],[style*="font-size:72px"],[style*="font-size:68px"],[style*="font-size:64px"],[style*="font-size:60px"],[style*="font-size: 76px"],[style*="font-size: 64px"]{font-size:42px !important;}
+  [style*="font-size:56px"],[style*="font-size:52px"],[style*="font-size:48px"],[style*="font-size: 48px"]{font-size:34px !important;}
+}</style>
+</head>
+<body>
+
+<div class="pillnav">
+  <div class="wrap">
+    <a class="brand" href="#top">Le'rum</a>
+    <nav>
+      <a href="#objective">01 Objective</a>
+      <a href="#positioning">02 Positioning</a>
+      <a href="#audience">03 Audience</a>
+      <a href="#concept">04 Concept</a>
+      <a href="#system">05 System</a>
+      <a href="#applications">06 In use</a>
+      <a href="#design">07 Design</a>
+      <a href="#reflection">08 Reflection</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker">Brand Identity</p>
+    <div class="hero-grid">
+      <div class="hero-lead">
+        <h1>Le&rsquo;rum</h1>
+        <p class="premise">A monogram identity for a men&rsquo;s clothing label built on quiet, &ldquo;old money&rdquo; ease &mdash; sharp enough for the event, easy enough for the bar.</p>
+      </div>
+      <figure class="hero-mark-wrap">
+        <img class="hero-mark" src="assets/projects/case/lerum/logo-primary.png" alt="Le'rum LR monogram over the Le'rum script">
+      </figure>
+    </div>
+    <dl class="meta">
+      <div><dt>Role</dt><dd><!-- EDIT role --><span class="role">Identity design &mdash; logo, colour, applications</span></dd></div>
+      <div><dt>Type</dt><dd>Brand identity &middot; menswear label</dd></div>
+      <div><dt>Context</dt><dd>&ldquo;Old money&rdquo; positioning; one wardrobe for the formal event, the after-work drink and the jazz bar</dd></div>
+      <div><dt>Scope</dt><dd>Monogram, script wordmark, 4-colour palette, hang tag, garment emblem, wax seal, digital icon</dd></div>
+    </dl>
+  </div>
+</header>
+
+
+<!-- ============ STATS BAND ============ -->
+<div class="stats">
+  <div class="wrap">
+    <div class="row">
+      <div><div class="num">5</div><div class="cap">Colourways</div></div>
+      <div><div class="num">4</div><div class="cap">Core colours</div></div>
+      <div><div class="num">4</div><div class="cap">Brand touchpoints</div></div>
+      <div><div class="num">3</div><div class="cap">Occasions it dresses for</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 01 OBJECTIVE ============ -->
+<section id="objective">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Objective</h2></div>
+    <div class="quote-media">
+      <blockquote class="pullquote">Design men&rsquo;s clothing that can be worn to formal events, for after-work drinks, or as attire for visiting an upscale jazz bar &mdash; clothing that adapts to any situation while still elevating the wearer&rsquo;s appearance.</blockquote>
+      <figure class="mood"><img src="assets/projects/case/lerum/mood-objective.jpg" alt="An &lsquo;old money&rsquo; still life &mdash; soft linen light on marble, a stack of design books, a green glass, a signet ring in a dish"></figure>
+    </div>
+    <div class="grid-2">
+      <div class="body-col">
+        <p>The hard part of the brief is that &ldquo;old money&rdquo; is a feeling, not a graphic device. It can&rsquo;t be drawn with a crest or a serif clich&eacute;; it has to arrive through weight, spacing and restraint. The same mark also has to survive two opposite jobs &mdash; reading as considered next to formalwear, and reading as effortless on a Friday &mdash; without becoming either a luxury pastiche or a streetwear stamp.</p>
+      </div>
+      <div class="goals">
+        <div class="goal"><span class="g-n">01</span><p>Build the identity on the brand&rsquo;s initials, <b>L</b> and <b>R</b>, merged with a single, perfectly balanced gap.</p></div>
+        <div class="goal"><span class="g-n">02</span><p>Keep every element &ldquo;sharp yet casual&rdquo; &mdash; formal enough for an event, relaxed enough to wear without thinking about it.</p></div>
+        <div class="goal"><span class="g-n">03</span><p>Carry the &ldquo;old money&rdquo; cue through <b>thickness and solidity</b>, not ornament, so it holds from a wax seal to a shopfront.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 POSITIONING ============ -->
+<section id="positioning" class="dark">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Positioning</h2></div>
+    <div class="quote-media">
+      <blockquote class="pullquote">&ldquo;Le&rsquo;rum&rdquo; can be read as the Thai word &ldquo;&#3648;&#3621;&#3636;&#3624;&#3619;&#3633;&#3617;&rdquo; &mdash; excellence &mdash; or simply as &ldquo;Rum&rdquo;. The brand blends the styles of cocktails with different bases to make clothing that reflects the feeling and mood of savouring each one.</blockquote>
+      <figure class="mood"><img src="assets/projects/case/lerum/mood-positioning.jpg" alt="A quiet corner of an upscale jazz bar &mdash; low green light, a whisky and a folded newspaper on marble, a tweed jacket over the chair, a framed saxophonist above"></figure>
+    </div>
+    <div class="grid-3">
+      <div class="named">
+        <h3>The register</h3>
+        <p>&ldquo;Old money&rdquo;, casual and elegant &mdash; menswear that looks inherited rather than bought this season.</p>
+      </div>
+      <div class="named">
+        <h3>The wardrobe</h3>
+        <p>One set of clothes that flexes across a single evening, adapting to the room without changing the wearer.</p>
+      </div>
+      <div class="named">
+        <h3>The reference worlds</h3>
+        <p>The formal event &middot; the after-work drink &middot; the upscale jazz bar &mdash; the three settings the clothing is cut for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 AUDIENCE ============ -->
+<section id="audience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Audience</h2></div>
+    <p class="lead">The wearer is one person in three rooms. The identity has to read the same in each.</p>
+    <div class="grid-3" style="margin-top:clamp(36px,5vw,56px)">
+      <div class="named">
+        <h3>At the event</h3>
+        <p>Wants to look considered without looking like he tried. The garment emblem and the label do the talking; nothing shouts.</p>
+      </div>
+      <div class="named">
+        <h3>After work</h3>
+        <p>Same jacket, collar open. The mark has to survive being dressed down &mdash; it can&rsquo;t depend on the full formal context to make sense.</p>
+      </div>
+      <div class="named">
+        <h3>At the jazz bar</h3>
+        <p>Low light, close quarters. The details noticed here are the small ones: the tag, the stitch, the seal on the box it came in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 CONCEPT ============ -->
+<section id="concept" class="dark dark-2">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Concept</h2></div>
+    <div style="font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(46px,9vw,140px);line-height:.96;letter-spacing:-.02em;margin:0 0 .3em">Sharp&nbsp;yet casual.</div>
+    <p class="body-col" style="max-width:58ch;margin-bottom:0">The core concept emphasises &ldquo;old money&rdquo;, casual and elegant styles &mdash; clothing that adapts to any situation while still elevating the wearer&rsquo;s appearance. The identity is the smallest possible version of that idea: two letters, one gap, no decoration.</p>
+    <div class="grid-4 concept-cards">
+      <figure class="ccard">
+        <div class="ccard-vis"><img src="assets/projects/case/lerum/mark-monogram.png" alt="The LR monogram"></div>
+        <h4>Monogram</h4><p>L and R merged into one mark with a single balanced gap &mdash; the primary signature.</p>
+      </figure>
+      <figure class="ccard">
+        <div class="ccard-vis"><img src="assets/projects/case/lerum/mark-wordmark.png" alt="The Le'rum script wordmark"></div>
+        <h4>Script wordmark</h4><p>&ldquo;Le&rsquo;rum&rdquo; set in Palace Script MT, beneath the monogram.</p>
+      </figure>
+      <figure class="ccard">
+        <div class="ccard-vis ccard-swatches"><span style="background:#3D1E0F"></span><span style="background:#162842"></span><span style="background:#263319"></span><span style="background:#F9F3D7"></span></div>
+        <h4>Colour</h4><p>A four-tone palette &mdash; espresso, navy, forest, cream &mdash; deep and unbranded.</p>
+      </figure>
+      <figure class="ccard">
+        <div class="ccard-vis"><img src="assets/projects/case/lerum/badge-outline.png" alt="Outline circle badge"></div>
+        <h4>Reductions</h4><p>Circle badge and filled icon for stitching, stamping and small screens.</p>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 IDENTITY SYSTEM ============ -->
+<section id="system">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Identity system</h2></div>
+    <ol class="goals system-list" style="margin-top:0;list-style:none;padding:0">
+      <li class="goal"><span class="g-n">01</span><p><b>The monogram.</b> Inspired by the initials L and R, merged together with a perfectly balanced gap, adding elegance through the design of the metal tag. Distinctive thickness and solidity &mdash; the characteristics of &ldquo;old money&rdquo;. Every element is modified to be sharp yet casual.</p></li>
+      <li class="goal"><span class="g-n">02</span><p><b>The wordmark.</b> Palace Script MT, Regular &mdash; a formal English roundhand for &ldquo;Le&rsquo;rum&rdquo; and any supporting script.</p></li>
+      <li class="goal"><span class="g-n">03</span><p><b>Colour.</b> Four core tones: espresso <b>#3D1E0F</b>, navy <b>#162842</b>, forest <b>#263319</b>, cream <b>#F9F3D7</b>.</p></li>
+      <li class="goal"><span class="g-n">04</span><p><b>Colourways.</b> Five approved lockups &mdash; on espresso, navy, forest, black-on-white, and on cream.</p></li>
+      <li class="goal"><span class="g-n">05</span><p><b>Reductions.</b> An outline circle badge for a single-weight small mark, and a filled circle icon for avatars.</p></li>
+    </ol>
+    <figure class="card pad-tight" style="margin-top:clamp(30px,5vw,52px)">
+      <img src="assets/projects/case/lerum/colourways.png" alt="Le'rum logo shown in five colourways">
+      <figcaption>The five approved colourways, held against the four palette grounds plus black-on-white.</figcaption>
+    </figure>
+    <div class="system-visuals">
+      <figure>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#3D1E0F"></div><div class="lab"><b>Espresso</b><span>#3D1E0F</span></div></div>
+          <div class="sw"><div class="chip" style="background:#162842"></div><div class="lab"><b>Navy</b><span>#162842</span></div></div>
+          <div class="sw"><div class="chip" style="background:#263319"></div><div class="lab"><b>Forest</b><span>#263319</span></div></div>
+          <div class="sw"><div class="chip" style="background:#F9F3D7"></div><div class="lab"><b>Cream</b><span>#F9F3D7</span></div></div>
+        </div>
+        <figcaption>Palette. Three deep grounds and one warm light &mdash; the contrast that lets the monogram stay a flat, single-colour shape everywhere.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="assets/projects/case/lerum/mark-wordmark.png" alt="The Le'rum script wordmark" style="max-width:520px;margin:0 auto">
+        <figcaption>The &ldquo;Le&rsquo;rum&rdquo; wordmark, set in Palace Script MT, Regular.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 IN USE ============ -->
+<section id="applications" class="dark">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>In use</h2></div>
+    <div class="steps">
+      <div class="step"><div class="s-n">1</div><div class="s-t">Label</div><p>Hang tag &amp; interior label &mdash; where the metal-tag thickness idea started.</p></div>
+      <div class="step"><div class="s-n">2</div><div class="s-t">Garment</div><p>Chest emblem, embroidered tonal and small.</p></div>
+      <div class="step"><div class="s-n">3</div><div class="s-t">Seal</div><p>Wax seal from a brass die &mdash; packaging and correspondence.</p></div>
+      <div class="step"><div class="s-n">4</div><div class="s-t">Digital</div><p>Circle icon and profile treatment for social.</p></div>
+    </div>
+    <div class="gallery-even">
+      <figure class="card">
+        <img src="assets/projects/case/lerum/label-tag.jpg" alt="Kraft hang tag with the LR monogram printed in black">
+        <figcaption><b>Label.</b> Kraft board, single-colour print, keyline border, brass eyelet, jute string. The tag&rsquo;s weight is the reference the whole identity is built from.</figcaption>
+      </figure>
+      <figure class="card pad-tight">
+        <img src="assets/projects/case/lerum/label-portrait.png" alt="Portrait interior label, thin border, monogram and wordmark centred">
+        <figcaption><b>Interior label.</b> Thin keyline, monogram over wordmark, centred &mdash; the version sewn into the garment.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="assets/projects/case/lerum/emblem-polo.jpg" alt="LR monogram embroidered in tonal white on a navy polo shirt">
+        <figcaption><b>Garment emblem.</b> Tonal white embroidery at chest height &mdash; visible up close, quiet at a distance.</figcaption>
+      </figure>
+      <figure class="card on-charcoal">
+        <img src="assets/projects/case/lerum/logo-mono-tight.png" alt="Full LR monogram and Le'rum wordmark, large">
+        <figcaption><b>Full lockup.</b> The monogram and script together, for large or hero placements.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="assets/projects/case/lerum/wax-seal.jpg" alt="Red wax seal stamped with the LR monogram beside a brass wax stamp">
+        <figcaption><b>Seal.</b> Brass die, deep red wax &mdash; struck on packaging and correspondence so the box carries the mark before the garment does.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="assets/projects/case/lerum/icon-social.png" alt="Le' Rum social profile mockup with the brown circle avatar">
+        <figcaption><b>Digital.</b> Espresso circle avatar with the cream monogram, and the profile treatment for social. <em>Follower and post counts shown are mockup placeholders.</em></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 DESIGN ============ -->
+<section id="design">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Design</h2></div>
+    <figure class="card on-charcoal" style="padding:clamp(32px,6vw,88px);margin-bottom:clamp(28px,4vw,44px)">
+      <img src="assets/projects/case/lerum/logo-primary.png" alt="Le'rum LR monogram over the Le'rum script, white on near-black" style="max-width:640px;margin:0 auto">
+      <figcaption style="text-align:center;max-width:60ch;margin-left:auto;margin-right:auto">The primary lockup. The <b>L</b>&rsquo;s foot runs under the <b>R</b>, meeting at one balanced gap; the script sits below at a fixed relationship. Held on the brand&rsquo;s near-black.</figcaption>
+    </figure>
+    <div class="gallery-even">
+      <figure class="card pad-tight">
+        <img src="assets/projects/case/lerum/logo-mono.png" alt="Monochrome black Le'rum lockup on white">
+        <figcaption>Monochrome lockup &mdash; the single-colour master used for print, embroidery digitising and etching.</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="assets/projects/case/lerum/mark-wordmark.png" alt="The Le'rum script wordmark" style="max-width:460px;margin:0 auto">
+        <figcaption>The &ldquo;Le&rsquo;rum&rdquo; wordmark &mdash; Palace Script MT, Regular, used beneath the monogram and for any supporting script.</figcaption>
+      </figure>
+      <figure class="card pad-tight">
+        <img src="assets/projects/case/lerum/badge-outline.png" alt="Outline circle badge with the LR monogram" style="max-width:300px;margin:0 auto">
+        <figcaption>Outline badge &mdash; a single-weight mark for the smallest sizes and one-colour surfaces.</figcaption>
+      </figure>
+      <figure class="card pad-tight">
+        <img src="assets/projects/case/lerum/badge-fill.png" alt="Filled espresso circle with the cream LR monogram" style="max-width:300px;margin:0 auto">
+        <figcaption>Filled icon &mdash; cream monogram on espresso, for avatars and app tiles.</figcaption>
+      </figure>
+    </div>
+    <figure class="card" style="margin-top:clamp(20px,3vw,32px)">
+      <img src="assets/projects/case/lerum/colourways.png" alt="The Le'rum logo in five colourways">
+      <figcaption>Five approved colourways. The mark never gains a second colour, an outline or a shadow &mdash; only the ground changes.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 08 REFLECTION ============ -->
+<section id="reflection" class="dark dark-2">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Reflection</h2></div>
+    <div class="stack">
+      <div class="take">
+        <h3>Weight did the work.</h3>
+        <p>The &ldquo;old money&rdquo; read came from stroke thickness and one balanced gap &mdash; not a crest, not a flourish. Because the mark is just a flat shape, it drops onto a wax seal, a chest and a shopfront with no redraw.</p>
+      </div>
+      <div class="take">
+        <h3>One mark, four surfaces.</h3>
+        <p>Print, thread, wax and pixels each wanted a different reduction. Building the circle badge and the filled icon early &mdash; instead of stretching the full lockup &mdash; kept the small sizes honest.</p>
+      </div>
+      <div class="take">
+        <h3>What I&rsquo;d do differently: test the script at garment scale sooner.</h3>
+        <p>Palace Script MT is delicate. At embroidery and woven-label sizes its thin strokes start to break up; a heavier weight or a redrawn alternate for small use should have been settled before the applications were built.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <!-- EDIT name -->
+    <span class="f-name">Dan Sungvornveshapan</span>
+    <!-- EDIT role -->
+    <span>Identity design</span>
+    <span>Le&rsquo;rum &mdash; Brand Identity, 2025</span>
+    <a href="#top">Back to top &uarr;</a>
+  </div>
+</footer>
+
+<script>
+/* In-page anchor bridge. Standalone: normal smooth scroll. Embedded in the
+   portfolio (a non-scrolling srcdoc iframe, same-origin): scroll the PARENT
+   window instead, since the iframe itself has no scroll of its own. Fixes
+   the footer "Back to top" link (and the pill-nav, if ever shown). */
+(function () {
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault();
+    var id = (a.getAttribute('href') || '').slice(1);
+    var t = id ? document.getElementById(id) : null;
+    var embedded = false;
+    try { embedded = window.parent && window.parent !== window; } catch (_) {}
+    if (embedded) {
+      try {
+        var fe = window.frameElement;
+        var base = (window.parent.pageYOffset || window.parent.scrollY || 0) + (fe ? fe.getBoundingClientRect().top : 0);
+        var y = (id && t) ? base + t.getBoundingClientRect().top - 96 : base;
+        window.parent.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        return;
+      } catch (_) {}
+    }
+    if (!id) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+</script>
+
+<a href="index.html#projects" id="__back_to_portfolio" style="position:fixed;bottom:18px;left:18px;z-index:2147483647;display:inline-flex;align-items:center;gap:8px;font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f2f0e9;background:rgba(15,15,14,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:11px 18px 9px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)">&#8592; All projects</a>
+<!-- dc-section-nav (injected — main-site-style top nav: back-link + this page's sections, scroll-spied) -->
+<script>
+(function(){
+  if(document.getElementById('dc-secnav'))return;
+  var SKIP={top:1,hero:1,intro:1,home:1};
+  var ACR={ui:'UI',ux:'UX',ia:'IA',cv:'CV',faq:'FAQ',api:'API'};
+
+  // pages with too many sections for a nav bar — show a curated subset.
+  // entry is an id (keeps its own label) or [id, 'Custom label'] (merged group).
+  var CURATE={
+    'case-uplatform.html':[
+      ['objective','Overview'],['moodboard','Direction'],'wireframes',
+      ['system','System'],['entry','UI'],['handoff','Handoff']
+    ],
+    'case-cmcc-chance.html':[
+      'context','problem','process',['ia','Flow & IA'],
+      ['system','Design System'],['mobile','UI'],'testing'
+    ],
+    'case-whx-korea.html':          [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Identity'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-kseafood-popup.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-jeju-olive-flounder.html':[['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Zoning'],['s07','Design'],['s08','Outcome']],
+    'case-k-food-night.html':       [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','Venue'],['s07','Design'],['s08','Outcome']],
+    'case-trafs-kseafood.html':     [['s01','Objective'],['s02','Context'],['s04','Concept'],['s05','System'],['s07','Design'],['s08','Outcome']]
+  };
+  function curate(els){
+    var key=(location.pathname.split('/').pop()||'').toLowerCase();
+    var spec=CURATE[key]; if(!spec)return els;
+    var byId={}; els.forEach(function(e){ byId[e.id]=e; });
+    var out=[];
+    spec.forEach(function(row){
+      var arr=Array.isArray(row), id=arr?row[0]:row, el=byId[id];
+      if(!el)return;
+      if(arr) el.setAttribute('data-screen-label',row[1]);
+      out.push(el);
+    });
+    return out.length>=2?out:els;
+  }
+  var FONT="600 12px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+  var CSS=[
+    '#dc-secnav{position:fixed;top:0;left:0;right:0;z-index:2147483200;display:flex;align-items:center;justify-content:space-between;gap:20px;',
+      'padding:clamp(14px,2.4vw,28px) clamp(20px,6vw,120px);pointer-events:none;mix-blend-mode:difference;color:#fff;font:'+FONT+';letter-spacing:.16em;text-transform:uppercase}',
+    '#dc-secnav a{color:inherit;text-decoration:none}',
+    '#dc-secnav .dc-sn-back{pointer-events:auto;display:inline-flex;align-items:center;gap:9px;white-space:nowrap;flex:none;position:relative;padding:4px 0}',
+    '#dc-secnav .dc-sn-back svg{width:13px;height:13px;flex:none}',
+    '#dc-secnav ol{pointer-events:auto;list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:clamp(12px,2vw,30px);overflow-x:auto;scrollbar-width:none;max-width:72vw}',
+    '#dc-secnav ol::-webkit-scrollbar{display:none}',
+    '#dc-secnav ol a{position:relative;display:block;padding:5px 0;white-space:nowrap;opacity:.5;transition:opacity .2s ease}',
+    '#dc-secnav ol a:hover{opacity:1}',
+    '#dc-secnav ol a.on{opacity:1}',
+    '#dc-secnav .dc-sn-back::after,#dc-secnav ol a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .38s cubic-bezier(0.16,1,0.3,1)}',
+    '#dc-secnav .dc-sn-back:hover::after,#dc-secnav ol a:hover::after,#dc-secnav ol a.on::after{transform:scaleX(1);transform-origin:left}',
+    '#dc-secnav .dc-sn-menu{display:none}',
+    'html{scroll-padding-top:66px}',
+    '#__back_to_portfolio{display:none!important}',
+    '#dc-secnav{transition:color .3s ease,background-color .3s ease}',
+    // frosted once the hero has scrolled away (scroll handler adds .scrolled)
+    '#dc-secnav.scrolled{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.86);',
+      '-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+    '#dc-secnav.scrolled ol a{opacity:.45}#dc-secnav.scrolled ol a.on{opacity:1}',
+    // ---- MOBILE: the cramped scrolling row becomes a dropdown menu ----
+    '@media (max-width:720px){',
+      '#dc-secnav{font-size:11px;letter-spacing:.09em;padding-left:16px;padding-right:16px;gap:10px}',
+      '#dc-secnav .dc-sn-back span{display:none}',
+      // toggle button showing the current section + a chevron
+      '#dc-secnav .dc-sn-menu{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;flex:none;',
+        'max-width:56vw;background:none;border:0;margin:0;padding:6px 0;cursor:pointer;',
+        'font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}',
+      '#dc-secnav .dc-sn-cur{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '#dc-secnav .dc-sn-menu svg{width:11px;height:11px;flex:none;transition:transform .2s ease}',
+      '#dc-secnav.open .dc-sn-menu svg{transform:rotate(180deg)}',
+      // opening (or scrolling) frosts the bar so the panel reads on any page
+      '#dc-secnav.open{mix-blend-mode:normal;color:#141413;background:rgba(250,249,246,.92);',
+        '-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(17,17,16,.07)}',
+      // the <ol> is now a dropdown panel anchored under the bar
+      '#dc-secnav ol{position:absolute;top:calc(100% - 2px);right:clamp(12px,4vw,18px);left:auto;',
+        'flex-direction:column;align-items:stretch;gap:0;padding:5px;max-width:min(78vw,300px);',
+        'max-height:min(68vh,440px);overflow-y:auto;overflow-x:visible;mask-image:none;-webkit-mask-image:none;',
+        'background:rgba(252,251,248,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);',
+        'border:1px solid rgba(17,17,16,.1);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.2);',
+        'opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;',
+        'transition:opacity .18s ease,transform .18s ease}',
+      '#dc-secnav.open ol{opacity:1;transform:none;pointer-events:auto}',
+      '#dc-secnav ol a{color:#141413;opacity:.55;padding:11px 13px 10px;border-radius:9px;white-space:normal}',
+      '#dc-secnav ol a::after{display:none}',
+      '#dc-secnav ol a.on{opacity:1;background:rgba(17,17,16,.06)}',
+    '}',
+    '@media print{#dc-secnav{display:none}}'
+  ].join('');
+
+  function injectCSS(){
+    if(document.getElementById('dc-secnav-css'))return;
+    var st=document.createElement('style'); st.id='dc-secnav-css'; st.textContent=CSS;
+    (document.head||document.documentElement).appendChild(st);
+  }
+
+  function collect(){
+    var s=[].slice.call(document.querySelectorAll('section[id]'))
+      .filter(function(e){return !SKIP[String(e.id).toLowerCase()];});
+    if(s.length>=2)return s;
+    // packed pages have no <section> wrappers — fall back to h2s, only when they
+    // read like section names (short, few words, no sentence punctuation)
+    var hs=[].slice.call(document.querySelectorAll('h2')).filter(function(h){
+      var t=h.textContent.trim();
+      return h.offsetParent!==null && t.length>1 && t.length<=26
+        && t.split(/\s+/).length<=3 && !/[.:!?,;]$/.test(t);
+    });
+    return (hs.length>=2 && hs.length<=12)?hs:null;
+  }
+
+  function titlecase(id){
+    if(id.length<=3)return id.toUpperCase();
+    return id.split(/[-_\s]+/).map(function(w){
+      return ACR[w.toLowerCase()]||(w.charAt(0).toUpperCase()+w.slice(1));
+    }).join(' ');
+  }
+  function label(el){
+    var l=el.getAttribute('data-screen-label'); if(l)return l;
+    if(/^H[1-6]$/.test(el.tagName))return el.textContent.trim();
+    var id=String(el.id);
+    if(/^(s|sec|section|dcs|part|block)?[-_]?\d+$/i.test(id)){
+      var h=el.querySelector('h2,h3');
+      if(h){ var ht=h.textContent.trim(); if(ht.length>1 && ht.length<=40) return ht; }
+    }
+    return titlecase(id);
+  }
+
+  function backHref(){
+    var b=document.getElementById('__back_to_portfolio');
+    return (b && b.getAttribute('href')) || 'index.html#projects';
+  }
+
+  function build(els){
+    els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
+    injectCSS();
+    var ex=document.querySelector('.dc-topnav'); if(ex) ex.style.display='none';
+
+    var nav=document.createElement('nav'); nav.id='dc-secnav'; nav.setAttribute('aria-label','Case study navigation');
+
+    var back=document.createElement('a');
+    back.className='dc-sn-back'; back.href=backHref();
+    back.innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All projects</span>';
+    nav.appendChild(back);
+
+    // mobile-only toggle: shows the current section + a chevron, opens the panel
+    var menu=document.createElement('button');
+    menu.className='dc-sn-menu'; menu.type='button'; menu.setAttribute('aria-label','Jump to section');
+    menu.innerHTML='<span class="dc-sn-cur"></span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var curLabel=menu.querySelector('.dc-sn-cur');
+    menu.addEventListener('click',function(e){ e.stopPropagation(); nav.classList.toggle('open'); });
+    nav.appendChild(menu);
+
+    var ol=document.createElement('ol');
+    var items=els.map(function(el){
+      var a=document.createElement('a'); a.href='#'+el.id; a.textContent=label(el);
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        nav.classList.remove('open');
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+        try{history.replaceState(null,'','#'+el.id);}catch(_){}
+        lockUntil=Date.now()+800;
+        setActive(items[idxOf(el)]);
+      });
+      var li=document.createElement('li'); li.appendChild(a); ol.appendChild(li);
+      return {a:a,el:el};
+    });
+    nav.appendChild(ol);
+    document.body.appendChild(nav);
+
+    // tap outside closes the panel
+    document.addEventListener('click',function(e){
+      if(nav.classList.contains('open') && !nav.contains(e.target)) nav.classList.remove('open');
+    });
+
+    var raf,cur,lockUntil=0;
+    function idxOf(el){ for(var i=0;i<items.length;i++) if(items[i].el===el) return i; return 0; }
+    function setActive(pick){
+      if(pick===cur)return; cur=pick;
+      items.forEach(function(it){ it.a.classList.toggle('on',it===pick); });
+      if(pick) curLabel.textContent = pick.a.textContent;
+      // desktop only: nudge the active chip into view if the row overflows
+      if(pick && window.innerWidth>720){
+        var a=pick.a, l=a.offsetLeft, r=l+a.offsetWidth, vl=ol.scrollLeft, vr=vl+ol.clientWidth;
+        if(l<vl+16) ol.scrollTo({left:Math.max(0,l-16),behavior:'smooth'});
+        else if(r>vr-16) ol.scrollTo({left:r-ol.clientWidth+16,behavior:'smooth'});
+      }
+    }
+    var frosted=false;
+    function sync(){
+      if(window.innerWidth>720) nav.classList.remove('open');   // never stuck open on desktop
+      var past=window.scrollY>window.innerHeight*0.85;
+      if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
+      if(Date.now()<lockUntil)return;
+      var y=window.scrollY+90, pick=items[0];
+      items.forEach(function(it){ if(it.el.getBoundingClientRect().top+window.scrollY<=y) pick=it; });
+      if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) pick=items[items.length-1];
+      setActive(pick);
+    }
+    addEventListener('scroll',function(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
+    addEventListener('resize',sync);
+    sync();
+  }
+
+  var tries=0;
+  (function boot(){
+    if(document.getElementById('dc-secnav'))return;
+    var els=collect();
+    if(!els){ if(++tries<20) setTimeout(boot,250); return; }
+    build(curate(els));
+  })();
+})();
+</script>
+</body>
+</html>
