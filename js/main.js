@@ -232,7 +232,8 @@
 
     // pointer position + smoothed render position + travel direction
     var tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-    var mx = tx, my = ty, px = tx, py = ty;
+    var mx = tx, my = ty, px = tx, py = ty, ptx = tx, pty = ty;
+    var accx = 0, accy = 0;                      // leaky-integrated pointer travel
     var ang = -Math.PI * 0.75, targAng = ang;   // radians
     var down = false, overCf = false, overPt = false;
 
@@ -262,38 +263,71 @@
 
     /* ---- thruster trail (canvas) ---- */
     var ctx = trailC.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cw = 0, ch = 0;   // the canvas's CSS-pixel display size (its own coord space)
     function sizeCanvas() {
-      trailC.width = window.innerWidth * dpr;
-      trailC.height = window.innerHeight * dpr;
+      // The backing store MUST match the element's rendered CSS size, or the
+      // drawing is scaled: `width:100%` on a fixed canvas excludes the scrollbar
+      // gutter while window.innerWidth includes it, so sizing the buffer from
+      // innerWidth squashed the whole trail ~15px toward x=0 (worse the further
+      // right the pointer was) while the ship element stayed put.
+      cw = trailC.clientWidth  || window.innerWidth;
+      ch = trailC.clientHeight || window.innerHeight;
+      trailC.width  = Math.round(cw * dpr);
+      trailC.height = Math.round(ch * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     sizeCanvas();
     window.addEventListener('resize', sizeCanvas);
     var parts = [];
     var NOZZLE = 27;   // px from the nose down the body to the thruster
-    // Each particle only carries `back` (px behind the nozzle) in the SHIP'S
-    // frame and is redrawn from the ship's CURRENT position + axis every frame —
-    // NO sideways component at all, so the exhaust is a column dead-centre
-    // behind the nose whatever the mouse did to get there.
-    function emit() {
+    // Each particle carries `back` (px behind the nozzle) plus the astern axis
+    // FROZEN at the moment it was fired — it's redrawn from the ship's CURRENT
+    // nose each frame but keeps its birth direction, so a heading wobble (the
+    // end-of-drag settle, a turn) can't swing the existing plume sideways.
+    function emit(ax, ay) {
       parts.push({
         back: Math.random() * 4,
         grow: 2.6 + Math.random() * 2.3,
         life: 1, decay: 0.05 + Math.random() * 0.035,
-        r: 3.7 + Math.random() * 3.0
+        r: 3.7 + Math.random() * 3.0,
+        bx: ax, by: ay
       });
       if (parts.length > 110) parts.shift();
     }
 
     (function loop() {
+      // keep the backing store matched to the rendered size — a scrollbar
+      // appearing/disappearing after load changes clientWidth without a resize
+      // event, and any mismatch scales (shifts) the whole trail
+      if (trailC.clientWidth !== cw || trailC.clientHeight !== ch) sizeCanvas();
+
       // follow with a heavy lag — the ship drifts well behind the pointer
       px = mx; py = my;
+      var pdx = tx - ptx, pdy = ty - pty;   // POINTER motion since last frame
+      ptx = tx; pty = ty;
       mx += (tx - mx) * 0.17;
       my += (ty - my) * 0.17;
       var dx = mx - px, dy = my - py, sp = Math.sqrt(dx * dx + dy * dy);
 
-      // slowly bank toward the direction of travel; hold heading when idle
-      if (sp > 0.2) targAng = Math.atan2(dy, dx);
+      // Heading = the direction the POINTER has actually travelled, not the
+      // per-frame delta. A per-frame delta on a SLOW drag is mostly hand
+      // jitter (±1-2px), so atan2 of it swings wildly and drags the nose (and
+      // the plume) off-axis. Instead leak-integrate the pointer motion and only
+      // re-aim once it has covered a real distance — jitter is zero-mean so it
+      // never accumulates past the threshold; a genuine drag always does.
+      accx = accx * 0.9 + pdx;
+      accy = accy * 0.9 + pdy;
+      var acc = Math.sqrt(accx * accx + accy * accy);
+      if (acc > 9) {
+        var adx = Math.abs(accx), ady = Math.abs(accy), ex = accx, ey = accy;
+        // Snap to the nearer cardinal axis: within ~19deg of it the minor
+        // component is zeroed (a "vertical" drag gives an exactly vertical
+        // plume), 19-35deg it ramps back, past 35deg the true angle stands.
+        if (ady >= adx) { var r = adx / ady; ex = accx * Math.min(1, Math.max(0, (r - 0.35) / 0.35)); }
+        else            { var r = ady / adx; ey = accy * Math.min(1, Math.max(0, (r - 0.35) / 0.35)); }
+        targAng = Math.atan2(ey, ex);
+        accx = 0; accy = 0;
+      }
       var d = ((targAng - ang + Math.PI * 3) % (Math.PI * 2)) - Math.PI;   // shortest turn
       ang += d * (Math.abs(d) > 0.9 ? 0.26 : 0.14);
       var offAxis = Math.abs(((targAng - ang + Math.PI * 3) % (Math.PI * 2)) - Math.PI);
@@ -301,18 +335,17 @@
       cursor.style.transform = 'translate(' + mx.toFixed(2) + 'px,' + my.toFixed(2) + 'px)';
       ship.style.transform = 'rotate(' + (ang * 180 / Math.PI + NOSE_DEG).toFixed(1) + 'deg)';
 
-      // fire when roughly aligned — the plume is drawn on the current axis so it
-      // can't spray sideways, but easing it off during a hard bank reads as the
-      // ship throttling down to turn
-      if (sp > 0.6 && offAxis < 0.7) {
-        var n = Math.min(3, 1 + (sp * 0.22) | 0);
-        for (var i = 0; i < n; i++) emit();
-      }
-
       // unit axis straight astern of the CURRENT nose
       var bx = Math.cos(ang + Math.PI), by = Math.sin(ang + Math.PI);
 
-      ctx.clearRect(0, 0, trailC.width, trailC.height);
+      // fire only once the nose has settled onto the heading — mid-turn frames
+      // produce no exhaust, so each puff is born on the true travel axis
+      if (sp > 0.6 && offAxis < 0.4) {
+        var n = Math.min(3, 1 + (sp * 0.22) | 0);
+        for (var i = 0; i < n; i++) emit(bx, by);
+      }
+
+      ctx.clearRect(0, 0, cw, ch);
       ctx.globalCompositeOperation = 'lighter';
       for (var j = parts.length - 1; j >= 0; j--) {
         var p = parts[j];
@@ -320,8 +353,8 @@
         p.life -= p.decay;
         if (p.life <= 0) { parts.splice(j, 1); continue; }
         var dist = NOZZLE + p.back;
-        var pxp = mx + bx * dist;   // dead-centre on the ship axis
-        var pyp = my + by * dist;
+        var pxp = mx + p.bx * dist;   // current nose, each puff's frozen axis
+        var pyp = my + p.by * dist;
         var rad = p.r * (0.35 + p.life * 0.9);
         var g = ctx.createRadialGradient(pxp, pyp, 0, pxp, pyp, rad);
         var a = p.life;

@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jeju Olive Flounder — Exhibition Case Study</title>
+<link rel="canonical" href="https://www.sdn-portfolio.me/case-jeju-olive-flounder.html" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Dan Sungvornveshapan" />
+<meta property="og:url" content="https://www.sdn-portfolio.me/case-jeju-olive-flounder.html" />
+<meta property="og:title" content="Jeju Olive Flounder — Exhibition Case Study" />
+<meta property="og:description" content="A case study by Dan Sungvornveshapan &mdash; UX/UI &amp; Spatial Experience Designer." />
+<meta property="og:image" content="https://www.sdn-portfolio.me/assets/brand/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="SDN monogram &mdash; Dan Sungvornveshapan" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Jeju Olive Flounder — Exhibition Case Study" />
+<meta name="twitter:description" content="A case study by Dan Sungvornveshapan &mdash; UX/UI &amp; Spatial Experience Designer." />
+<meta name="twitter:image" content="https://www.sdn-portfolio.me/assets/brand/og-image.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -269,15 +283,14 @@ a:hover { color: #17181c; }
   });
 })();
 </script>
-<a href="index.html#projects" id="__back_to_portfolio" style="position:fixed;bottom:18px;left:18px;z-index:2147483647;display:inline-flex;align-items:center;gap:8px;font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f2f0e9;background:rgba(15,15,14,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:11px 18px 9px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)">&#8592; All projects</a>
-<!-- dc-section-nav (injected — main-site-style top nav: back-link + this page's sections, scroll-spied) -->
+<a href="index.html#projects" id="__back_to_portfolio" style="position:fixed;bottom:18px;left:18px;z-index:2147483647;display:inline-flex;align-items:center;gap:8px;font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f2f0e9;background:rgba(15,15,14,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:11px 18px 9px;border-radius:999px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.35)">&#8592; All projects</a><!-- dc-section-nav (injected โ€” main-site-style top nav: back-link + this page's sections, scroll-spied) -->
 <script>
 (function(){
   if(document.getElementById('dc-secnav'))return;
   var SKIP={top:1,hero:1,intro:1,home:1};
   var ACR={ui:'UI',ux:'UX',ia:'IA',cv:'CV',faq:'FAQ',api:'API'};
 
-  // pages with too many sections for a nav bar — show a curated subset.
+  // pages with too many sections for a nav bar โ€” show a curated subset.
   // entry is an id (keeps its own label) or [id, 'Custom label'] (merged group).
   var CURATE={
     'case-uplatform.html':[
@@ -369,7 +382,7 @@ a:hover { color: #17181c; }
     var s=[].slice.call(document.querySelectorAll('section[id]'))
       .filter(function(e){return !SKIP[String(e.id).toLowerCase()];});
     if(s.length>=2)return s;
-    // packed pages have no <section> wrappers — fall back to h2s, only when they
+    // packed pages have no <section> wrappers โ€” fall back to h2s, only when they
     // read like section names (short, few words, no sentence punctuation)
     var hs=[].slice.call(document.querySelectorAll('h2')).filter(function(h){
       var t=h.textContent.trim();
@@ -401,10 +414,52 @@ a:hover { color: #17181c; }
     return (b && b.getAttribute('href')) || 'index.html#projects';
   }
 
+  // Hide any section nav the page ships itself so it can't double up with
+  // #dc-secnav (some case pages โ€” e.g. a-journey โ€” have their own sticky <nav>
+  // with the same section links, which stacked on top of the injected bar).
+  function hideNativeNavs(els){
+    var want={}; els.forEach(function(e){ want['#'+e.id]=1; });
+    var bars=document.querySelectorAll('nav, header, .dc-topnav');
+    [].forEach.call(bars,function(b){
+      if(!b || b.id==='dc-secnav') return;
+      if(b.classList && b.classList.contains('dc-topnav')){ b.style.setProperty('display','none','important'); return; }
+      var cs; try{ cs=getComputedStyle(b); }catch(_){ return; }
+      if(cs.position!=='fixed' && cs.position!=='sticky') return;
+      var hit=0;
+      [].forEach.call(b.querySelectorAll('a[href^="#"]'),function(a){
+        var h=a.getAttribute('href');
+        if(want[h] || h==='#top' || h==='#hero' || h==='#intro') hit++;
+      });
+      if(hit>=2) b.style.setProperty('display','none','important');
+    });
+  }
+
+  // Per-page collisions the generic logic can't catch. a-journey's hero has a
+  // masthead strip (project title + category) pinned to the very top, which the
+  // fixed bar sits on top of โ€” nudge that strip down so it clears the bar.
+  function fixPageQuirks(){
+    var f=(location.pathname.split('/').pop()||'').toLowerCase();
+    if(f==='case-a-journey.html'){
+      var hdr=document.querySelector('#top header')||document.querySelector('header');
+      if(!hdr)return;
+      [].slice.call(hdr.querySelectorAll('div')).some(function(d){
+        var s=getComputedStyle(d);
+        if(s.display!=='flex'||s.justifyContent!=='space-between')return false;
+        if(d.getBoundingClientRect().top>90)return false;
+        if(d.textContent.replace(/\s+/g,' ').trim().length>90)return false;
+        if(d.__dcPushed)return true;
+        d.__dcPushed=1;
+        d.style.paddingTop=(parseFloat(s.paddingTop||0)+56)+'px';
+        return true;
+      });
+    }
+  }
+
   function build(els){
     els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
     injectCSS();
-    var ex=document.querySelector('.dc-topnav'); if(ex) ex.style.display='none';
+    hideNativeNavs(els);
+    fixPageQuirks();
 
     var nav=document.createElement('nav'); nav.id='dc-secnav'; nav.setAttribute('aria-label','Case study navigation');
 
@@ -456,8 +511,9 @@ a:hover { color: #17181c; }
         else if(r>vr-16) ol.scrollTo({left:r-ol.clientWidth+16,behavior:'smooth'});
       }
     }
-    var frosted=false;
+    var frosted=false, sweeps=0;
     function sync(){
+      if(sweeps<8){ sweeps++; hideNativeNavs(els); fixPageQuirks(); }   // catch a nav / strip the page reveals late
       if(window.innerWidth>720) nav.classList.remove('open');   // never stuck open on desktop
       var past=window.scrollY>window.innerHeight*0.85;
       if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
@@ -470,6 +526,11 @@ a:hover { color: #17181c; }
     addEventListener('scroll',function(){ cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
     addEventListener('resize',sync);
     sync();
+
+    // packed pages unpack their DOM late โ€” the page's own nav / masthead can
+    // appear after build() ran, so sweep again a couple of times.
+    setTimeout(function(){ hideNativeNavs(els); fixPageQuirks(); },600);
+    setTimeout(function(){ hideNativeNavs(els); fixPageQuirks(); },1600);
   }
 
   var tries=0;

@@ -361,9 +361,12 @@ body.intro-lock .nav { opacity: 0; pointer-events: none; }
 }
 .cursor-ship {
   position: absolute;
-  left: -30px; top: -13px;         /* the rocket's nose apex (~50% / 21% of the art) sits on the point */
+  /* the rocket's solid centre-line rasterises at x≈29.5 of the 60px box (the
+     art sits a touch left of box-centre), so offset by 29.5 — not 30 — to land
+     the rocket's axis exactly on the pointer point where the plume is drawn */
+  left: -29.5px; top: -13px;
   width: 60px; height: 60px;
-  transform-origin: 30px 13px;      /* rotate about the nose — centred on the ship's axis */
+  transform-origin: 29.5px 13px;    /* rotate about the nose, on the ship's axis */
   will-change: transform;
 }
 .cursor-layer {
@@ -415,13 +418,16 @@ body.intro-lock .nav { opacity: 0; pointer-events: none; }
   color: #fff;
 }
 .nav a { color: inherit; }
-.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo { display: flex; align-items: center; gap: 9px; }
 .nav-logo-mark {
   display: block;
-  height: 18px;                 /* nav-mark.png is cropped tight to the art */
+  /* match the wordmark's presence: cap height is ~8px, so 13px keeps the mark a
+     touch taller than the caps (a normal lockup) instead of towering over them */
+  height: 12px;                 /* nav-mark.png is cropped tight to the art */
   width: auto;
-  /* nudge to the wordmark's optical centre (uppercase text sits high in its line) */
-  transform: translateY(-0.5px);
+  /* the flex row centres the mark's BOX on the line box; the caps sit ~1px above
+     that centre, so pull the mark up onto the caps' optical midline */
+  transform: translateY(-1px);
   /* the mark art is black; invert it to white so it rides the nav's
      mix-blend-mode: difference the same way the wordmark text does */
   filter: invert(1);
@@ -458,6 +464,7 @@ body.intro-lock .nav { opacity: 0; pointer-events: none; }
 
 @media (max-width: 640px) {
   .nav-logo-name { display: none; }
+  .nav-logo-mark { height: 15px; transform: none; }   /* mark stands alone — let it read a bit larger */
   .nav-links { gap: 18px; }
 }
 
