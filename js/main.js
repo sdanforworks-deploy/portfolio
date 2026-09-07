@@ -497,21 +497,26 @@
   function initNameGate() {
     var nameEl = document.querySelector('.hero-name');
     if (!nameEl || reduce) return;
-    var chars = [].slice.call(nameEl.querySelectorAll('.ch'));
-    if (!chars.length) return;
 
-    var N = chars.length;
+    var chars = [], N = 0, FILL_PX = 760;
     var progress = 0;                       // 0..1
     var armed = true;
-    var FILL_PX = Math.max(760, N * 60);    // wheel px to fill the whole name
 
+    function rebuild() {                    // re-read .ch after a language swap
+      chars = [].slice.call(nameEl.querySelectorAll('.ch'));
+      N = chars.length;
+      FILL_PX = Math.max(760, N * 60);      // wheel px to fill the whole name
+      apply();
+    }
     function apply() {
       for (var i = 0; i < N; i++) {
         var local = (progress * N) - i;     // >=1 lit, <=0 not yet
         chars[i].style.opacity = (0.1 + 0.9 * Math.max(0, Math.min(1, local))).toFixed(3);
       }
     }
-    apply();
+    rebuild();
+    if (!N) return;
+    window.addEventListener('langchange', rebuild);
 
     function atTop() {
       return (window.pageYOffset || document.documentElement.scrollTop || 0) <= 1;
@@ -613,24 +618,25 @@
         if (!caption) return;
         var card = cards[idx];
         var no = ('0' + (idx + 1)).slice(-2);
-        var scope = (card.getAttribute('data-scope') || '').split('·')
+        var scope = (dattr(card, 'scope')).split('·')
           .map(function (s) { return s.trim(); }).filter(Boolean)
           .map(function (s) { return '<span>' + kern(s) + '</span>'; }).join('');
         // project link -> the real case-study page (slug derived from the cover filename)
         var img = card.querySelector('img');
         var slug = img ? (img.getAttribute('src') || '').split('/').pop().replace(/\.[a-z0-9]+$/i, '') : '';
         var link = slug
-          ? '<a class="cf-link" href="case-' + slug + '.html" data-cursor>View project <span aria-hidden="true">&#8594;</span></a>'
+          ? '<a class="cf-link" href="case-' + slug + '.html" data-cursor>' + tr('View project', 'ดูโปรเจกต์') + ' <span aria-hidden="true">&#8594;</span></a>'
           : '';
-        var org = card.getAttribute('data-org');
+        var org = dattr(card, 'org');
         caption.innerHTML =
           '<span class="cf-no">' + no + '</span>' +
-          '<h3 class="cf-title">' + kern(card.getAttribute('data-title') || '') + '</h3>' +
+          '<h3 class="cf-title">' + kern(dattr(card, 'title')) + '</h3>' +
           (org ? '<p class="cf-org">' + org + '</p>' : '') +
-          '<p class="cf-desc">' + (card.getAttribute('data-desc') || '') + '</p>' +
+          '<p class="cf-desc">' + (dattr(card, 'desc')) + '</p>' +
           (scope ? '<p class="cf-scope">' + scope + '</p>' : '') +
           link;
       }
+      window.addEventListener('langchange', function () { renderCaption(selected < 0 ? 0 : selected); });
 
       function syncDots(idx) {
         if (!dotsWrap) return;
@@ -769,10 +775,10 @@
       projects:   document.getElementById('view-projects'),
       experience: document.getElementById('view-experience')
     };
-    var homeTitle = document.title;
+    var homeTitle = document.title;   // "Digital Design & Experience" — kept in both languages
     function titleFor(name) {
       var el = VIEWS[name];
-      return (el && el.getAttribute('data-page-title')) || homeTitle;
+      return (el && dattr(el, 'page-title')) || homeTitle;
     }
     var current = 'home';
 
@@ -834,6 +840,7 @@
     });
 
     window.addEventListener('hashchange', routeFromHash);
+    window.__retitle = function () { document.title = titleFor(current); };
     return { show: show, routeFromHash: routeFromHash, current: function () { return current; } };
   }
 
@@ -853,9 +860,69 @@
   }
 
   /* ====================================================================
+     LANGUAGE  (EN / TH)
+     Every translatable element carries its Thai copy in `data-th` (the English
+     stays as the natural content). JS-rendered bits (carousel captions, page
+     titles) read a `-th` suffixed data-attr. Choice persists in localStorage;
+     an early inline script in the HTML sets <html lang> before first paint so
+     the Thai font doesn't flash.
+     ==================================================================== */
+  function currentLang() { return document.documentElement.lang === 'th' ? 'th' : 'en'; }
+  // pick a data-attr value for the active language: data-xxx-th falls back to data-xxx
+  function dattr(el, name) {
+    if (!el) return '';
+    var th = currentLang() === 'th' && el.getAttribute('data-' + name + '-th');
+    return th || el.getAttribute('data-' + name) || '';
+  }
+  function tr(en, th) { return currentLang() === 'th' ? th : en; }
+
+  function initLang() {
+    var KEY = 'sdn-lang';
+    var btn = document.querySelector('.nav-lang');
+
+    function apply(lang, save) {
+      lang = lang === 'th' ? 'th' : 'en';
+      var th = lang === 'th';
+      document.documentElement.lang = lang;
+      document.documentElement.setAttribute('data-lang', lang);
+
+      document.querySelectorAll('[data-th]').forEach(function (el) {
+        if (el.__en == null) el.__en = el.innerHTML;
+        el.innerHTML = th ? el.getAttribute('data-th') : el.__en;
+      });
+      // swapped attributes: data-th-attr="alt|content|..."  data-th-<attr>="value"
+      document.querySelectorAll('[data-th-attr]').forEach(function (el) {
+        el.getAttribute('data-th-attr').split(/\s+/).forEach(function (a) {
+          var k = '__' + a;
+          if (el[k] == null) el[k] = el.getAttribute(a) || '';
+          var v = th ? el.getAttribute('data-th-' + a) : el[k];
+          if (v != null) el.setAttribute(a, v);
+        });
+      });
+
+      if (btn) btn.querySelectorAll('[data-lang]').forEach(function (s) {
+        s.classList.toggle('is-on', s.getAttribute('data-lang') === lang);
+      });
+      if (save !== false) { try { localStorage.setItem(KEY, lang); } catch (e) {} }
+
+      if (typeof window.__retitle === 'function') window.__retitle();
+      window.dispatchEvent(new CustomEvent('langchange', { detail: { lang: lang } }));
+    }
+
+    if (btn) btn.addEventListener('click', function () {
+      apply(currentLang() === 'th' ? 'en' : 'th');
+    });
+
+    // <html lang> was already set by the inline bootstrap; sync the rest of the UI
+    apply(currentLang(), false);
+    window.__setLang = apply;
+  }
+
+  /* ====================================================================
      BOOT  (called once the intro clip is done)
      ==================================================================== */
   function boot() {
+    initLang();
     initLenis();
     if (lenis && lenis.scrollTo) lenis.scrollTo(0, { immediate: true, force: true });
     router = initRouter();

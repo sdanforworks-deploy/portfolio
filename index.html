@@ -22,10 +22,30 @@
 <meta name="twitter:description" content="UX/UI &amp; Spatial Experience Designer." />
 <meta name="twitter:image" content="https://www.sdn-portfolio.me/assets/brand/og-image.jpg" />
 
+<link rel="alternate" hreflang="en" href="https://www.sdn-portfolio.me/?lang=en" />
+<link rel="alternate" hreflang="th" href="https://www.sdn-portfolio.me/?lang=th" />
+<link rel="alternate" hreflang="x-default" href="https://www.sdn-portfolio.me/" />
+
 <link rel="icon" href="assets/brand/favicon.png" type="image/png" sizes="512x512" />
 <link rel="icon" href="assets/brand/favicon-32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
-<link rel="stylesheet" href="css/style.css?v=131" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600&display=swap" />
+<link rel="stylesheet" href="css/style.css?v=134" />
+<script>
+  /* set the language before first paint so the Thai font doesn't flash */
+  (function () {
+    try {
+      var q = (location.search.match(/[?&]lang=(en|th)/) || [])[1];
+      var l = q || localStorage.getItem('sdn-lang') ||
+              (/^th\b/i.test(navigator.language || '') ? 'th' : 'en');
+      document.documentElement.lang = l;
+      document.documentElement.setAttribute('data-lang', l);
+      if (q) localStorage.setItem('sdn-lang', q);
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body class="intro-lock">
 
@@ -34,7 +54,7 @@
   <video class="intro-video" id="introVideo" muted playsinline preload="auto">
     <source src="assets/bg/intro.mp4" type="video/mp4" />
   </video>
-  <button class="intro-skip" id="introSkip" type="button" data-cursor>Skip intro</button>
+  <button class="intro-skip" id="introSkip" type="button" data-cursor data-th="ข้ามอินโทร">Skip intro</button>
 </div>
 <!-- opaque paper layer that covers the (never-hidden) intro clip on the sub-pages -->
 <div class="sub-cover" aria-hidden="true"></div>
@@ -42,7 +62,7 @@
 <!-- ============================ LOADING ============================ -->
 <div class="loader negative" id="loader" aria-hidden="true">
   <div class="loader-inner">
-    <span class="loader-label"><span class="kd">D</span>an&nbsp;Sungvornveshapan</span>
+    <span class="loader-label" data-th="แดน&nbsp;สังวรเวชภัณฑ์"><span class="kd">D</span>an&nbsp;Sungvornveshapan</span>
     <span class="loader-count" id="loaderCount">000</span>
   </div>
   <div class="loader-bar"><span id="loaderBar"></span></div>
@@ -52,7 +72,7 @@
     <span class="launch-line launch-line-l"></span>
     <span class="launch-line launch-line-r"></span>
   </div>
-  <p class="launch-title" aria-hidden="true">You&rsquo;ve<br />Entered<br />My&nbsp;Orbit</p>
+  <p class="launch-title" aria-hidden="true" data-th="คุณเข้าสู่<br />วงโคจร<br />ของผมแล้ว">You&rsquo;ve<br />Entered<br />My&nbsp;Orbit</p>
 </div>
 
 <!-- ============================ CURSOR ============================ -->
@@ -68,32 +88,35 @@
 <header class="nav" id="nav">
   <a href="#home" class="nav-logo" data-cursor data-view-link="home">
     <img class="nav-logo-mark" src="assets/brand/nav-mark.png" alt="SDN" width="15" height="12" />
-    <span class="nav-logo-name"><span class="kd">D</span>an&nbsp;Sungvornveshapan</span>
+    <span class="nav-logo-name" data-th="แดน&nbsp;สังวรเวชภัณฑ์"><span class="kd">D</span>an&nbsp;Sungvornveshapan</span>
   </a>
   <nav class="nav-links" aria-label="Primary">
-    <a href="#projects" data-cursor data-view-link="projects">Projects</a>
-    <a href="#experience" data-cursor data-view-link="experience">Experience</a>
+    <a href="#projects" data-cursor data-view-link="projects" data-th="โปรเจกต์">Projects</a>
+    <a href="#experience" data-cursor data-view-link="experience" data-th="ประสบการณ์">Experience</a>
+    <button class="nav-lang" type="button" data-cursor aria-label="Switch language / เปลี่ยนภาษา">
+      <span data-lang="en">EN</span><span class="nav-lang-sep">/</span><span data-lang="th">TH</span>
+    </button>
   </nav>
 </header>
 
 <!-- ============ SECTION DOTS : one column per view, shown with that view ============ -->
 <nav class="section-dots" id="sectionDots" aria-label="Home sections">
-  <a href="#home" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label">Home</span></a>
-  <a href="#about" class="section-dot" data-cursor><span class="section-dot-label">About</span></a>
-  <a href="#work" class="section-dot" data-cursor><span class="section-dot-label">Work</span></a>
-  <a href="#contact" class="section-dot" data-cursor><span class="section-dot-label">Contact</span></a>
+  <a href="#home" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label" data-th="หน้าแรก">Home</span></a>
+  <a href="#about" class="section-dot" data-cursor><span class="section-dot-label" data-th="เกี่ยวกับ">About</span></a>
+  <a href="#work" class="section-dot" data-cursor><span class="section-dot-label" data-th="ผลงาน">Work</span></a>
+  <a href="#contact" class="section-dot" data-cursor><span class="section-dot-label" data-th="ติดต่อ">Contact</span></a>
 </nav>
 <nav class="section-dots" id="projectsDots" aria-label="Project sections">
   <a href="#group-uxui" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label">UX / UI</span></a>
-  <a href="#group-exhibition" class="section-dot" data-cursor><span class="section-dot-label">Exhibition</span></a>
-  <a href="#group-brand" class="section-dot" data-cursor><span class="section-dot-label">Brand</span></a>
+  <a href="#group-exhibition" class="section-dot" data-cursor><span class="section-dot-label" data-th="นิทรรศการ">Exhibition</span></a>
+  <a href="#group-brand" class="section-dot" data-cursor><span class="section-dot-label" data-th="แบรนด์">Brand</span></a>
 </nav>
 <nav class="section-dots" id="xpDots" aria-label="Experience sections">
-  <a href="#xp-profile" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label">Profile</span></a>
-  <a href="#xp-education" class="section-dot" data-cursor><span class="section-dot-label">Education</span></a>
-  <a href="#xp-career" class="section-dot" data-cursor><span class="section-dot-label">Career</span></a>
-  <a href="#xp-skills" class="section-dot" data-cursor><span class="section-dot-label">Skills</span></a>
-  <a href="#xp-contact" class="section-dot" data-cursor><span class="section-dot-label">Contact</span></a>
+  <a href="#xp-profile" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label" data-th="โปรไฟล์">Profile</span></a>
+  <a href="#xp-education" class="section-dot" data-cursor><span class="section-dot-label" data-th="การศึกษา">Education</span></a>
+  <a href="#xp-career" class="section-dot" data-cursor><span class="section-dot-label" data-th="การทำงาน">Career</span></a>
+  <a href="#xp-skills" class="section-dot" data-cursor><span class="section-dot-label" data-th="ทักษะ">Skills</span></a>
+  <a href="#xp-contact" class="section-dot" data-cursor><span class="section-dot-label" data-th="ติดต่อ">Contact</span></a>
 </nav>
 
 <main id="scroll" class="view">
@@ -115,15 +138,15 @@
     <!-- solid surface that rides up over the bottom of the clip -->
     <div class="hero-lower negative">
       <div class="hero-lower-inner">
-        <p class="hero-note">
+        <p class="hero-note" data-th="เกียรตินิยมอันดับหนึ่ง สาขาการออกแบบนิทรรศการและประสบการณ์<br />จุฬาลงกรณ์มหาวิทยาลัย">
           First-Class Honours, Exhibition &amp; Experience <span class="kd">D</span>esign,<br />
           Chulalongkorn University.
         </p>
-        <p class="hero-name">
+        <p class="hero-name" data-th='<span class="line"><span class="line-in"><span class="ch">แดน</span></span></span><span class="line"><span class="line-in"><span class="ch">สังวรเวชภัณฑ์</span></span></span>'>
           <span class="line"><span class="line-in"><span class="ch kd">D</span><span class="ch">a</span><span class="ch">n</span></span></span>
           <span class="line"><span class="line-in"><span class="ch">S</span><span class="ch">u</span><span class="ch">n</span><span class="ch">g</span><span class="ch">v</span><span class="ch">o</span><span class="ch">r</span><span class="ch">n</span><span class="ch">v</span><span class="ch">e</span><span class="ch">s</span><span class="ch">h</span><span class="ch">a</span><span class="ch">p</span><span class="ch">a</span><span class="ch">n</span></span></span>
         </p>
-        <span class="hero-scroll" data-cursor>
+        <span class="hero-scroll" data-cursor data-th='<span class="hero-scroll-dot"></span> เลื่อนเพื่อสำรวจ'>
           <span class="hero-scroll-dot"></span> Scroll to explore
         </span>
       </div>
@@ -135,8 +158,8 @@
 
   <!-- ---------- ABOUT ---------- -->
   <section class="about" id="about">
-    <p class="section-tag reveal reveal-sm"><span>01</span> About</p>
-    <p class="about-lede reveal">
+    <p class="section-tag reveal reveal-sm" data-th="<span>01</span> เกี่ยวกับ"><span>01</span> About</p>
+    <p class="about-lede reveal" data-th='<span class="reveal-word">ผมออกแบบทั้งโลกดิจิทัลและกายภาพ</span> <span class="reveal-word">เชื่อมระบบอินเทอร์เฟซ</span> <span class="reveal-word">เข้ากับสภาพแวดล้อมจริง</span> <span class="reveal-word">ด้วย UX Research</span> <span class="reveal-word">งาน 3D</span> <span class="reveal-word">และ Visual Design เป็นแกนหลัก</span>'>
       <span class="reveal-word">I</span> <span class="reveal-word">design</span>
       <span class="reveal-word">across</span> <span class="reveal-word">the</span>
       <span class="reveal-word">digital</span> <span class="reveal-word">&amp;</span>
@@ -156,30 +179,30 @@
     </figure>
     <div class="about-grid reveal">
       <div>
-        <p class="about-k">Focus</p>
+        <p class="about-k" data-th="โฟกัส">Focus</p>
         <p class="about-v"><span>UX Research</span><span>Journey Mapping</span><span>UI &amp; <span class="kd">D</span>esign Systems</span><span>Experience <span class="kd">D</span>esign</span><span>Spatial &amp; 3D</span></p>
       </div>
       <div>
-        <p class="about-k">Tools</p>
+        <p class="about-k" data-th="เครื่องมือ">Tools</p>
         <p class="about-v"><span>Figma</span><span>SketchUp</span><span>Enscape</span><span>Photoshop</span><span>Illustrator</span><span>After Effects</span></p>
       </div>
       <div>
-        <p class="about-k">Based</p>
-        <p class="about-v"><span>Bangkok, Thailand</span></p>
+        <p class="about-k" data-th="ฐานที่">Based</p>
+        <p class="about-v" data-th="<span>กรุงเทพฯ ประเทศไทย</span>"><span>Bangkok, Thailand</span></p>
       </div>
     </div>
     <p class="about-more">
-      <a href="#experience" data-view-link="experience" data-cursor>View full experience <span aria-hidden="true">&#8594;</span></a>
+      <a href="#experience" data-view-link="experience" data-cursor data-th='ดูประสบการณ์ทั้งหมด <span aria-hidden="true">&#8594;</span>'>View full experience <span aria-hidden="true">&#8594;</span></a>
     </p>
   </section>
 
   <!-- ---------- SELECTED WORK (negative band) ---------- -->
   <section class="work negative" id="work">
-    <p class="section-tag reveal reveal-sm"><span>02</span> Selected Work</p>
+    <p class="section-tag reveal reveal-sm" data-th="<span>02</span> ผลงานคัดสรร"><span>02</span> Selected Work</p>
 
     <div class="work-tabs reveal reveal-sm" role="tablist" aria-label="Work categories">
       <button class="work-tab is-active" type="button" role="tab" aria-selected="true" data-cat="uxui" data-cursor>UX/UI</button>
-      <button class="work-tab" type="button" role="tab" aria-selected="false" data-cat="event" data-cursor>Event Experience</button>
+      <button class="work-tab" type="button" role="tab" aria-selected="false" data-cat="event" data-cursor data-th="งานอีเวนต์">Event Experience</button>
     </div>
 
     <div class="work-cats">
@@ -190,28 +213,36 @@
             <div class="cf-card"
                  data-title="CMCC&#8209;Chance"
                  data-org="Capital Market Case Competition in Investment Banking"
+                 data-org-th="การแข่งขันเคสตลาดทุนสาย Investment Banking"
                  data-desc="A decision-support platform for a capital-market case competition, turning a dense investment-banking brief into a guided, confident flow."
+                 data-desc-th="แพลตฟอร์มช่วยตัดสินใจสำหรับการแข่งขันเคสตลาดทุน แปลงโจทย์ Investment Banking ที่ซับซ้อนให้เป็นขั้นตอนที่ชัดและมั่นใจ"
                  data-scope="UX/UI · Product Design · Prototyping">
               <img src="assets/projects/cmcc-chance.webp" alt="CMCC-Chance" draggable="false" loading="lazy" />
             </div>
             <div class="cf-card"
                  data-title="FriendLi"
                  data-org="Rethinking Chulalongkorn Central Library"
+                 data-org-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่"
                  data-desc="A rethink of Chulalongkorn's Central Library, turning a vast, intimidating space into somewhere students actually want to be."
+                 data-desc-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่ เปลี่ยนพื้นที่กว้างและน่าเกร็งให้เป็นที่ที่นักศึกษาอยากมาจริงๆ"
                  data-scope="UX Research · Service Design · UI Design">
               <img src="assets/projects/friendli.webp" alt="FriendLi" draggable="false" loading="lazy" />
             </div>
             <div class="cf-card"
                  data-title="UPLATFORM"
                  data-org="Real-time IoT Platform for Education &amp; Research"
+                 data-org-th="แพลตฟอร์ม IoT เรียลไทม์เพื่อการศึกษาและวิจัย"
                  data-desc="A real-time IoT platform for education and research, built for labs, student projects and smart-campus applications."
+                 data-desc-th="แพลตฟอร์ม IoT เรียลไทม์เพื่อการศึกษาและวิจัย ออกแบบสำหรับแล็บ โปรเจกต์นักศึกษา และงาน smart-campus"
                  data-scope="UX Research · UI Design · Design System">
               <img src="assets/projects/uplatform.jpg" alt="UPLATFORM" draggable="false" loading="lazy" />
             </div>
             <div class="cf-card"
                  data-title="Thrive"
                  data-org="Grow Together, Heal Together"
+                 data-org-th="เติบโตไปด้วยกัน เยียวยาไปด้วยกัน"
                  data-desc="&ldquo;Grow together, heal together.&rdquo; A wellbeing app built around gentle daily rituals, shared progress and a calm, legible interface."
+                 data-desc-th="&ldquo;เติบโตไปด้วยกัน เยียวยาไปด้วยกัน&rdquo; แอปดูแลใจที่สร้างจากกิจวัตรเล็กๆ ในแต่ละวัน ความคืบหน้าที่แชร์กันได้ และอินเทอร์เฟซที่สงบและอ่านง่าย"
                  data-scope="Concept · UX/UI · Branding">
               <img src="assets/projects/thrive.jpg" alt="Thrive" draggable="false" loading="lazy" />
             </div>
@@ -232,21 +263,27 @@
             <div class="cf-card"
                  data-title="A Journey"
                  data-org="The Adventure to Find Yourself"
+                 data-org-th="การผจญภัยเพื่อค้นหาตัวเอง"
                  data-desc="An exhibition and spatial experience: narrative wayfinding, 3D-modelled sets and a route that carries visitors through the story."
+                 data-desc-th="นิทรรศการและประสบการณ์เชิงพื้นที่ ระบบนำทางแบบเล่าเรื่อง ฉากที่ขึ้นโมเดล 3D และเส้นทางที่พาผู้ชมไปกับเรื่องราว"
                  data-scope="Experience Design · 3D · Spatial">
               <img src="assets/projects/a-journey.webp" alt="A Journey" draggable="false" loading="lazy" />
             </div>
             <div class="cf-card"
                  data-title="Jeju K&#8209;Seafood Pop&#8209;up"
                  data-org="2026 Jeju K-Seafood Pop-up Store"
+                 data-org-th="ป็อปอัปสโตร์ Jeju K-Seafood 2026"
                  data-desc="A soft, playful underwater world where Jeju seafood is discovered rather than sold."
+                 data-desc-th="โลกใต้ทะเลที่นุ่มนวลและสนุก ที่อาหารทะเลเชจูถูก &lsquo;ค้นพบ&rsquo; มากกว่าถูก &lsquo;ขาย&rsquo;"
                  data-scope="Experience Design · Spatial · 3D">
               <img src="assets/projects/jeju-kseafood-popup.jpg" alt="Jeju K-Seafood Pop-up" draggable="false" loading="lazy" />
             </div>
             <div class="cf-card"
                  data-title="TRAFS K&#8209;Seafood"
                  data-org="TRAFS 2026 K-Seafood Booth"
+                 data-org-th="บูธ K-Seafood งาน TRAFS 2026"
                  data-desc="Ocean waves turned into structure: a curved, bright pavilion where three exporters share one address."
+                 data-desc-th="คลื่นทะเลกลายเป็นโครงสร้าง พาวิลเลียนโค้งสว่างที่ผู้ส่งออกสามรายใช้ที่อยู่เดียวกัน"
                  data-scope="Exhibition · Booth Design · Wayfinding">
               <img src="assets/projects/trafs-kseafood.jpg" alt="TRAFS K-Seafood" draggable="false" loading="lazy" />
             </div>
@@ -262,14 +299,14 @@
     </div>
 
     <p class="work-all">
-      <a href="#projects" data-view-link="projects" data-cursor>View all projects <span aria-hidden="true">&#8594;</span></a>
+      <a href="#projects" data-view-link="projects" data-cursor data-th='ดูโปรเจกต์ทั้งหมด <span aria-hidden="true">&#8594;</span>'>View all projects <span aria-hidden="true">&#8594;</span></a>
     </p>
   </section>
 
   <!-- ---------- CONTACT ---------- -->
   <section class="contact" id="contact">
-    <p class="section-tag reveal reveal-sm"><span>03</span> Contact</p>
-    <a class="contact-cta reveal reveal-lg" href="mailto:sdan.forworks@gmail.com" data-cursor="Say hi">
+    <p class="section-tag reveal reveal-sm" data-th="<span>03</span> ติดต่อ"><span>03</span> Contact</p>
+    <a class="contact-cta reveal reveal-lg" href="mailto:sdan.forworks@gmail.com" data-cursor="Say hi" data-th='มาสร้าง<br />อะไรดีๆ<span class="contact-cta-em"> กัน.</span>'>
       Let&rsquo;s build<br />something<span class="contact-cta-em"> good.</span>
     </a>
     <div class="contact-grid reveal">
@@ -278,16 +315,16 @@
         <a class="contact-line" href="mailto:sdan.forworks@gmail.com" data-cursor>sdan.forworks@gmail.com</a>
       </div>
       <div>
-        <p class="about-k">Phone</p>
+        <p class="about-k" data-th="โทร">Phone</p>
         <a class="contact-line" href="tel:+66990797010" data-cursor>+66 099 079 7010</a>
       </div>
       <div>
-        <p class="about-k">Résumé</p>
-        <a class="contact-line" href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor>Download CV (PDF)</a>
+        <p class="about-k" data-th="เรซูเม่">Résumé</p>
+        <a class="contact-line" href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor data-th="ดาวน์โหลด CV (PDF)">Download CV (PDF)</a>
       </div>
     </div>
     <footer class="site-footer">
-      <span><span class="kd">D</span>esigned &amp; built by <span class="kd">D</span>an Sungvornveshapan - ideas, works &amp; things in my drawer.</span>
+      <span data-th="ออกแบบและพัฒนาโดย แดน สังวรเวชภัณฑ์ - จักรวาลของไอเดีย โปรเจกต์ และการค้นพบเล็กๆ"><span class="kd">D</span>esigned &amp; built by <span class="kd">D</span>an Sungvornveshapan - a universe of ideas, projects &amp; little discoveries.</span>
       <span>&copy; 2026</span>
     </footer>
   </section>
@@ -299,13 +336,13 @@
 <!-- ============================================================
      ROUTED SUB-PAGE: ALL PROJECTS
 ============================================================ -->
-<div class="view static-page" id="view-projects" hidden data-page-title="All Projects">
+<div class="view static-page" id="view-projects" hidden data-page-title="All Projects" data-page-title-th="โปรเจกต์ทั้งหมด">
   <a class="page-back" href="#home" data-view-link="home" data-cursor>
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Home
+    <span data-th="หน้าแรก">Home</span>
   </a>
-  <h1 class="page-title"><span class="kd">D</span>an&rsquo;s projects</h1>
-  <p class="page-intro">
+  <h1 class="page-title" data-th="โปรเจกต์ทั้งหมด"><span class="kd">D</span>an&rsquo;s projects</h1>
+  <p class="page-intro" data-th="โปรเจกต์ทั้งหมดรวมไว้ในที่เดียว แบ่งเป็นงาน UX/UI, งานนิทรรศการและพื้นที่ และงานอัตลักษณ์แบรนด์ คลิกที่ปกเพื่อเปิดเคสสตัดดี้ฉบับเต็ม">
     Every project in one place, grouped into UX/UI design, exhibition
     &amp; space design, and brand identity. Each cover opens the full case study.
   </p>
@@ -319,63 +356,63 @@
   <section class="projects-group negative" id="group-uxui">
     <div class="projects-group-head">
       <h2 class="projects-group-title">UX / UI <span class="kd">D</span>esign</h2>
-      <span class="projects-group-count">7 projects</span>
+      <span class="projects-group-count" data-th="7 โปรเจกต์">7 projects</span>
     </div>
     <div class="projects-grid">
       <article class="project-card-full">
         <img src="assets/projects/cmcc-chance.webp" alt="CMCC-Chance" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">CMCC&#8209;Chance</h3>
-          <p class="project-card-full-org">Capital Market Case Competition in Investment Banking</p>
-          <a class="project-card-full-link" href="case-cmcc-chance.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="การแข่งขันเคส Capital Market สาย Investment Banking">Capital Market Case Competition in Investment Banking</p>
+          <a class="project-card-full-link" href="case-cmcc-chance.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/friendli.webp" alt="FriendLi" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">FriendLi</h3>
-          <p class="project-card-full-org">Rethinking Chulalongkorn Central Library</p>
-          <a class="project-card-full-link" href="case-friendli.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่">Rethinking Chulalongkorn Central Library</p>
+          <a class="project-card-full-link" href="case-friendli.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/uplatform.jpg" alt="UPLATFORM" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">UPLATFORM</h3>
-          <p class="project-card-full-org">Real-time IoT Platform for Education &amp; Research</p>
-          <a class="project-card-full-link" href="case-uplatform.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="แพลตฟอร์ม IoT เรียลไทม์เพื่อการศึกษาและวิจัย">Real-time IoT Platform for Education &amp; Research</p>
+          <a class="project-card-full-link" href="case-uplatform.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/thrive.jpg" alt="Thrive" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Thrive</h3>
-          <p class="project-card-full-org">Grow Together, Heal Together</p>
-          <a class="project-card-full-link" href="case-thrive.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="เติบโตไปด้วยกัน เยียวยาไปด้วยกัน">Grow Together, Heal Together</p>
+          <a class="project-card-full-link" href="case-thrive.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/chac-chac.jpg" alt="Chac Chac" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Chac Chac</h3>
-          <p class="project-card-full-org">Chulalongkorn Faculty of Fine and Applied Arts</p>
-          <a class="project-card-full-link" href="case-chac-chac.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="คณะศิลปกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย">Chulalongkorn Faculty of Fine and Applied Arts</p>
+          <a class="project-card-full-link" href="case-chac-chac.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/storade.jpg" alt="Storade" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Storade</h3>
-          <p class="project-card-full-org">Reading Marketplace</p>
-          <a class="project-card-full-link" href="case-storade.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="มาร์เก็ตเพลสสำหรับนักอ่าน">Reading Marketplace</p>
+          <a class="project-card-full-link" href="case-storade.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/sos.jpg" alt="SOS" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">SOS</h3>
-          <p class="project-card-full-org">Safety of School</p>
-          <a class="project-card-full-link" href="case-sos.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="ความปลอดภัยในโรงเรียน">Safety of School</p>
+          <a class="project-card-full-link" href="case-sos.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
     </div>
@@ -384,63 +421,63 @@
   <section class="projects-group" id="group-exhibition">
     <div class="projects-group-head">
       <h2 class="projects-group-title">Exhibition &amp; Space <span class="kd">D</span>esign</h2>
-      <span class="projects-group-count">7 projects</span>
+      <span class="projects-group-count" data-th="7 โปรเจกต์">7 projects</span>
     </div>
     <div class="projects-grid">
       <article class="project-card-full">
         <img src="assets/projects/a-journey.webp" alt="A Journey" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">A Journey</h3>
-          <p class="project-card-full-org">The Adventure to Find Yourself</p>
-          <a class="project-card-full-link" href="case-a-journey.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="การผจญภัยเพื่อค้นหาตัวเอง">The Adventure to Find Yourself</p>
+          <a class="project-card-full-link" href="case-a-journey.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/jeju-kseafood-popup.jpg" alt="Jeju K-Seafood Pop-up" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Jeju K&#8209;Seafood Pop&#8209;up</h3>
-          <p class="project-card-full-org">2026 Jeju K-Seafood Pop-up Store</p>
-          <a class="project-card-full-link" href="case-jeju-kseafood-popup.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="ป็อปอัปสโตร์ Jeju K-Seafood ปี 2026">2026 Jeju K-Seafood Pop-up Store</p>
+          <a class="project-card-full-link" href="case-jeju-kseafood-popup.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/trafs-kseafood.jpg" alt="TRAFS K-Seafood" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">TRAFS K&#8209;Seafood</h3>
-          <p class="project-card-full-org">TRAFS 2026 K-Seafood Booth</p>
-          <a class="project-card-full-link" href="case-trafs-kseafood.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="บูธ K-Seafood งาน TRAFS 2026">TRAFS 2026 K-Seafood Booth</p>
+          <a class="project-card-full-link" href="case-trafs-kseafood.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/jeju-olive-flounder.jpg" alt="Jeju Olive Flounder" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Jeju Olive Flounder</h3>
-          <p class="project-card-full-org">2025 Bangkok Jeju Olive Flounder Pop-up</p>
-          <a class="project-card-full-link" href="case-jeju-olive-flounder.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="ป็อปอัป Jeju Olive Flounder กรุงเทพฯ ปี 2025">2025 Bangkok Jeju Olive Flounder Pop-up</p>
+          <a class="project-card-full-link" href="case-jeju-olive-flounder.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/whx-korea.jpg" alt="WHX Korea" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">WHX Korea</h3>
-          <p class="project-card-full-org">Thailand Wellness &amp; Healthcare Expo 2026, Korea Booth</p>
-          <a class="project-card-full-link" href="case-whx-korea.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="งาน Thailand Wellness &amp; Healthcare Expo 2026 บูธเกาหลี">Thailand Wellness &amp; Healthcare Expo 2026, Korea Booth</p>
+          <a class="project-card-full-link" href="case-whx-korea.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/k-food-night.jpg" alt="K-Food Night" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">K&#8209;Food Night</h3>
-          <p class="project-card-full-org">K-Food Night 2026 · THAIFEX – Anuga Asia</p>
-          <a class="project-card-full-link" href="case-k-food-night.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="งาน K-Food Night 2026 · THAIFEX – Anuga Asia">K-Food Night 2026 · THAIFEX – Anuga Asia</p>
+          <a class="project-card-full-link" href="case-k-food-night.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
       <article class="project-card-full">
         <img src="assets/projects/leitz-mu.jpg" alt="Leitz MU" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Leitz MU</h3>
-          <p class="project-card-full-org">Leica Exhibition &amp; Experience Design</p>
-          <a class="project-card-full-link" href="case-leitz-mu.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="งานนิทรรศการและประสบการณ์ให้ Leica">Leica Exhibition &amp; Experience Design</p>
+          <a class="project-card-full-link" href="case-leitz-mu.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
     </div>
@@ -449,15 +486,15 @@
   <section class="projects-group negative" id="group-brand">
     <div class="projects-group-head">
       <h2 class="projects-group-title">Brand Identity</h2>
-      <span class="projects-group-count">1 project</span>
+      <span class="projects-group-count" data-th="1 โปรเจกต์">1 project</span>
     </div>
     <div class="projects-grid">
       <article class="project-card-full">
         <img src="assets/projects/lerum.jpg" alt="Le&rsquo;rum" loading="lazy" />
         <div class="project-card-full-body">
           <h3 class="project-card-full-title">Le&rsquo;rum</h3>
-          <p class="project-card-full-org">Logo Design For Clothing Brands</p>
-          <a class="project-card-full-link" href="case-lerum.html" data-cursor>Case study <span aria-hidden="true">&#8594;</span></a>
+          <p class="project-card-full-org" data-th="ออกแบบโลโก้ให้แบรนด์เสื้อผ้า">Logo Design For Clothing Brands</p>
+          <a class="project-card-full-link" href="case-lerum.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
         </div>
       </article>
     </div>
@@ -467,23 +504,23 @@
 <!-- ============================================================
      ROUTED SUB-PAGE: FULL EXPERIENCE
 ============================================================ -->
-<div class="view static-page" id="view-experience" hidden data-page-title="Career Experience">
+<div class="view static-page" id="view-experience" hidden data-page-title="Career Experience" data-page-title-th="ประสบการณ์การทำงาน">
   <section class="xp-block xp-hero" id="xp-profile">
     <div class="xp-hero-grid">
       <div class="xp-hero-text">
         <a class="page-back" href="#home" data-view-link="home" data-cursor>
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Home
+          <span data-th="หน้าแรก">Home</span>
         </a>
-        <h1 class="page-title">Career experience</h1>
-        <p class="page-intro">
+        <h1 class="page-title" data-th="ประสบการณ์การทำงาน">Career experience</h1>
+        <p class="page-intro" data-th="ไทม์ไลน์การทำงานฉบับเต็ม ทุกตำแหน่ง พร้อมงานที่ทำจริงในแต่ละที่ รวมถึงการศึกษา ทักษะ และช่องทางติดต่อ">
           The complete career timeline: every role, with the work each one actually involved,
           plus education, skills and how to reach me.
         </p>
 
-        <p class="xp-label">Profile</p>
-        <p class="xp-lede"><span class="kd">D</span>an Sungvornveshapan<br />UX/UI &amp; Spatial Experience <span class="kd">D</span>esigner.</p>
-        <p class="xp-sub">
+        <p class="xp-label" data-th="โปรไฟล์">Profile</p>
+        <p class="xp-lede" data-th="แดน สังวรเวชภัณฑ์<br />UX/UI &amp; Spatial Experience Designer."><span class="kd">D</span>an Sungvornveshapan<br />UX/UI &amp; Spatial Experience <span class="kd">D</span>esigner.</p>
+        <p class="xp-sub" data-th="ผมเชื่อมผลิตภัณฑ์ดิจิทัลกับพื้นที่จริง ตั้งแต่ระบบอินเทอร์เฟซไปจนถึงงานนิทรรศการ โดยมี UX Research งาน 3D และ Visual Design เป็นแกนหลัก">
           I connect digital products and physical spaces, from interface systems to exhibitions,
           with UX research, 3D craft and visual design at the core.
         </p>
@@ -495,85 +532,85 @@
   </section>
 
   <section class="xp-block negative" id="xp-education">
-    <p class="xp-label">Education</p>
+    <p class="xp-label" data-th="การศึกษา">Education</p>
     <div class="xp-edu-row">
       <div>
-        <p class="xp-edu-deg">Bachelor&rsquo;s <span class="kd">D</span>egree, Exhibition &amp; Experience <span class="kd">D</span>esign</p>
-        <p class="xp-edu-meta">
+        <p class="xp-edu-deg" data-th="ปริญญาตรี สาขาการออกแบบนิทรรศการและประสบการณ์">Bachelor&rsquo;s <span class="kd">D</span>egree, Exhibition &amp; Experience <span class="kd">D</span>esign</p>
+        <p class="xp-edu-meta" data-th="คณะศิลปกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย<br />2020 – 2024 · เกียรตินิยมอันดับหนึ่ง GPA 3.75">
           The Faculty of Fine and Applied Arts, Chulalongkorn University<br />
           2020 – 2024 · First-Class Honors, GPA 3.75
         </p>
       </div>
-      <span class="xp-badge">Graduated</span>
+      <span class="xp-badge" data-th="จบการศึกษา">Graduated</span>
     </div>
   </section>
 
   <section class="xp-block" id="xp-career">
-    <p class="xp-label">Career Timeline · 6 roles</p>
+    <p class="xp-label" data-th="ไทม์ไลน์การทำงาน · 6 ตำแหน่ง">Career Timeline · 6 roles</p>
     <ul class="xp-timeline">
       <li>
-        <span class="xp-date">Oct 2025 – Aug 2026</span>
+        <span class="xp-date" data-th="ต.ค. 2025 – ส.ค. 2026">Oct 2025 – Aug 2026</span>
         <div>
           <p class="xp-role">Graphic &amp; Event <span class="kd">D</span>esigner</p>
           <p class="xp-org">MultiTab Co., Ltd.</p>
           <ul class="xp-duties">
-            <li>Design all graphic materials and key visuals for events</li>
-            <li>Shape event concept and visitor experience</li>
+            <li data-th="ออกแบบกราฟิกและ Key Visual ทั้งหมดสำหรับงานอีเวนต์">Design all graphic materials and key visuals for events</li>
+            <li data-th="กำหนดคอนเซปต์งานและประสบการณ์ผู้เข้าชม">Shape event concept and visitor experience</li>
           </ul>
         </div>
       </li>
       <li>
-        <span class="xp-date">Jun – Aug 2025</span>
+        <span class="xp-date" data-th="มิ.ย. – ส.ค. 2025">Jun – Aug 2025</span>
         <div>
           <p class="xp-role">UI <span class="kd">D</span>esigner · Freelance</p>
           <p class="xp-org">TRINERGY COMM-THA Co., Ltd.</p>
           <ul class="xp-duties">
-            <li>Designed UPLATFORM&rsquo;s UI</li>
-            <li>Built a complete UI design system and interactive prototypes</li>
+            <li data-th="ออกแบบ UI ให้ UPLATFORM">Designed UPLATFORM&rsquo;s UI</li>
+            <li data-th="สร้าง UI Design System ครบชุดและ Interactive Prototype">Built a complete UI design system and interactive prototypes</li>
           </ul>
         </div>
       </li>
       <li>
-        <span class="xp-date">Jun – Oct 2024</span>
+        <span class="xp-date" data-th="มิ.ย. – ต.ค. 2024">Jun – Oct 2024</span>
         <div>
           <p class="xp-role">Photo Editor · Freelance</p>
           <p class="xp-org">Norse Republics</p>
           <ul class="xp-duties">
-            <li>Retouched and cut out furniture images for the Odoo Software furniture catalog</li>
+            <li data-th="รีทัชและตัดภาพเฟอร์นิเจอร์สำหรับแคตตาล็อกของ Odoo Software">Retouched and cut out furniture images for the Odoo Software furniture catalog</li>
           </ul>
         </div>
       </li>
       <li>
-        <span class="xp-date">Apr – Jul 2023</span>
+        <span class="xp-date" data-th="เม.ย. – ก.ค. 2023">Apr – Jul 2023</span>
         <div>
           <p class="xp-role">UX/UI <span class="kd">D</span>esigner · Internship</p>
           <p class="xp-org">FynnCorp Capital Group</p>
           <ul class="xp-duties">
-            <li>Co-led research, ideation and design for web applications (CMCC)</li>
-            <li>Worked with engineers on frontend and backend</li>
+            <li data-th="ร่วมนำการทำวิจัย คิดไอเดีย และออกแบบเว็บแอปพลิเคชัน (CMCC)">Co-led research, ideation and design for web applications (CMCC)</li>
+            <li data-th="ทำงานร่วมกับวิศวกรทั้งฝั่ง Frontend และ Backend">Worked with engineers on frontend and backend</li>
           </ul>
         </div>
       </li>
       <li>
-        <span class="xp-date">Sep – Oct 2022</span>
+        <span class="xp-date" data-th="ก.ย. – ต.ค. 2022">Sep – Oct 2022</span>
         <div>
           <p class="xp-role">Scenery <span class="kd">D</span>esigner</p>
           <p class="xp-org">Colosseum Show Pattaya</p>
           <ul class="xp-duties">
-            <li>Assisted in scenery show design</li>
-            <li>Created 3D models in Blender</li>
+            <li data-th="ช่วยออกแบบฉากการแสดง">Assisted in scenery show design</li>
+            <li data-th="ขึ้นโมเดล 3D และเตรียมไฟล์ส่งต่อให้เวนเดอร์">Created 3D models and prepared files for vendor handoff.</li>
           </ul>
         </div>
       </li>
       <li>
-        <span class="xp-date">Mar – Apr 2022</span>
+        <span class="xp-date" data-th="มี.ค. – เม.ย. 2022">Mar – Apr 2022</span>
         <div>
           <p class="xp-role">Experience <span class="kd">D</span>esigner</p>
           <p class="xp-org">Chula Welcome Fair</p>
           <ul class="xp-duties">
-            <li>Assisted in designing the visitor experience journey for the exhibition</li>
-            <li>Created 3D modelling and a pitch presentation for the board</li>
-            <li>Collaborated with other departments to find solutions</li>
+            <li data-th="ช่วยออกแบบเส้นทางประสบการณ์ผู้เข้าชมสำหรับนิทรรศการ">Assisted in designing the visitor experience journey for the exhibition</li>
+            <li data-th="ทำโมเดล 3D และ Pitch Presentation เสนอบอร์ด">Created 3D modelling and a pitch presentation for the board</li>
+            <li data-th="ทำงานร่วมกับแผนกอื่นเพื่อหาทางออก">Collaborated with other departments to find solutions</li>
           </ul>
         </div>
       </li>
@@ -581,48 +618,48 @@
   </section>
 
   <section class="xp-block negative" id="xp-skills">
-    <p class="xp-label">Skills</p>
+    <p class="xp-label" data-th="ทักษะ">Skills</p>
     <div class="xp-sub-group">
-      <p class="xp-sub-label">Tools</p>
+      <p class="xp-sub-label" data-th="เครื่องมือ">Tools</p>
       <div class="xp-pills">
         <span>Figma</span><span>SketchUp</span><span>Enscape</span><span>Photoshop</span><span>Illustrator</span><span>After Effects</span><span>Miro</span><span>ClickUp</span>
       </div>
     </div>
     <div class="xp-sub-group">
-      <p class="xp-sub-label">Practice</p>
+      <p class="xp-sub-label" data-th="งานที่ทำ">Practice</p>
       <div class="xp-pills">
         <span>UX Research</span><span>User Flow &amp; Journey <span class="kd">D</span>esign</span><span>Wireframing &amp; Prototyping</span><span>UI &amp; <span class="kd">D</span>esign Systems</span><span>Experience <span class="kd">D</span>esign</span><span>Concept <span class="kd">D</span>evelopment</span><span>Spatial &amp; 3D <span class="kd">D</span>esign</span><span>Visual Communication</span><span>Cross-functional Collaboration</span><span>Creative Problem Solving</span>
       </div>
     </div>
     <div class="xp-sub-group">
-      <p class="xp-sub-label">Soft skills</p>
+      <p class="xp-sub-label" data-th="Soft Skills">Soft skills</p>
       <div class="xp-pills">
         <span>Creative Thinking</span><span>Critical Thinking</span><span>Collaboration</span><span>Adaptability</span><span>Feedback Receptiveness</span><span>Strategic Thinking</span><span>Prioritization</span>
       </div>
     </div>
     <div class="xp-sub-group">
-      <p class="xp-sub-label">Languages</p>
+      <p class="xp-sub-label" data-th="ภาษา">Languages</p>
       <div class="xp-langs">
         <div class="xp-lang">
-          <p class="xp-lang-name">Thai</p>
+          <p class="xp-lang-name" data-th="ไทย">Thai</p>
           <div class="xp-lang-bar"><span style="--fill:100%"></span></div>
-          <p class="xp-lang-level">Native</p>
+          <p class="xp-lang-level" data-th="เจ้าของภาษา">Native</p>
         </div>
         <div class="xp-lang">
-          <p class="xp-lang-name">English</p>
+          <p class="xp-lang-name" data-th="อังกฤษ">English</p>
           <div class="xp-lang-bar"><span style="--fill:62%"></span></div>
-          <p class="xp-lang-level">Intermediate (B1)</p>
+          <p class="xp-lang-level" data-th="ระดับกลาง (B1)">Intermediate (B1)</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="xp-block" id="xp-contact">
-    <p class="xp-label">Get in touch</p>
+    <p class="xp-label" data-th="ติดต่อ">Get in touch</p>
     <div class="xp-contact">
-      <a href="mailto:sdan.forworks@gmail.com" data-cursor><span class="k">Email</span> <span class="v">sdan.forworks@gmail.com</span></a>
-      <a href="tel:+66990797010" data-cursor><span class="k">Phone</span> <span class="v">+66 099 079 7010</span></a>
-      <a href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor><span class="k">CV</span> <span class="v">Download PDF</span></a>
+      <a href="mailto:sdan.forworks@gmail.com" data-cursor><span class="k" data-th="อีเมล">Email</span> <span class="v">sdan.forworks@gmail.com</span></a>
+      <a href="tel:+66990797010" data-cursor><span class="k" data-th="โทร">Phone</span> <span class="v">+66 099 079 7010</span></a>
+      <a href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor><span class="k">CV</span> <span class="v" data-th="ดาวน์โหลด PDF">Download PDF</span></a>
     </div>
   </section>
 </div>
@@ -630,6 +667,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="js/portrait-reveal.js?v=81"></script>
-<script src="js/main.js?v=113"></script>
+<script src="js/main.js?v=116"></script>
 </body>
 </html>

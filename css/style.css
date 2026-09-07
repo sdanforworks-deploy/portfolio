@@ -28,10 +28,13 @@
   --line:       rgba(17, 17, 16, 0.18);
   --line-soft:  rgba(17, 17, 16, 0.08);
 
+  /* Heming stays on the display headings / sub-heads; everything else —
+     body, ledes' supporting text, labels, nav, meta, captions — is Anuphan
+     (a loopless geometric with a full Latin set, so EN and TH share it). */
   --font-display: 'Heming', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body:    'Heming', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body:    'Anuphan', 'Heming', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --w-heading: 500;   /* Medium */
-  --w-body:    300;   /* Light  */
+  --w-body:    400;   /* Anuphan reads too light at 300 — Regular is the text weight */
 
   /* One type scale for the whole site. Display headings keep their own
      editorial sizes; every body / detail / label role resolves here — so
@@ -52,6 +55,34 @@
   --ease-io: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ─── Thai locale ─────────────────────────────────────────────────────────
+   Heming carries no Thai glyphs, so swap in a Thai companion (Anuphan —
+   loopless, geometric, pairs with a grotesque) and undo the Latin-specific
+   type tuning: negative display tracking and wide label tracking both hurt
+   Thai, and Thai needs more leading for tone marks / upper vowels. The grid,
+   spacing and section order are unchanged. */
+html[lang="th"] {
+  /* Heming first so English headings kept in TH mode (the "Digital Design &
+     Experience" wordmark, the role line) still render in Heming; Thai glyphs,
+     which Heming lacks, fall through to Anuphan per-character. */
+  --font-display: 'Heming', 'Anuphan', 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif;
+  --font-body:    'Anuphan', 'IBM Plex Sans Thai', 'Noto Sans Thai', system-ui, sans-serif;
+  --w-heading: 500;
+  --w-body:    400;
+  --tk-body:   0;        /* no letter-spacing on Thai reading text */
+  --tk-label:  0.04em;   /* the 0.18em Latin label tracking is far too wide for Thai */
+}
+html[lang="th"] body { line-height: 1.72; }
+html[lang="th"] .about-lede,
+html[lang="th"] .contact-cta,
+html[lang="th"] .page-title,
+html[lang="th"] .xp-lede,
+html[lang="th"] .hero-name,
+html[lang="th"] .launch-title { letter-spacing: 0; line-height: 1.25; }
+/* Thai needs headroom above the base for sara / tone marks — the 0.95 name
+   line-height clips them between the two stacked lines */
+html[lang="th"] .hero-name { line-height: 1.12; }
+
 /* This design commits to one light editorial world; alternating "negative"
    bands (the hero surface, Work) flip the palette to near-black.
    NB: no `background` here — the ground is painted by `section.negative::before`
@@ -70,8 +101,14 @@
 
 /* Heming's capital "D" carries a wide right side-bearing — every "D" that is
    followed by another letter is wrapped in <span class="kd"> to pull the gap
-   after it back by 0.13em (~13%). */
-.kd { letter-spacing: -0.13em; }
+   after it back by 0.13em (~13%). Only Heming needs this, so it's scoped to
+   the display headings; in Anuphan body text `.kd` is a no-op. */
+.kd { letter-spacing: normal; }
+.hero-head .kd, .hero-name .kd, .contact-cta .kd, .page-title .kd,
+.projects-group-title .kd, .project-card-full-title .kd, .cf-title .kd,
+.work-title .kd, .work-no .kd, .cf-no .kd, .section-tag .kd,
+.xp-edu-deg .kd, .xp-role .kd, .xp-lang-name .kd,
+.launch-title .kd, .loader-count .kd { letter-spacing: -0.13em; }
 
 /* -------------------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -461,6 +498,26 @@ body.intro-lock .nav { opacity: 0; pointer-events: none; }
   transition: transform 0.4s var(--ease);
 }
 .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* EN / TH language switch — reads as one more nav item */
+.nav-lang {
+  font: inherit;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tk-label);
+  text-transform: uppercase;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  cursor: pointer;
+}
+.nav-lang span[data-lang] { opacity: 0.38; transition: opacity 0.3s var(--ease); }
+.nav-lang span[data-lang].is-on { opacity: 1; }
+.nav-lang .nav-lang-sep { opacity: 0.38; }
+html[lang="th"] .nav-lang { letter-spacing: 0.08em; }
 
 @media (max-width: 640px) {
   .nav-logo-name { display: none; }
