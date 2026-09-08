@@ -566,8 +566,21 @@ body.view-experience #xpDots {
   border-radius: 50%;
   border: 1.5px solid #fff;
   background: transparent;
-  transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+  opacity: 0;                 /* M2: the dots fade in when their column goes live */
+  transition: background 0.3s var(--ease), transform 0.3s var(--ease), opacity 0.4s var(--ease);
 }
+/* M2: per-dot stagger so a column arrives as a gentle cascade, not a hard cut.
+   The wrapper still flips instantly (mix-blend + opacity transition is buggy in
+   Chrome) — the motion lives on the dots, which don't carry the blend. */
+body:not(.view-sub):not(.intro-lock) #sectionDots .section-dot,
+body.view-projects   #projectsDots .section-dot,
+body.view-experience #xpDots       .section-dot { opacity: 1; }
+.section-dots .section-dot:nth-child(2) { transition-delay: 0s, 0s, 0.05s; }
+.section-dots .section-dot:nth-child(3) { transition-delay: 0s, 0s, 0.10s; }
+.section-dots .section-dot:nth-child(4) { transition-delay: 0s, 0s, 0.15s; }
+.section-dots .section-dot:nth-child(5) { transition-delay: 0s, 0s, 0.20s; }
+.section-dots .section-dot:nth-child(6) { transition-delay: 0s, 0s, 0.25s; }
+.section-dots .section-dot:nth-child(7) { transition-delay: 0s, 0s, 0.30s; }
 .section-dot:hover { background: #fff; }
 .section-dot.is-active { background: #fff; transform: scale(1.15); }
 
@@ -595,6 +608,7 @@ body.view-experience #xpDots {
 }
 @media (prefers-reduced-motion: reduce) {
   .section-dot, .section-dot-label { transition: none; }
+  .section-dots .section-dot { transition-delay: 0s; }
 }
 
 /* ==========================================================================
@@ -1122,6 +1136,17 @@ body.intro-done .hero-scroll { opacity: 1; }
   object-fit: cover;
   display: block;
   pointer-events: none;
+  transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
+}
+/* M1: the centre card is the one you can open — give it a hover affordance.
+   Card transform is written every frame by the coverflow's rAF loop, so the
+   lift lives on the image + shadow, never on the card's own transform. */
+@media (hover: hover) and (pointer: fine) {
+  .cf-card.is-active { cursor: pointer; }
+  .cf-card.is-active:hover {
+    box-shadow: 0 58px 120px -38px rgba(0, 0, 0, 0.72);
+  }
+  .cf-card.is-active:hover img { transform: scale(1.035); }
 }
 /* placeholder card — no screenshot yet */
 .cf-card.is-ph {
@@ -1321,6 +1346,21 @@ body.intro-done .hero-scroll { opacity: 1; }
    scroll flow; the sub-pages are plain scrolling documents on --paper.
    ========================================================================== */
 .view[hidden] { display: none !important; }
+
+/* M4: view-router cross-fade. `body.rt-out` dips the leaving view for 150ms
+   (JS then swaps [hidden]); `body.rt-in` eases the arriving one back. Only the
+   router toggles these — first load / deep-links never get them. Sub-pages
+   still run their own `.static-page` page-in; this just gives Home an entrance
+   and every view a soft exit. */
+body.rt-out #scroll,
+body.rt-out #view-projects,
+body.rt-out #view-experience { opacity: 0; transition: opacity 0.15s var(--ease); }
+@keyframes rt-view-in { from { opacity: 0; } to { opacity: 1; } }
+body.rt-in #scroll { animation: rt-view-in 0.4s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  body.rt-out #scroll, body.rt-out #view-projects, body.rt-out #view-experience { opacity: 1; transition: none; }
+  body.rt-in #scroll { animation: none; }
+}
 
 /* home-page links out to the routed sub-pages */
 .work-all { margin: clamp(40px, 7vw, 90px) 0 0; }

@@ -704,6 +704,23 @@
         });
         if (prevBtn) prevBtn.addEventListener('click', function () { nudge(-1); });
         if (nextBtn) nextBtn.addEventListener('click', function () { nudge(1); });
+
+        /* M1: a clean tap on the centre card opens its case study — same
+           destination as the caption link, so the hover lift means something.
+           A drag (pointer moved > 6px) or a slow press is not a tap. */
+        var tapX = 0, tapY = 0, tapT = 0;
+        frame.addEventListener('pointerdown', function (e) {
+          tapX = e.clientX; tapY = e.clientY; tapT = performance.now();
+        }, true);
+        frame.addEventListener('click', function (e) {
+          if (Math.abs(e.clientX - tapX) > 6 || Math.abs(e.clientY - tapY) > 6) return;
+          if (performance.now() - tapT > 500) return;
+          var card = e.target.closest && e.target.closest('.cf-card.is-active');
+          if (!card || card.classList.contains('is-ph')) return;
+          var im = card.querySelector('img');
+          var sl = im ? (im.getAttribute('src') || '').split('/').pop().replace(/\.[a-z0-9]+$/i, '') : '';
+          if (sl) location.href = 'case-' + sl + '.html';
+        });
         if (dotsWrap) {
           for (var d = 0; d < count; d++) {
             (function (di) {
@@ -781,11 +798,10 @@
       return (el && dattr(el, 'page-title')) || homeTitle;
     }
     var current = 'home';
+    var booted  = false;   // M4: the first show() (initial load / deep-link) skips the cross-fade
+    var swapTok = 0;       // guards against a rapid second nav landing mid-transition
 
-    function show(name, opts) {
-      if (!VIEWS[name]) name = 'home';
-      if (name === current && !(opts && opts.force)) return;
-      current = name;
+    function applySwap(name) {
       Object.keys(VIEWS).forEach(function (k) {
         if (VIEWS[k]) VIEWS[k].hidden = (k !== name);
       });
@@ -813,6 +829,28 @@
           });
         }, 40);
       }
+      // M4: ease the arriving view in (home has no inner page-in of its own;
+      // the sub-pages' .static-page keeps handling theirs)
+      if (booted && !reduce) {
+        body.classList.add('rt-in');
+        setTimeout(function () { body.classList.remove('rt-in'); }, 420);
+      }
+    }
+
+    function show(name, opts) {
+      if (!VIEWS[name]) name = 'home';
+      var first = !booted; booted = true;
+      if (name === current && !(opts && opts.force)) return;
+      current = name;
+      if (first || reduce) { applySwap(name); return; }
+      // M4: dip the leaving view out, then swap under cover of the fade
+      var tok = ++swapTok;
+      body.classList.add('rt-out');
+      setTimeout(function () {
+        if (tok !== swapTok) return;            // a newer nav already took over
+        body.classList.remove('rt-out');
+        applySwap(name);
+      }, 150);
     }
 
     function routeFromHash() {
