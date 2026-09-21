@@ -1534,7 +1534,7 @@ body.view-sub .sub-cover { opacity: 1; }
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(26px, 3.4vw, 52px) clamp(20px, 2.6vw, 40px);
 }
-.project-card-full { display: flex; flex-direction: column; }
+.project-card-full { display: flex; flex-direction: column; position: relative; }
 .project-card-full img {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -1542,6 +1542,10 @@ body.view-sub .sub-cover { opacity: 1; }
   border-radius: 10px;
   background: var(--paper-2);
   border: 1px solid var(--line-soft);
+  transition: transform 0.5s var(--ease), filter 0.5s var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-card-full:hover img { transform: scale(1.02); filter: brightness(1.04); }
 }
 .project-card-full-body { padding-top: 18px; }
 .project-card-full-title {
@@ -1570,6 +1574,15 @@ body.view-sub .sub-cover { opacity: 1; }
   transition: gap 0.3s var(--ease);
 }
 .project-card-full-link:hover { gap: 14px; }
+/* stretched-link: the visible "Case study" link's hit area grows to cover the
+   whole card (image included), so clicking the photo opens the case study
+   too — not just the small text row. `.project-card-full-link` itself stays
+   un-positioned so this ::after's containing block is the card, not the link. */
+.project-card-full-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
 
 @media (max-width: 900px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .projects-grid { grid-template-columns: 1fr; } }
