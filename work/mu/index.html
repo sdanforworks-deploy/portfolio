@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MU — Case Study</title>
+<meta name="description" content="MU is a bilingual web app that gives people a short, private moment to set an intention or find a reminder, in the faith they choose.">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<meta property="og:image" content="assets/brand/og-image.jpg">
+<!-- Display serif for accents. To self-host, download Instrument Serif (OFL) and replace this link with an @font-face. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/case-study.css">
+</head>
+<body style="margin:0">
+
+<!-- ============ MU case study: everything inside .cs is self-contained ============ -->
+<!-- Phone mockup pattern (reuse anywhere):
+     <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="SCREEN"></div>
+     <img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure> -->
+<article class="cs" id="mu-case-study">
+
+  <!-- Top bar: point the back link at the host portfolio's work list -->
+  <header class="cs-top">
+    <div class="cs-wrap">
+      <a class="cs-back" href="../../index.html#projects">&larr; All work</a>
+      <nav aria-label="Sections">
+        <ul class="cs-toc">
+          <li><a href="#cs-problem">Problem</a></li>
+          <li><a href="#cs-research">Research</a></li>
+          <li><a href="#cs-people">People</a></li>
+          <li><a href="#cs-flow">Flow</a></li>
+          <li><a href="#cs-ui">UI</a></li>
+          <li><a href="#cs-brand">Brand</a></li>
+          <li><a href="#cs-outcome">Outcome</a></li>
+        </ul>
+      </nav>
+      <button class="cs-lang" type="button" hidden>ไทย</button>
+    </div>
+  </header>
+
+  <!-- 01 Hero -->
+  <section class="cs-hero">
+    <span class="cs-orb" aria-hidden="true" style="--c:#d8c3f7;width:520px;height:520px;left:-160px;top:-120px"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#ffd6c6;width:560px;height:560px;right:-180px;top:180px"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#cfe7c0;width:360px;height:360px;left:40%;bottom:-160px"></span>
+    <span class="cs-ghost cs-ghost--hero" aria-hidden="true">rest</span>
+    <div class="cs-wrap">
+      <img class="cs-deco cs-deco--hide-sm" src="assets/art/b2-flower-pink.webp" alt="" aria-hidden="true" style="--s:54px;--r:-12deg;left:-1%;top:46%">
+      <div class="cs-hero-grid">
+        <div class="cs-hero-copy cs-reveal">
+          <img class="cs-logo" src="assets/brand/mu-logo.png" alt="MU logo" width="300" height="140">
+          <p class="cs-eyebrow">Case study · Product design · 2026</p>
+          <h1 class="cs-h1">A small space<br>to <em>rest your heart.</em></h1>
+          <p class="cs-lead">MU turns a Thai habit, stopping at a shrine to ask for a little luck, into a two-minute ritual on your phone. It is <strong>private by default</strong>, <strong>makes no promises</strong>, and it works <strong>for every faith</strong>, not only one.</p>
+          <div class="cs-hero-cta">
+            <a class="cs-btn cs-btn--primary" href="https://mujai.space/full/" target="_blank" rel="noopener">Visit the live site &nearr;</a>
+            <a class="cs-btn cs-btn--ghost" href="#cs-flow">See the flow</a>
+          </div>
+        </div>
+        <div class="cs-hero-art cs-reveal" aria-hidden="true">
+          <img class="cs-hero-garden" src="assets/art/home-garden.webp" alt="">
+          <img class="cs-deco" src="assets/art/b2-flower-yellow.webp" alt="" style="--s:52px;--r:10deg;right:2%;top:8%;--d:-2s">
+          <img class="cs-deco" src="assets/art/b2-leaf.webp" alt="" style="--s:46px;--r:-20deg;left:0;top:30%;--d:-4s">
+          <img class="cs-deco" src="assets/art/b2-flower-blue.webp" alt="" style="--s:44px;--r:6deg;right:-2%;bottom:18%;z-index:3;--d:-1s">
+          <div class="cs-hero-phones">
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-paths.jpg" alt=""></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-home.jpg" alt=""></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-result.jpg" alt=""></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+          </div>
+        </div>
+      </div>
+
+      <dl class="cs-meta cs-reveal">
+        <div><dt>Role</dt><dd>Product owner &amp; designer</dd></div>
+        <div><dt>Scope</dt><dd>Research, UX, UI, art direction, brand, privacy</dd></div>
+        <div><dt>Platform</dt><dd>Responsive web app · Thai / English</dd></div>
+        <div><dt>Timeline</dt><dd>Oct 2026 · live, still iterating</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 02 Overview -->
+  <section class="cs-chapter cs-overview">
+    <div class="cs-wrap cs-reveal">
+      <img class="cs-deco cs-deco--still cs-deco--hide-sm" id="cs-anchor-lotus" src="assets/art/b5-offering-lotus.webp" alt="" aria-hidden="true" style="--s:120px;--r:-6deg;right:8%;top:6%">
+      <p class="cs-eyebrow"><b>01</b> Overview</p>
+      <p>In Thailand, “<strong>มู</strong>” (mu) is shorthand for everyday spiritual practice: <strong>wishing, praying and carrying a reminder</strong>. Online it is mostly sold as luck. I wanted to design the opposite: <strong>a calm moment that asks nothing</strong> and gives you something small to keep.</p>
+    </div>
+  </section>
+
+  <!-- 03 Problem -->
+  <section class="cs-chapter" id="cs-problem">
+    <span class="cs-ghost" aria-hidden="true" style="left:-2%;top:-10px">outcomes</span>
+    <div class="cs-wrap">
+      <div class="cs-problem-grid">
+        <div class="cs-reveal">
+          <p class="cs-eyebrow"><b id="cs-anchor-problem">02</b> The problem</p>
+          <h2 class="cs-h2">Digital mu sells <em>outcomes</em>, not a moment.</h2>
+          <p class="cs-lead">Wallpapers, charms and “lucky” posts are popular, but most of them promise results, need an account, or quietly collect data about what people believe. And they leave out anyone whose faith isn't mu.</p>
+          <img class="cs-ill cs-ill--problem" src="assets/art/ill-problem.png" alt="" aria-hidden="true" loading="lazy">
+        </div>
+        <ul class="cs-pains cs-reveal">
+          <li><span>1</span><p><b>Promises it can't keep</b>“Wish and it will happen” turns a personal moment into a transaction, and sets people up for disappointment.</p></li>
+          <li><span>2</span><p><b>Belief is sensitive data</b>Under Thailand's PDPA, religious belief is a special category. Most apps treat it like any other click.</p></li>
+          <li><span>3</span><p><b>One faith fits all</b>People who want a quiet moment but don't practise mu get language and rituals that don't fit them.</p></li>
+          <li><span>4</span><p><b>Too much, too long</b>Feeds and quizzes ask for attention. People just want a short pause and something to carry with them.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Research (dark chapter) -->
+  <section class="cs-dark" id="cs-research">
+    <span class="cs-orb" aria-hidden="true" style="--c:#6b4fa0;width:620px;height:620px;right:-200px;top:-200px;opacity:.55"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#9a4f7a;width:480px;height:480px;left:-180px;bottom:-160px;opacity:.4"></span>
+    <span class="cs-ghost cs-ghost--dark" aria-hidden="true" style="right:-1%;bottom:-40px">evidence</span>
+    <div class="cs-wrap">
+      <div class="cs-head-split cs-reveal">
+        <div>
+          <p class="cs-eyebrow"><b>03</b> Research</p>
+          <h2 class="cs-h2">Thailand first, <em>evidence</em> before features.</h2>
+          <p class="cs-lead">I started with desk research: public polls, plus institutional sources on <strong>which practices are actually documented at Thai sites</strong>. Every path and offering in MU has to trace back to a source. Nothing is ranked as “most popular”.</p>
+        </div>
+        <img class="cs-ill" src="assets/art/ill-research.png" alt="" aria-hidden="true" loading="lazy">
+      </div>
+      <div class="cs-stats cs-reveal">
+        <div class="cs-stat"><strong>45.5%</strong><p>asked for help with money, work or business</p><small>Baan Somdet poll · Bangkok residents, New Year</small></div>
+        <div class="cs-stat"><strong>21.6%</strong><p>had bought a mu-style wallpaper online</p><small>Krungsri survey · 1,213 online respondents</small></div>
+        <div class="cs-stat"><strong>17.5%</strong><p>were drawn to digital amulets and charms</p><small>Baan Somdet poll · Bangkok residents, New Year</small></div>
+      </div>
+      <div class="cs-methods cs-reveal">
+        <div class="cs-method"><h3>Source register</h3><p>Fine Arts Department, OKMD and museum sources for each path. These support Thai practice, not claims of efficacy.</p></div>
+        <div class="cs-method"><h3>Content review</h3><p>A structured review of iconography, Thai copy and faith vocabulary. Items that need a real expert are flagged and kept out of marketing.</p></div>
+        <div class="cs-method"><h3>Privacy review</h3><p>Page copy checked against what the code actually sends, using the PDPA's sections on consent and sensitive data.</p></div>
+      </div>
+      <p class="cs-note cs-reveal" style="color:var(--cs-on-dark-muted);margin-top:28px">Poll figures are quoted with their scope. No user interviews have been run yet. That is the next step (see Outcome).</p>
+    </div>
+  </section>
+
+  <!-- 05 Insight + principles -->
+  <section class="cs-chapter cs-band cs-band--lavender cs-insight">
+    <span class="cs-orb" aria-hidden="true" style="--c:#e2cffb;width:480px;height:480px;left:-140px;top:10%"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#ffdcd0;width:420px;height:420px;right:-120px;bottom:-60px"></span>
+    <div class="cs-wrap">
+      <div class="cs-reveal">
+        <img class="cs-insight-art" src="assets/art/completion-garden.webp" alt="" aria-hidden="true">
+        <p class="cs-eyebrow"><b>04</b> Key insight</p>
+        <h2 class="cs-h2">People don't need a promise. They need <em>a moment, and something to keep.</em></h2>
+        <p class="cs-lead">So the product had to be short, kind and honest about what it is: a symbolic activity designed by MU, not a real offering made on your behalf.</p>
+      </div>
+      <div class="cs-principles">
+        <div class="cs-principle cs-reveal"><img src="assets/art/b4-home-comfort.webp" alt="" loading="lazy"><h3 class="cs-h3">No promises</h3><p>No “guaranteed”, no scores for how many flowers you place, no “strongest deity”.</p></div>
+        <div class="cs-principle cs-reveal"><img src="assets/art/b4-home-money.webp" alt="" loading="lazy"><h3 class="cs-h3">Private by default</h3><p>No sign-up. What you type is never sent and is cleared when you leave.</p></div>
+        <div class="cs-principle cs-reveal"><img src="assets/art/b4-home-love.webp" alt="" loading="lazy"><h3 class="cs-h3">Every faith, its own words</h3><p>Each path speaks in its own words and ritual, not one script with the names swapped.</p></div>
+        <div class="cs-principle cs-reveal"><img src="assets/art/b4-home-study.webp" alt="" loading="lazy"><h3 class="cs-h3">Short, then yours</h3><p>A few minutes, ending in a wallpaper, a share card or a card for your wallet.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Personas -->
+  <section class="cs-chapter" id="cs-people">
+    <span class="cs-ghost" aria-hidden="true" style="right:-2%;top:0">people</span>
+    <div class="cs-wrap">
+      <div class="cs-head cs-reveal">
+        <p class="cs-eyebrow"><b>05</b> Who it's for</p>
+        <h2 class="cs-h2">Three people, <em>three reasons</em> to pause.</h2>
+        <p class="cs-lead">Proto-personas built from audience research and launch goals. They frame early design decisions and will be validated through user interviews.</p>
+      </div>
+      <div class="cs-personas">
+        <article class="cs-persona cs-reveal" style="--tone:#efe7fa">
+          <div class="cs-persona-art"><img src="assets/art/ill-student.png" alt="" loading="lazy"></div>
+          <div class="cs-persona-top"><div><h3 class="cs-h3">The student</h3><small>Gen Z · exam season</small></div></div>
+          <blockquote>“I don't really believe it changes my grade. I just want to feel calmer before I walk in.”</blockquote>
+          <dl><div><dt>Needs</dt><dd>A short ritual on the phone, and a wallpaper that reminds them to breathe</dd></div><div><dt>Worries</dt><dd>Looking silly, or getting sold to</dd></div></dl>
+          <div class="cs-tags"><span>Study &amp; exams</span><span>Wallpaper</span></div>
+        </article>
+        <article class="cs-persona cs-reveal" style="--tone:#fdeee6">
+          <div class="cs-persona-art"><img src="assets/art/ill-commuter.png" alt="" loading="lazy"></div>
+          <div class="cs-persona-top"><div><h3 class="cs-h3">The commuter</h3><small>Urban worker · already does mu</small></div></div>
+          <blockquote>“I used to stop at the shrine on the way to work. Now I don't have the time.”</blockquote>
+          <dl><div><dt>Needs</dt><dd>A familiar path and offering, done in two minutes</dd></div><div><dt>Worries</dt><dd>That it feels fake or disrespectful</dd></div></dl>
+          <div class="cs-tags"><span>Career</span><span>Wallet card</span></div>
+        </article>
+        <article class="cs-persona cs-reveal" style="--tone:#eef6e6">
+          <div class="cs-persona-art"><img src="assets/art/ill-believer.png" alt="" loading="lazy"></div>
+          <div class="cs-persona-top"><div><h3 class="cs-h3">The believer</h3><small>Different faith · friends all do mu</small></div></div>
+          <blockquote>“I want to join in when my friends do this, but in a way that is true to my own faith.”</blockquote>
+          <dl><div><dt>Needs</dt><dd>A quiet moment in the words of their own faith</dd></div><div><dt>Worries</dt><dd>Being lumped in with practices they don't share</dd></div></dl>
+          <div class="cs-tags"><span>Comfort</span><span>Share card</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Flow -->
+  <section class="cs-chapter" id="cs-flow">
+    <span class="cs-ghost" aria-hidden="true" style="left:-2%;top:0">journey</span>
+    <div class="cs-wrap">
+      <div class="cs-head cs-reveal">
+        <p class="cs-eyebrow"><b>06</b> User flow</p>
+        <h2 class="cs-h2">Two ways in, <em>one calm path</em> through.</h2>
+      </div>
+      <div class="cs-entries cs-reveal">
+        <div class="cs-entry"><b>A · Start from what's on your mind</b><p>Pick a need (career, study, love, money, comfort) and see the paths that fit it, each with a reason.</p></div>
+        <div class="cs-entry"><b>B · Start from what you believe</b><p>Browse the paths, read where each one comes from, then choose a need. After that the journey is the same.</p></div>
+      </div>
+      <ol class="cs-flow cs-reveal">
+        <li><b>Choose</b><span>a need or a path</span></li>
+        <li><b>Prepare</b><span>optional context chips</span></li>
+        <li class="is-key"><b>Intend</b><span>type it, or keep it silent. Never sent.</span></li>
+        <li class="is-key"><b>Arrange</b><span>place offerings: drag, tap or keyboard</span></li>
+        <li><b>Pause</b><span>take your time, no timer</span></li>
+        <li class="is-key"><b>Keep</b><span>wallpaper · share card · wallet card</span></li>
+      </ol>
+
+      <div class="cs-stage cs-reveal">
+        <img class="cs-deco" src="assets/art/b2-flower-pink.webp" alt="" aria-hidden="true" style="--s:58px;--r:-10deg;left:3%;top:5%">
+        <img class="cs-deco cs-deco--hide-sm" src="assets/art/b2-leaf.webp" alt="" aria-hidden="true" style="--s:52px;--r:24deg;right:4%;top:38%;--d:-3s">
+        <img class="cs-deco" src="assets/art/b2-flower-yellow.webp" alt="" aria-hidden="true" style="--s:50px;--r:8deg;right:5%;bottom:4%;--d:-5s">
+        <div class="cs-showcase">
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-home.jpg" alt="Home screen asking what is on your mind, with a list of needs" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>01</i><b>Home</b>One question, five needs</figcaption></figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-paths.jpg" alt="Path selection showing a Ganesha card" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>02</i><b>Paths</b>Each card shows a reason and a source</figcaption></figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-prepare.jpg" alt="Prepare step with context chips and an intention field" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>03</i><b>Prepare</b>Typed or silent intention</figcaption></figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-offering.jpg" alt="Offering table with a garland and flowers placed on a tray" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>04</i><b>Arrange</b>Free placement, undo, no score</figcaption></figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-focus.jpg" alt="Focus step showing the path illustration" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>05</i><b>Pause</b>Ends only when you're ready</figcaption></figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-result.jpg" alt="Result card with a floral frame and an affirmation" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div><figcaption><i>06</i><b>Keep</b>The card you take with you</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Wireframes -->
+  <section class="cs-chapter">
+    <div class="cs-wrap">
+      <div class="cs-split">
+        <div class="cs-wires cs-reveal" role="img" aria-label="Four home-screen wireframes: a menu grid, a workspace with a side menu, a card dashboard, and a single question">
+          <img src="assets/process/wire-a.png" alt="" loading="lazy">
+          <img src="assets/process/wire-b.png" alt="" loading="lazy">
+          <img src="assets/process/wire-c.png" alt="" loading="lazy">
+          <img src="assets/process/wire-d.png" alt="" loading="lazy">
+        </div>
+        <div class="cs-reveal">
+          <p class="cs-eyebrow"><b>07</b> Wireframes</p>
+          <h2 class="cs-h2">A home screen that <em>feels like a pause.</em></h2>
+          <p class="cs-lead">The home screen has one job: help someone having a hard day start with a single tap. I sketched four layouts with the same content and compared how quickly each let people begin, and how calm it felt.</p>
+          <ul class="cs-checks">
+            <li><span><b>Chosen · One quiet question.</b> The screen only asks “What's on your mind?” and lists five topics. Nothing else competes for attention.</span></li>
+            <li><span><b>Borrowed · A side menu.</b> Taken from the workspace layout and used on wide screens only. Phones get a floating bottom bar instead.</span></li>
+            <li><span><b>Dropped · Menu grid and dashboard.</b> Both showed everything at once, which felt busy for a moment that should feel calm.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 Key decisions -->
+  <section class="cs-chapter" id="cs-ui">
+    <div class="cs-wrap">
+      <div class="cs-head cs-reveal">
+        <p class="cs-eyebrow"><b>08</b> Design decisions</p>
+        <h2 class="cs-h2">Small choices that <em>keep it honest.</em></h2>
+      </div>
+      <div class="cs-decisions">
+
+        <div class="cs-decision cs-reveal">
+          <div class="cs-decision-media" style="--tone:#f3ecfb">
+            <img class="cs-deco" src="assets/art/b5-offering-garland.webp" alt="" aria-hidden="true" style="--s:84px;--r:-8deg;left:8%;bottom:10%">
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-offering.jpg" alt="Offering table separate from the deity scene" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+          </div>
+          <div>
+            <p class="cs-decision-num">Decision 01</p>
+            <h3 class="cs-h3">Offerings stay at the shrine</h3>
+            <p class="cs-body">The first version put your flowers onto the card you download. But in real practice an offering is left behind, so taking it home reads as taking it back. I split the scene into two panels, the shrine and an offering table, and only the shrine goes onto your card.</p>
+            <div class="cs-cs"><div><b>Challenge</b>Keep placing offerings fun without turning the card into a trophy.</div><div><b>Solution</b>Separate table, no count or colour score, and an undo for every move.</div></div>
+          </div>
+        </div>
+
+        <div class="cs-decision cs-reveal">
+          <div class="cs-decision-media" style="--tone:#eef6e6">
+            <img class="cs-deco" src="assets/art/ill-privacy.png" alt="" aria-hidden="true" style="--s:clamp(84px,10vw,130px);--r:6deg;right:6%;bottom:8%;z-index:2">
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-prepare.jpg" alt="Intention field with a note that the text is not sent" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+          </div>
+          <div>
+            <p class="cs-decision-num">Decision 02</p>
+            <h3 class="cs-h3">Your words never leave the page</h3>
+            <p class="cs-body">An intention is personal and can reveal what you believe. The text field lives only in memory. It is cleared when you finish, leave, reload or close the tab, and it is never sent or put into any image you download. You can also skip typing and keep it silent.</p>
+            <div class="cs-cs"><div><b>Challenge</b>Make privacy visible, not just a policy page.</div><div><b>Solution</b>A plain-language note under the field, and a “keep it in my head” button right next to it.</div></div>
+          </div>
+        </div>
+
+        <div class="cs-decision cs-reveal">
+          <div class="cs-decision-media" style="--tone:#fdf1e7">
+            <img class="cs-deco" src="assets/art/b5-offering-rose.webp" alt="" aria-hidden="true" style="--s:76px;--r:10deg;left:9%;top:14%">
+            <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-download.jpg" alt="Download step with three keepsake formats" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+          </div>
+          <div>
+            <p class="cs-decision-num">Decision 03</p>
+            <h3 class="cs-h3">Something real to keep</h3>
+            <p class="cs-body">The ritual ends with something you can keep: a 1080 × 1920 wallpaper, a share card, or a wallet card printed at exactly 85 × 55 mm. The card on screen and the file you download are drawn by the same code, so what you see is what you get.</p>
+            <div class="cs-cs"><div><b>Challenge</b>Thai text, art and print sizes that look right everywhere.</div><div><b>Solution</b>One renderer, fonts loaded before drawing, and failures you can retry without redoing the ritual.</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cs-devices cs-reveal">
+        <div class="cs-devices-inner">
+          <figure class="cs-browser">
+            <div class="cs-browser-bar"><i></i><i></i><i></i><span>mujai.space</span></div>
+            <img src="assets/screens/d-home.jpg" alt="MU home on desktop with a side menu, a question on the left and five needs on the right" loading="lazy">
+          </figure>
+          <figure class="cs-phone"><div class="cs-device"><div class="cs-device-screen"><img src="assets/screens/m-home.jpg" alt="" loading="lazy"></div><img class="cs-device-frame" src="assets/mockup/iphone.png" alt=""></div></figure>
+        </div>
+        <p class="cs-devices-caption">One layout system: a side menu on wide screens, a floating bottom bar on phones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Brand -->
+  <section class="cs-chapter cs-band cs-band--cream" id="cs-brand">
+    <span class="cs-orb" aria-hidden="true" style="--c:#ffe1cf;width:520px;height:520px;right:-160px;top:-80px"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#e6dafb;width:460px;height:460px;left:-160px;bottom:10%"></span>
+    <span class="cs-ghost" aria-hidden="true" style="right:-1%;top:20px">brand</span>
+    <div class="cs-wrap">
+      <div class="cs-head cs-reveal">
+        <p class="cs-eyebrow"><b>09</b> Brand &amp; visual system</p>
+        <h2 class="cs-h2">Soft, playful, <em>never a joke.</em></h2>
+        <p class="cs-lead">Pastels and small isometric worlds keep the tone light, while the sacred subjects stay respectful. Every piece of religious artwork was reviewed before it shipped.</p>
+      </div>
+      <div class="cs-bento">
+        <div class="cs-tile cs-tile--logo cs-reveal">
+          <h3>Logo</h3>
+          <img src="assets/brand/mu-logo.png" alt="MU wordmark with a pink starburst" loading="lazy">
+          <p>พื้นที่เล็ก ๆ ให้ใจได้พัก · a small space to rest your heart</p>
+        </div>
+        <div class="cs-tile cs-tile--type cs-reveal">
+          <h3>Typeface</h3>
+          <p class="cs-type-aa">Aa <span>กข</span></p>
+          <p class="cs-type-name">IBM Plex Sans Thai</p>
+          <div class="cs-type-rows">
+            <div><span>Headings</span><span>SemiBold 600</span></div>
+            <div><span>Body</span><span>Regular 400</span></div>
+            <div><span>Why</span><span>Thai + Latin in one family</span></div>
+          </div>
+        </div>
+        <div class="cs-tile cs-tile--colors cs-reveal">
+          <h3>Colour</h3>
+          <div class="cs-swatches">
+            <div class="cs-swatch" style="--c:#302e40;--t:#fff"><b>Ink</b>#302E40</div>
+            <div class="cs-swatch" style="--c:#966d8c;--t:#fff"><b>Mauve</b>#966D8C</div>
+            <div class="cs-swatch" style="--c:#8c6bb1;--t:#fff"><b>Accent</b>#8C6BB1</div>
+            <div class="cs-swatch" style="--c:#eee6fc"><b>Lavender</b>#EEE6FC</div>
+            <div class="cs-swatch" style="--c:#ffe5ed"><b>Blush</b>#FFE5ED</div>
+            <div class="cs-swatch" style="--c:#c7ec96"><b>Lime</b>#C7EC96</div>
+          </div>
+        </div>
+        <div class="cs-tile cs-tile--icons cs-reveal">
+          <h3>Need icons</h3>
+          <div class="cs-icon-grid">
+            <img src="assets/art/b4-home-career.webp" alt="Career" loading="lazy">
+            <img src="assets/art/b4-home-study.webp" alt="Study" loading="lazy">
+            <img src="assets/art/b4-home-love.webp" alt="Love" loading="lazy">
+            <img src="assets/art/b4-home-money.webp" alt="Money" loading="lazy">
+            <img src="assets/art/b4-home-comfort.webp" alt="Comfort" loading="lazy">
+            <img src="assets/art/b4-activity-krathong.webp" alt="Krathong activity" loading="lazy">
+          </div>
+        </div>
+        <div class="cs-tile cs-tile--art cs-reveal">
+          <h3>Scenes</h3>
+          <img src="assets/art/b5-scene-river.webp" alt="Isometric river scene used for the digital krathong" loading="lazy">
+        </div>
+        <div class="cs-tile cs-tile--offer cs-reveal">
+          <h3>Offerings</h3>
+          <div class="cs-offer-row">
+            <img src="assets/art/b5-offering-garland.webp" alt="Garland" loading="lazy">
+            <img src="assets/art/b5-offering-lotus.webp" alt="Lotus" loading="lazy">
+            <img src="assets/art/b5-offering-rose.webp" alt="Rose" loading="lazy">
+          </div>
+        </div>
+        <div class="cs-tile cs-tile--cards cs-reveal">
+          <h3>Keepsake frames · one per path</h3>
+          <div class="cs-cards">
+            <img src="assets/art/b5-card-ganesha-portrait.webp" alt="Marigold frame" loading="lazy">
+            <img src="assets/art/b5-card-lakshmi-portrait.webp" alt="Lotus frame" loading="lazy">
+            <img src="assets/art/b5-card-wessuwan-portrait.webp" alt="Rose vine frame" loading="lazy">
+            <img src="assets/art/b5-card-guanyin-portrait.webp" alt="Willow and water frame" loading="lazy">
+            <img src="assets/art/b5-card-god-portrait.webp" alt="Meadow frame" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 Launch -->
+  <section class="cs-chapter">
+    <div class="cs-wrap">
+      <div class="cs-head cs-head-split cs-reveal">
+        <div>
+          <p class="cs-eyebrow"><b>10</b> Launch</p>
+          <h2 class="cs-h2">Telling the story <em>in five slides.</em></h2>
+          <p class="cs-lead">An organic launch carousel introduces MU, and a second one explains in plain words what MU does and doesn't keep about you.</p>
+        </div>
+        <img class="cs-ill" src="assets/art/ill-launch.png" alt="" aria-hidden="true" loading="lazy">
+      </div>
+      <p class="cs-posts-label cs-reveal">Intro carousel</p>
+      <div class="cs-posts cs-reveal">
+        <img src="assets/carousel/intro-1.jpg" alt="Intro slide 1: something on your mind today?" loading="lazy">
+        <img src="assets/carousel/intro-2.jpg" alt="Intro slide 2: choose what's on your heart" loading="lazy">
+        <img src="assets/carousel/intro-3.jpg" alt="Intro slide 3: choose the path that fits your faith" loading="lazy">
+        <img src="assets/carousel/intro-4.jpg" alt="Intro slide 4: what you write stays yours" loading="lazy">
+        <img src="assets/carousel/intro-5.jpg" alt="Intro slide 5: take a reminder card home" loading="lazy">
+      </div>
+      <p class="cs-posts-label cs-reveal">Privacy carousel</p>
+      <div class="cs-posts cs-posts--row cs-reveal">
+        <img src="assets/carousel/privacy-1.jpg" alt="Privacy slide 1" loading="lazy">
+        <img src="assets/carousel/privacy-2.jpg" alt="Privacy slide 2" loading="lazy">
+        <img src="assets/carousel/privacy-3.jpg" alt="Privacy slide 3" loading="lazy">
+        <img src="assets/carousel/privacy-4.jpg" alt="Privacy slide 4" loading="lazy">
+        <img src="assets/carousel/privacy-5.jpg" alt="Privacy slide 5" loading="lazy">
+        <img src="assets/carousel/privacy-6.jpg" alt="Privacy slide 6" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 Outcome -->
+  <section class="cs-chapter cs-band cs-band--dawn" id="cs-outcome">
+    <span class="cs-orb" aria-hidden="true" style="--c:#d9c6f7;width:520px;height:520px;left:-160px;top:-100px"></span>
+    <span class="cs-orb" aria-hidden="true" style="--c:#d5efbf;width:480px;height:480px;right:-140px;bottom:-120px"></span>
+    <span class="cs-ghost" aria-hidden="true" style="right:-1%;top:10px">next</span>
+    <div class="cs-wrap">
+      <div class="cs-head cs-reveal">
+        <p class="cs-eyebrow"><b>11</b> Outcome</p>
+        <h2 class="cs-h2">Version 1 is <em>live.</em></h2>
+        <p class="cs-lead">The first version of MU runs at <a href="https://mujai.space/full/" target="_blank" rel="noopener">mujai.space</a>, with the complete journey from choosing what's on your mind to downloading a keepsake.</p>
+      </div>
+      <div class="cs-numbers cs-reveal">
+        <div class="cs-number"><strong>5</strong><p>needs to start from</p></div>
+        <div class="cs-number"><strong>8</strong><p>paths across Hindu, Chinese, Buddhist and Christian traditions</p></div>
+        <div class="cs-number"><strong>3</strong><p>keepsake formats, including a print-ready wallet card</p></div>
+        <div class="cs-number"><strong>2</strong><p>languages, Thai first and English</p></div>
+        <div class="cs-number"><strong>0</strong><p>accounts, payments or tracking cookies</p></div>
+      </div>
+      <div class="cs-reflect cs-reveal">
+        <div style="--tone:#f6f1fd">
+          <h3 class="cs-h3">Key takeaways</h3>
+          <ul>
+            <li><b>Fewer choices, easier start.</b> On a hard day, one clear question lowers the effort to begin more than a menu of options.</li>
+            <li><b>Show privacy in the interface.</b> A short note beside the input and a silent option build more trust than a policy page.</li>
+            <li><b>Make play safe.</b> Drag, tap and keyboard all work, and every move can be undone, so people explore without fear of mistakes.</li>
+            <li><b>Design the ending.</b> A keepsake gives a short flow a clear finish and something to take away.</li>
+          </ul>
+        </div>
+        <div style="--tone:#f3f9ec">
+          <h3 class="cs-h3">Roadmap</h3>
+          <ul>
+            <li><b>Usability testing</b> with each persona, measuring time to start and completion rate.</li>
+            <li><b>Opt-in, anonymous analytics</b>, already built in, to see which needs and paths people choose.</li>
+            <li><b>New topics</b> for health and family, based on demand in national surveys.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="cs-end">
+    <div class="cs-wrap">
+      <img class="cs-end-art" src="assets/art/b2-krathong-base.webp" alt="" aria-hidden="true" loading="lazy">
+      <p>Thanks for reading.</p>
+      <div class="cs-hero-cta">
+        <a class="cs-btn cs-btn--ghost" href="../../index.html#projects">&larr; Back to all work</a>
+        <a class="cs-btn cs-btn--primary" href="https://mujai.space/full/" target="_blank" rel="noopener">Try MU &nearr;</a>
+      </div>
+    </div>
+  </footer>
+
+</article>
+<!-- ============ /MU case study ============ -->
+
+<script src="js/case-study-th.js" defer></script>
+<script src="js/case-study.js" defer></script>
+</body>
+</html>

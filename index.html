@@ -32,7 +32,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600&display=swap" />
-<link rel="stylesheet" href="css/style.css?v=136" />
+<link rel="stylesheet" href="css/style.css?v=144" />
 <script>
   /* set the language before first paint so the Thai font doesn't flash */
   (function () {
@@ -85,25 +85,58 @@
 </div>
 
 <!-- ============================ NAV ============================ -->
+<!-- scroll-edition menu bar: pills left / name centred / Menu pill right -->
 <header class="nav" id="nav">
+  <div class="nav-side">
+    <a class="nv-pill nv-pill-accent" href="mailto:sdan.forworks@gmail.com" data-cursor>
+      <svg class="nv-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      <span data-th="ทักมาคุยกัน">Let&rsquo;s talk</span>
+    </a>
+    <button class="nv-pill nav-lang" type="button" data-cursor aria-label="Switch language / เปลี่ยนภาษา">
+      <span data-lang="en">EN</span><span class="nav-lang-sep">/</span><span data-lang="th">TH</span>
+    </button>
+  </div>
   <a href="#home" class="nav-logo" data-cursor data-view-link="home">
     <img class="nav-logo-mark" src="assets/brand/nav-mark.png" alt="SDN" width="15" height="12" />
     <span class="nav-logo-name" data-th="แดน&nbsp;สังวรเวชภัณฑ์"><span class="kd">D</span>an&nbsp;Sungvornveshapan</span>
   </a>
-  <nav class="nav-links" aria-label="Primary">
-    <a href="#projects" data-cursor data-view-link="projects" data-th="โปรเจกต์">Projects</a>
-    <a href="#experience" data-cursor data-view-link="experience" data-th="ประสบการณ์">Experience</a>
-    <button class="nav-lang" type="button" data-cursor aria-label="Switch language / เปลี่ยนภาษา">
-      <span data-lang="en">EN</span><span class="nav-lang-sep">/</span><span data-lang="th">TH</span>
+  <div class="nav-side nav-side-end">
+    <button class="nv-pill" type="button" data-menu-open aria-expanded="false" aria-controls="menu" data-cursor>
+      <span class="nv-burger" aria-hidden="true"><i></i><i></i></span>
+      <span data-th="เมนู">Menu</span>
     </button>
-  </nav>
+  </div>
 </header>
+
+<!-- full-screen menu: circle wipe out of the Menu pill (js/landing-fx.js) -->
+<div class="nv-menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="nv-menu-panel">
+    <button class="nv-pill nv-menu-close" type="button" data-menu-close data-cursor>
+      <span class="nv-x" aria-hidden="true"><i></i><i></i></span>
+      <span data-th="ปิด">Close</span>
+    </button>
+    <nav class="nv-menu-links" aria-label="Site">
+      <a href="#home" data-view-link="home" data-menu-link data-cursor><span class="nv-no">01</span><span class="nv-word" data-th="หน้าแรก">Home</span></a>
+      <a href="#work" data-menu-link data-cursor><span class="nv-no">02</span><span class="nv-word" data-th="ผลงานคัดสรร">Selected work</span></a>
+      <a href="#projects" data-view-link="projects" data-menu-link data-cursor><span class="nv-no">03</span><span class="nv-word" data-th="โปรเจกต์ทั้งหมด">All projects</span></a>
+      <a href="#experience" data-view-link="experience" data-menu-link data-cursor><span class="nv-no">04</span><span class="nv-word" data-th="ประสบการณ์">Experience</span></a>
+      <a href="#contact" data-menu-link data-cursor><span class="nv-no">05</span><span class="nv-word" data-th="ติดต่อ">Contact</span></a>
+    </nav>
+    <div class="nv-menu-foot">
+      <a href="mailto:sdan.forworks@gmail.com" data-cursor>sdan.forworks@gmail.com</a>
+      <a href="tel:+66990797010" data-cursor>+66 099 079 7010</a>
+      <a href="assets/Dan-Sungvornveshapan-CV.pdf" download data-cursor data-th="ดาวน์โหลด CV">Download CV</a>
+    </div>
+  </div>
+</div>
 
 <!-- ============ SECTION DOTS : one column per view, shown with that view ============ -->
 <nav class="section-dots" id="sectionDots" aria-label="Home sections">
   <a href="#home" class="section-dot is-active" data-cursor aria-current="true"><span class="section-dot-label" data-th="หน้าแรก">Home</span></a>
   <a href="#about" class="section-dot" data-cursor><span class="section-dot-label" data-th="เกี่ยวกับ">About</span></a>
   <a href="#work" class="section-dot" data-cursor><span class="section-dot-label" data-th="ผลงาน">Work</span></a>
+  <a href="#career" class="section-dot" data-cursor><span class="section-dot-label" data-th="ประสบการณ์">Experience</span></a>
+  <a href="#toolkit" class="section-dot" data-cursor><span class="section-dot-label" data-th="เครื่องมือ">Toolkit</span></a>
   <a href="#contact" class="section-dot" data-cursor><span class="section-dot-label" data-th="ติดต่อ">Contact</span></a>
 </nav>
 <nav class="section-dots" id="projectsDots" aria-label="Project sections">
@@ -196,105 +229,103 @@
     </p>
   </section>
 
-  <!-- ---------- SELECTED WORK (negative band) ---------- -->
-  <section class="work negative" id="work">
+  <!-- ---------- SELECTED WORK ---------- -->
+  <section class="work" id="work">
     <p class="section-tag reveal reveal-sm" data-th="<span>02</span> ผลงานคัดสรร"><span>02</span> Selected Work</p>
 
-    <div class="work-tabs reveal reveal-sm" role="tablist" aria-label="Work categories">
-      <button class="work-tab is-active" type="button" role="tab" aria-selected="true" data-cat="uxui" data-cursor>UX/UI</button>
-      <button class="work-tab" type="button" role="tab" aria-selected="false" data-cat="event" data-cursor data-th="งานอีเวนต์">Event Experience</button>
-    </div>
-
-    <div class="work-cats">
-      <!-- UX/UI -->
-      <div class="work-cat is-active" data-cat="uxui">
-        <div class="cf" tabindex="0" aria-roledescription="carousel" aria-label="UX/UI projects" data-cursor="Drag">
-          <div class="cf-stage">
-            <div class="cf-card"
-                 data-title="CMCC&#8209;Chance"
-                 data-org="Capital Market Case Competition in Investment Banking"
-                 data-org-th="การแข่งขันเคสตลาดทุนสาย Investment Banking"
-                 data-desc="A decision-support platform for a capital-market case competition, turning a dense investment-banking brief into a guided, confident flow."
-                 data-desc-th="แพลตฟอร์มช่วยตัดสินใจสำหรับการแข่งขันเคสตลาดทุน แปลงโจทย์ Investment Banking ที่ซับซ้อนให้เป็นขั้นตอนที่ชัดและมั่นใจ"
-                 data-scope="UX/UI · Product Design · Prototyping">
-              <img src="assets/projects/cmcc-chance.webp" alt="CMCC-Chance" draggable="false" loading="lazy" />
-            </div>
-            <div class="cf-card"
-                 data-title="FriendLi"
-                 data-org="Rethinking Chulalongkorn Central Library"
-                 data-org-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่"
-                 data-desc="A rethink of Chulalongkorn's Central Library, turning a vast, intimidating space into somewhere students actually want to be."
-                 data-desc-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่ เปลี่ยนพื้นที่กว้างและน่าเกร็งให้เป็นที่ที่นักศึกษาอยากมาจริงๆ"
-                 data-scope="UX Research · Service Design · UI Design">
-              <img src="assets/projects/friendli.webp" alt="FriendLi" draggable="false" loading="lazy" />
-            </div>
-            <div class="cf-card"
-                 data-title="UPLATFORM"
-                 data-org="Real-time IoT Platform for Education &amp; Research"
-                 data-org-th="แพลตฟอร์ม IoT เรียลไทม์เพื่อการศึกษาและวิจัย"
-                 data-desc="A real-time IoT platform for education and research, built for labs, student projects and smart-campus applications."
-                 data-desc-th="แพลตฟอร์ม IoT เรียลไทม์เพื่อการศึกษาและวิจัย ออกแบบสำหรับแล็บ โปรเจกต์นักศึกษา และงาน smart-campus"
-                 data-scope="UX Research · UI Design · Design System">
-              <img src="assets/projects/uplatform.jpg" alt="UPLATFORM" draggable="false" loading="lazy" />
-            </div>
-            <div class="cf-card"
-                 data-title="Thrive"
-                 data-org="Grow Together, Heal Together"
-                 data-org-th="เติบโตไปด้วยกัน เยียวยาไปด้วยกัน"
-                 data-desc="&ldquo;Grow together, heal together.&rdquo; A wellbeing app built around gentle daily rituals, shared progress and a calm, legible interface."
-                 data-desc-th="&ldquo;เติบโตไปด้วยกัน เยียวยาไปด้วยกัน&rdquo; แอปดูแลใจที่สร้างจากกิจวัตรเล็กๆ ในแต่ละวัน ความคืบหน้าที่แชร์กันได้ และอินเทอร์เฟซที่สงบและอ่านง่าย"
-                 data-scope="Concept · UX/UI · Branding">
-              <img src="assets/projects/thrive.jpg" alt="Thrive" draggable="false" loading="lazy" />
-            </div>
+    <!-- sticky card stack (scroll edition): each card pins, the next one slides
+         over it and the previous card tilts back and fades. Whole card = link. -->
+    <div class="fx-stack">
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="ink">
+          <div class="fx-media"><img src="assets/projects/mu.jpg?v=2" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>01 / 07</span><span>UX/UI</span></p>
+            <h3 class="fx-title">MU</h3>
+            <p class="fx-org" data-th="พื้นที่เล็ก ๆ ให้ใจได้พัก">A small space to rest your heart</p>
+            <p class="fx-desc" data-th="MU เปลี่ยนสิ่งที่คนไทยคุ้นเคย อย่างการแวะศาลเพื่อขอพรเล็ก ๆ ให้เป็นช่วงเวลาราวสองนาทีบนมือถือ เป็นส่วนตัวตั้งแต่แรก ไม่สัญญาผลใด ๆ และเปิดรับทุกความเชื่อ">MU turns a Thai habit, stopping at a shrine to ask for a little luck, into a two-minute ritual on your phone: private by default, no promises, open to every faith.</p>
+            <p class="fx-scope">Product <span class="kd">D</span>esign · UX/UI · Brand</p>
+            <a class="fx-link" href="work/mu/index.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
           </div>
-        </div>
-        <div class="cf-nav">
-          <button class="cf-prev" type="button" aria-label="Previous project" data-cursor>&#8592;</button>
-          <span class="cf-dots" aria-hidden="true"></span>
-          <button class="cf-next" type="button" aria-label="Next project" data-cursor>&#8594;</button>
-        </div>
-        <div class="cf-caption" aria-live="polite"></div>
+        </article>
       </div>
-
-      <!-- Event Experience -->
-      <div class="work-cat" data-cat="event">
-        <div class="cf" tabindex="0" aria-roledescription="carousel" aria-label="Event Experience projects" data-cursor="Drag">
-          <div class="cf-stage">
-            <div class="cf-card"
-                 data-title="A Journey"
-                 data-org="The Adventure to Find Yourself"
-                 data-org-th="การผจญภัยเพื่อค้นหาตัวเอง"
-                 data-desc="An exhibition and spatial experience: narrative wayfinding, 3D-modelled sets and a route that carries visitors through the story."
-                 data-desc-th="นิทรรศการและประสบการณ์เชิงพื้นที่ ระบบนำทางแบบเล่าเรื่อง ฉากที่ขึ้นโมเดล 3D และเส้นทางที่พาผู้ชมไปกับเรื่องราว"
-                 data-scope="Experience Design · 3D · Spatial">
-              <img src="assets/projects/a-journey.webp" alt="A Journey" draggable="false" loading="lazy" />
-            </div>
-            <div class="cf-card"
-                 data-title="Jeju K&#8209;Seafood Pop&#8209;up"
-                 data-org="2026 Jeju K-Seafood Pop-up Store"
-                 data-org-th="ป็อปอัปสโตร์ Jeju K-Seafood 2026"
-                 data-desc="A soft, playful underwater world where Jeju seafood is discovered rather than sold."
-                 data-desc-th="โลกใต้ทะเลที่นุ่มนวลและสนุก ที่อาหารทะเลเชจูถูก &lsquo;ค้นพบ&rsquo; มากกว่าถูก &lsquo;ขาย&rsquo;"
-                 data-scope="Experience Design · Spatial · 3D">
-              <img src="assets/projects/jeju-kseafood-popup.jpg" alt="Jeju K-Seafood Pop-up" draggable="false" loading="lazy" />
-            </div>
-            <div class="cf-card"
-                 data-title="TRAFS K&#8209;Seafood"
-                 data-org="TRAFS 2026 K-Seafood Booth"
-                 data-org-th="บูธ K-Seafood งาน TRAFS 2026"
-                 data-desc="Ocean waves turned into structure: a curved, bright pavilion where three exporters share one address."
-                 data-desc-th="คลื่นทะเลกลายเป็นโครงสร้าง พาวิลเลียนโค้งสว่างที่ผู้ส่งออกสามรายใช้ที่อยู่เดียวกัน"
-                 data-scope="Exhibition · Booth Design · Wayfinding">
-              <img src="assets/projects/trafs-kseafood.jpg" alt="TRAFS K-Seafood" draggable="false" loading="lazy" />
-            </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="accent">
+          <div class="fx-media"><img src="assets/projects/cmcc-chance.webp" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>02 / 07</span><span>UX/UI</span></p>
+            <h3 class="fx-title">CMCC&#8209;Chance</h3>
+            <p class="fx-org" data-th="การแข่งขันเคสตลาดทุนสาย Investment Banking">Capital Market Case Competition in Investment Banking</p>
+            <p class="fx-desc" data-th="แพลตฟอร์มช่วยตัดสินใจสำหรับการแข่งขันเคสตลาดทุน แปลงโจทย์ Investment Banking ที่ซับซ้อนให้เป็นขั้นตอนที่ชัดและมั่นใจ">A decision-support platform for a capital-market case competition, turning a dense investment-banking brief into a guided, confident flow.</p>
+            <p class="fx-scope">UX/UI · Product <span class="kd">D</span>esign · Prototyping</p>
+            <a class="fx-link" href="case-cmcc-chance.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
           </div>
-        </div>
-        <div class="cf-nav">
-          <button class="cf-prev" type="button" aria-label="Previous project" data-cursor>&#8592;</button>
-          <span class="cf-dots" aria-hidden="true"></span>
-          <button class="cf-next" type="button" aria-label="Next project" data-cursor>&#8594;</button>
-        </div>
-        <div class="cf-caption" aria-live="polite"></div>
+        </article>
+      </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="sand">
+          <div class="fx-media"><img src="assets/projects/friendli.webp" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>03 / 07</span><span>UX/UI</span></p>
+            <h3 class="fx-title">FriendLi</h3>
+            <p class="fx-org" data-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่">Rethinking Chulalongkorn Central Library</p>
+            <p class="fx-desc" data-th="ออกแบบหอสมุดกลางจุฬาฯ ใหม่ เปลี่ยนพื้นที่กว้างและน่าเกร็งให้เป็นที่ที่นักศึกษาอยากมาจริงๆ">A rethink of Chulalongkorn&rsquo;s Central Library, turning a vast, intimidating space into somewhere students actually want to be.</p>
+            <p class="fx-scope">UX Research · Service <span class="kd">D</span>esign · UI <span class="kd">D</span>esign</p>
+            <a class="fx-link" href="case-friendli.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="ink">
+          <div class="fx-media"><img src="assets/projects/thrive.jpg" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>04 / 07</span><span>UX/UI</span></p>
+            <h3 class="fx-title">Thrive</h3>
+            <p class="fx-org" data-th="เติบโตไปด้วยกัน เยียวยาไปด้วยกัน">Grow Together, Heal Together</p>
+            <p class="fx-desc" data-th="แอปดูแลใจที่สร้างจากกิจวัตรเล็กๆ ในแต่ละวัน ความคืบหน้าที่แชร์กันได้ และอินเทอร์เฟซที่สงบและอ่านง่าย">A wellbeing app built around gentle daily rituals, shared progress and a calm, legible interface.</p>
+            <p class="fx-scope">Concept · UX/UI · Branding</p>
+            <a class="fx-link" href="case-thrive.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="accent">
+          <div class="fx-media"><img src="assets/projects/a-journey.webp" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>05 / 07</span><span data-th="งานอีเวนต์">Event Experience</span></p>
+            <h3 class="fx-title">A Journey</h3>
+            <p class="fx-org" data-th="การผจญภัยเพื่อค้นหาตัวเอง">The Adventure to Find Yourself</p>
+            <p class="fx-desc" data-th="นิทรรศการและประสบการณ์เชิงพื้นที่ ระบบนำทางแบบเล่าเรื่อง ฉากที่ขึ้นโมเดล 3D และเส้นทางที่พาผู้ชมไปกับเรื่องราว">An exhibition and spatial experience: narrative wayfinding, 3D-modelled sets and a route that carries visitors through the story.</p>
+            <p class="fx-scope">Experience <span class="kd">D</span>esign · 3D · Spatial</p>
+            <a class="fx-link" href="case-a-journey.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="sand">
+          <div class="fx-media"><img src="assets/projects/jeju-kseafood-popup.jpg" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>06 / 07</span><span data-th="งานอีเวนต์">Event Experience</span></p>
+            <h3 class="fx-title">Jeju K&#8209;Seafood Pop&#8209;up</h3>
+            <p class="fx-org" data-th="ป็อปอัปสโตร์ Jeju K-Seafood 2026">2026 Jeju K-Seafood Pop-up Store</p>
+            <p class="fx-desc" data-th="โลกใต้ทะเลที่นุ่มนวลและสนุก ที่อาหารทะเลเชจูถูก &lsquo;ค้นพบ&rsquo; มากกว่าถูก &lsquo;ขาย&rsquo;">A soft, playful underwater world where Jeju seafood is discovered rather than sold.</p>
+            <p class="fx-scope">Experience <span class="kd">D</span>esign · Spatial · 3D</p>
+            <a class="fx-link" href="case-jeju-kseafood-popup.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </article>
+      </div>
+      <div class="fx-slide">
+        <article class="fx-card" data-tone="ink">
+          <div class="fx-media"><img src="assets/projects/trafs-kseafood.jpg" alt="" loading="lazy" /></div>
+          <div class="fx-text">
+            <p class="fx-meta"><span>07 / 07</span><span data-th="งานอีเวนต์">Event Experience</span></p>
+            <h3 class="fx-title">TRAFS K&#8209;Seafood</h3>
+            <p class="fx-org" data-th="บูธ K-Seafood งาน TRAFS 2026">TRAFS 2026 K-Seafood Booth</p>
+            <p class="fx-desc" data-th="คลื่นทะเลกลายเป็นโครงสร้าง พาวิลเลียนโค้งสว่างที่ผู้ส่งออกสามรายใช้ที่อยู่เดียวกัน">Ocean waves turned into structure: a curved, bright pavilion where three exporters share one address.</p>
+            <p class="fx-scope">Exhibition · Booth <span class="kd">D</span>esign · Wayfinding</p>
+            <a class="fx-link" href="case-trafs-kseafood.html" data-cursor data-th='ดูโปรเจกต์ <span aria-hidden="true">&#8594;</span>'>View project <span aria-hidden="true">&#8594;</span></a>
+          </div>
+        </article>
       </div>
     </div>
 
@@ -303,10 +334,59 @@
     </p>
   </section>
 
+  <!-- ---------- LETTER ZOOM (scroll edition): the I grows until it floods
+       the screen with ultramarine, the Experience band ---------- -->
+  <div class="fx-ls" data-fx-longscroll aria-hidden="true">
+    <div class="fx-ls-sticky">
+      <div class="fx-ls-wrap">
+        <p class="fx-ls-line fx-ls-top">From</p>
+        <p class="fx-ls-line fx-ls-mid">P<span class="fx-ls-pivot">I</span>XELS</p>
+        <p class="fx-ls-line fx-ls-bot">To places</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- EXPERIENCE TEASER (scroll edition): gravity title + drawn grid lines ---------- -->
+  <section class="fx-xp accent" id="career">
+    <div class="fx-gravity" data-fx-gravity>
+      <div class="fx-gravity-inner">
+        <p class="section-tag" data-th="<span>03</span> ประสบการณ์"><span>03</span> Experience</p>
+        <h2 class="fx-gravity-title" data-th="ประสบการณ์">Experience</h2>
+      </div>
+    </div>
+    <p class="fx-xp-intro" data-th="หกตำแหน่ง ครอบคลุมโปรดักต์ อีเวนต์ และพื้นที่ ตั้งแต่ปี 2022 จนถึงวันนี้">Six roles across product, events and space, from 2022 to now.</p>
+    <div class="fx-grid">
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="ต.ค. 2025 – ส.ค. 2026">Oct 2025 – Aug 2026</p><h3 class="fx-role">Graphic &amp; Event <span class="kd">D</span>esigner</h3><p class="fx-org2">MultiTab Co., Ltd.</p></article>
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="มิ.ย. – ส.ค. 2025">Jun – Aug 2025</p><h3 class="fx-role">UI <span class="kd">D</span>esigner · Freelance</h3><p class="fx-org2">TRINERGY COMM-THA Co., Ltd.</p></article>
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="มิ.ย. – ต.ค. 2024">Jun – Oct 2024</p><h3 class="fx-role">Photo Editor · Freelance</h3><p class="fx-org2">Norse Republics</p></article>
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="เม.ย. – ก.ค. 2023">Apr – Jul 2023</p><h3 class="fx-role">UX/UI <span class="kd">D</span>esigner · Internship</h3><p class="fx-org2">FynnCorp Capital Group</p></article>
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="ก.ย. – ต.ค. 2022">Sep – Oct 2022</p><h3 class="fx-role">Scenery <span class="kd">D</span>esigner</h3><p class="fx-org2">Colosseum Show Pattaya</p></article>
+      <article class="fx-cell"><span class="fx-rule"></span><p class="fx-date" data-th="มี.ค. – เม.ย. 2022">Mar – Apr 2022</p><h3 class="fx-role">Experience <span class="kd">D</span>esigner</h3><p class="fx-org2">Chula Welcome Fair</p></article>
+    </div>
+    <p class="about-more fx-xp-more">
+      <a href="#experience" data-view-link="experience" data-cursor data-th='ดูประสบการณ์ทั้งหมด <span aria-hidden="true">&#8594;</span>'>View full experience <span aria-hidden="true">&#8594;</span></a>
+    </p>
+  </section>
+
+  <!-- ---------- TOOLKIT (scroll edition): ruled tool grid + practice pills, staggered in ---------- -->
+  <section class="fx-tools" id="toolkit">
+    <p class="section-tag reveal reveal-sm" data-th="<span>04</span> ชุดเครื่องมือ"><span>04</span> Toolkit</p>
+    <h2 class="fx-tools-head reveal" data-th="เครื่องมือที่ใช้ทุกวัน และวิธีคิดที่อยู่เบื้องหลัง">The tools I work in every day, and the practice behind them.</h2>
+    <ul class="fx-tool-grid" data-fx-stagger>
+      <li>Figma</li><li>SketchUp</li><li>Enscape</li><li>Photoshop</li>
+      <li>Illustrator</li><li>After Effects</li><li>Miro</li><li>ClickUp</li>
+    </ul>
+    <ul class="fx-practice" data-fx-stagger>
+      <li>UX Research</li><li>User Flow &amp; Journey <span class="kd">D</span>esign</li><li>Wireframing &amp; Prototyping</li>
+      <li>UI &amp; <span class="kd">D</span>esign Systems</li><li>Experience <span class="kd">D</span>esign</li><li>Concept <span class="kd">D</span>evelopment</li>
+      <li>Spatial &amp; 3D <span class="kd">D</span>esign</li><li>Visual Communication</li><li>Cross-functional Collaboration</li>
+    </ul>
+  </section>
+
   <!-- ---------- CONTACT ---------- -->
-  <section class="contact" id="contact">
-    <p class="section-tag reveal reveal-sm" data-th="<span>03</span> ติดต่อ"><span>03</span> Contact</p>
-    <a class="contact-cta reveal reveal-lg" href="mailto:sdan.forworks@gmail.com" data-cursor="Say hi" data-th='มาสร้าง<br />อะไรดีๆ<span class="contact-cta-em"> กัน.</span>'>
+  <section class="contact negative" id="contact">
+    <p class="section-tag reveal reveal-sm" data-th="<span>05</span> ติดต่อ"><span>05</span> Contact</p>
+    <a class="contact-cta" data-fx-squeeze href="mailto:sdan.forworks@gmail.com" data-cursor="Say hi" data-th='มาสร้าง<br />อะไรดีๆ<span class="contact-cta-em"> กัน.</span>'>
       Let&rsquo;s build<br />something<span class="contact-cta-em"> good.</span>
     </a>
     <div class="contact-grid reveal">
@@ -356,9 +436,17 @@
   <section class="projects-group negative" id="group-uxui">
     <div class="projects-group-head">
       <h2 class="projects-group-title">UX / UI <span class="kd">D</span>esign</h2>
-      <span class="projects-group-count" data-th="7 โปรเจกต์">7 projects</span>
+      <span class="projects-group-count" data-th="8 โปรเจกต์">8 projects</span>
     </div>
     <div class="projects-grid">
+      <article class="project-card-full">
+        <img src="assets/projects/mu.jpg?v=2" alt="MU" loading="lazy" />
+        <div class="project-card-full-body">
+          <h3 class="project-card-full-title">MU</h3>
+          <p class="project-card-full-org" data-th="พื้นที่เล็ก ๆ ให้ใจได้พัก">A small space to rest your heart</p>
+          <a class="project-card-full-link" href="work/mu/index.html" data-cursor data-th='อ่านเคสสตัดดี้ <span aria-hidden="true">&#8594;</span>'>Case study <span aria-hidden="true">&#8594;</span></a>
+        </div>
+      </article>
       <article class="project-card-full">
         <img src="assets/projects/cmcc-chance.webp" alt="CMCC-Chance" loading="lazy" />
         <div class="project-card-full-body">
@@ -483,7 +571,7 @@
     </div>
   </section>
 
-  <section class="projects-group negative" id="group-brand">
+  <section class="projects-group accent" id="group-brand">
     <div class="projects-group-head">
       <h2 class="projects-group-title">Brand Identity</h2>
       <span class="projects-group-count" data-th="1 โปรเจกต์">1 project</span>
@@ -617,7 +705,7 @@
     </ul>
   </section>
 
-  <section class="xp-block negative" id="xp-skills">
+  <section class="xp-block accent" id="xp-skills">
     <p class="xp-label" data-th="ทักษะ">Skills</p>
     <div class="xp-sub-group">
       <p class="xp-sub-label" data-th="เครื่องมือ">Tools</p>
@@ -667,6 +755,9 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="js/portrait-reveal.js?v=81"></script>
-<script src="js/main.js?v=117"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="js/landing-fx.js?v=5"></script>
+<script src="js/main.js?v=118"></script>
 </body>
 </html>

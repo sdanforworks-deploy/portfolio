@@ -812,6 +812,8 @@
       document.title = titleFor(name);
       if (lenis) { try { lenis.start(); lenis.scrollTo(0, { immediate: true }); lenis.resize(); } catch (e) {} }
       window.scrollTo(0, 0);
+      // landing-fx.js re-measures its scroll scenes when Home comes back
+      window.dispatchEvent(new CustomEvent('viewchange', { detail: { name: name } }));
       // any view swap: the carousel (home) and the portrait canvas (experience)
       // both need a fresh measure once their container is actually visible
       window.dispatchEvent(new Event('resize'));
@@ -975,6 +977,8 @@
       parallax();
       window.addEventListener('resize', parallax);
     }
+    // scroll-edition landing effects (stack, letter zoom, gravity, squeeze)
+    if (window.LandingFX) window.LandingFX.init({ lenis: lenis, reduce: reduce, router: router });
     router.routeFromHash();   // honour a deep link once everything is wired
   }
 
