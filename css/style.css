@@ -2102,3 +2102,21 @@ html[lang="th"] .nv-word { letter-spacing: 0; line-height: 1.3; }
    letter zoom's 250px type that pushed "To places" off-screen. Zero
    specificity, so any class rule (section-tag, intro spacing) still wins. */
 :where(.fx-ls, .fx-stack, .fx-xp, .fx-tools) :where(p, h2, h3) { margin: 0; }
+
+/* v38.4: every arrow is one tail-less chevron (inline SVG, no text glyph),
+   sized to the label's text and nudged on hover */
+.chev {
+  display: inline-block;
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.12em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.35s var(--ease);
+}
+a:hover > .chev { transform: translateX(3px); }
+.nv-arrow { stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }

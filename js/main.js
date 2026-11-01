@@ -625,7 +625,7 @@
         var img = card.querySelector('img');
         var slug = img ? (img.getAttribute('src') || '').split('/').pop().replace(/\.[a-z0-9]+$/i, '') : '';
         var link = slug
-          ? '<a class="cf-link" href="case-' + slug + '.html" data-cursor>' + tr('View project', 'ดูโปรเจกต์') + ' <span aria-hidden="true">&#8594;</span></a>'
+          ? '<a class="cf-link" href="case-' + slug + '.html" data-cursor>' + tr('View project', 'ดูโปรเจกต์') + ' <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg></a>'
           : '';
         var org = dattr(card, 'org');
         caption.innerHTML =
