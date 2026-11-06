@@ -62,19 +62,19 @@
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(35,35,35,.14);margin:80px 0 0;border-top:1px solid rgba(35,35,35,.14);border-bottom:1px solid rgba(35,35,35,.14)">
-      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px">
+      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px;align-content:start">
         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5" data-th="บทบาท">Role</div>
-        <div style="font-size:16px;line-height:1.45;font-weight:500;color:#BE535D" data-th="เพิ่มบทบาท<br />และช่วงเวลา">Add your role<br />and timeline</div>
+        <div style="font-size:16px;line-height:1.45;font-weight:500" data-th="UX/UI Designer<br />ทำครบทุกขั้นตอน">UX/UI Designer<br />End-to-end</div>
       </div>
-      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px">
+      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px;align-content:start">
         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5" data-th="บริบท">Context</div>
         <div style="font-size:16px;line-height:1.45;font-weight:500" data-th="วิชา User Experience<br />คณะศิลปกรรมศาสตร์">User Experience class<br />Faculty of Fine &amp; Applied Arts</div>
       </div>
-      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px">
+      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px;align-content:start">
         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5" data-th="สิ่งที่ส่งมอบ">Deliverables</div>
         <div style="font-size:16px;line-height:1.45;font-weight:500" data-th="แผนผู้มีส่วนได้ส่วนเสีย เพอร์โซนา<br />พิมพ์เขียว IA ระบบ UI">Stakeholder map, personas,<br />blueprint, IA, UI system</div>
       </div>
-      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px">
+      <div style="background:#FFFDF3;padding:26px 24px 28px;display:grid;gap:9px;align-content:start">
         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.5" data-th="ขอบเขต">Scope</div>
         <div style="font-size:16px;line-height:1.45;font-weight:500" data-th="4 บริการ 3 ประเภทผู้ใช้<br />การเข้าถึงแบบผู้เยี่ยมชมและสมาชิก">4 services, 3 user types<br />guest and member access</div>
       </div>
@@ -556,6 +556,12 @@
   // pages with too many sections for a nav bar โ€” show a curated subset.
   // entry is an id (keeps its own label) or [id, 'Custom label'] (merged group).
   var CURATE={
+    // sections are <div id> (not <section>) and the h2s are full sentences, so
+    // the generic collect() finds nothing: name the chapters here instead
+    'case-chac-chac.html':[
+      'problem',['stakeholders','Research'],'blueprint',['architecture','IA'],
+      'identity','system','screens','reflection'
+    ],
     'case-uplatform.html':[
       ['objective','Overview'],['moodboard','Direction'],'wireframes',
       ['system','System'],['entry','UI'],['handoff','Handoff']
@@ -642,6 +648,12 @@
   }
 
   function collect(){
+    // a curated page may use any element for its chapters: take those ids first
+    var key=(location.pathname.split('/').pop()||'').toLowerCase();
+    if(CURATE[key]){
+      var cur=CURATE[key].map(function(r){ return document.getElementById(Array.isArray(r)?r[0]:r); }).filter(Boolean);
+      if(cur.length>=2) return cur;
+    }
     var s=[].slice.call(document.querySelectorAll('section[id]'))
       .filter(function(e){return !SKIP[String(e.id).toLowerCase()];});
     if(s.length>=2)return s;
@@ -716,9 +728,32 @@
         return true;
       });
     }
+    // pages whose opening content (#top) sits under / right against the bar
+    if(f==='case-chac-chac.html'||f==='case-thrive.html'||f==='case-lerum.html') clearTop(36);
   }
 
-  function build(els){
+  function clearTop(minGap){
+    var nav=document.getElementById('dc-secnav'), top=document.getElementById('top');
+    if(!nav||!top||top.__dcPushed)return;
+    var parts=['.dc-sn-back','.dc-sn-menu','#dc-i18n-btn'], navBottom=0;
+    if(window.innerWidth>720) parts.push('ol a');            // on phones the <ol> is a hidden dropdown
+    parts.forEach(function(sel){ [].forEach.call(nav.querySelectorAll(sel),function(e){
+      var r=e.getBoundingClientRect(); if(r.height) navBottom=Math.max(navBottom,r.bottom); }); });
+    if(!navBottom)return;
+    var w=document.createTreeWalker(top,NodeFilter.SHOW_TEXT), n, textTop=null;
+    while((n=w.nextNode())){
+      if(!n.nodeValue.trim())continue;
+      var rg=document.createRange(); rg.selectNodeContents(n); var rr=rg.getBoundingClientRect();
+      if(rr.height){ textTop=rr.top+window.scrollY; break; }   // page coordinates: the bar is fixed at scroll 0
+    }
+    if(textTop===null)return;
+    top.__dcPushed=1;
+    var short=minGap-(textTop-navBottom);
+    if(short>0) top.style.paddingTop=(parseFloat(getComputedStyle(top).paddingTop)||0)+short+'px';
+  }
+
+  function build
+(els){
     els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
     injectCSS();
     hideNativeNavs(els);
@@ -747,7 +782,13 @@
         nav.classList.remove('open');
         el.scrollIntoView({behavior:'smooth',block:'start'});
         try{history.replaceState(null,'','#'+el.id);}catch(_){}
-        lockUntil=Date.now()+800;
+        lockUntil=Date.now()+2500;   // held until the smooth scroll ends (scrollend); 2.5s fallback
+        var landed=function(){
+          var m=parseFloat(getComputedStyle(el).scrollMarginTop)||0;
+          if(Math.abs(el.getBoundingClientRect().top-m-66)>6 && Date.now()<lockUntil) return;   // not there yet
+          removeEventListener('scrollend',landed); lockUntil=0; sync();
+        };
+        addEventListener('scrollend',landed);
         setActive(items[idxOf(el)]);
       });
       var li=document.createElement('li'); li.appendChild(a); ol.appendChild(li);
@@ -782,7 +823,8 @@
       if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
       if(Date.now()<lockUntil)return;
       var y=window.scrollY+90, pick=items[0];
-      items.forEach(function(it){ if(it.el.getBoundingClientRect().top+window.scrollY<=y) pick=it; });
+      // current = the last section that reached its jump-landing line (90px + its own scroll-margin)
+      items.forEach(function(it){ var m=parseFloat(getComputedStyle(it.el).scrollMarginTop)||0; if(it.el.getBoundingClientRect().top-m<=92) pick=it; });
       if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) pick=items[items.length-1];
       setActive(pick);
     }

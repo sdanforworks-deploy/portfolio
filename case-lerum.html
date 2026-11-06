@@ -742,9 +742,32 @@
         return true;
       });
     }
+    // pages whose opening content (#top) sits under / right against the bar
+    if(f==='case-chac-chac.html'||f==='case-thrive.html'||f==='case-lerum.html') clearTop(36);
   }
 
-  function build(els){
+  function clearTop(minGap){
+    var nav=document.getElementById('dc-secnav'), top=document.getElementById('top');
+    if(!nav||!top||top.__dcPushed)return;
+    var parts=['.dc-sn-back','.dc-sn-menu','#dc-i18n-btn'], navBottom=0;
+    if(window.innerWidth>720) parts.push('ol a');            // on phones the <ol> is a hidden dropdown
+    parts.forEach(function(sel){ [].forEach.call(nav.querySelectorAll(sel),function(e){
+      var r=e.getBoundingClientRect(); if(r.height) navBottom=Math.max(navBottom,r.bottom); }); });
+    if(!navBottom)return;
+    var w=document.createTreeWalker(top,NodeFilter.SHOW_TEXT), n, textTop=null;
+    while((n=w.nextNode())){
+      if(!n.nodeValue.trim())continue;
+      var rg=document.createRange(); rg.selectNodeContents(n); var rr=rg.getBoundingClientRect();
+      if(rr.height){ textTop=rr.top+window.scrollY; break; }   // page coordinates: the bar is fixed at scroll 0
+    }
+    if(textTop===null)return;
+    top.__dcPushed=1;
+    var short=minGap-(textTop-navBottom);
+    if(short>0) top.style.paddingTop=(parseFloat(getComputedStyle(top).paddingTop)||0)+short+'px';
+  }
+
+  function build
+(els){
     els.forEach(function(el,i){ if(!el.id) el.id='dcs-'+(i+1); });
     injectCSS();
     hideNativeNavs(els);
@@ -773,7 +796,13 @@
         nav.classList.remove('open');
         el.scrollIntoView({behavior:'smooth',block:'start'});
         try{history.replaceState(null,'','#'+el.id);}catch(_){}
-        lockUntil=Date.now()+800;
+        lockUntil=Date.now()+2500;   // held until the smooth scroll ends (scrollend); 2.5s fallback
+        var landed=function(){
+          var m=parseFloat(getComputedStyle(el).scrollMarginTop)||0;
+          if(Math.abs(el.getBoundingClientRect().top-m-66)>6 && Date.now()<lockUntil) return;   // not there yet
+          removeEventListener('scrollend',landed); lockUntil=0; sync();
+        };
+        addEventListener('scrollend',landed);
         setActive(items[idxOf(el)]);
       });
       var li=document.createElement('li'); li.appendChild(a); ol.appendChild(li);
@@ -808,7 +837,8 @@
       if(past!==frosted){ frosted=past; nav.classList.toggle('scrolled',past); }
       if(Date.now()<lockUntil)return;
       var y=window.scrollY+90, pick=items[0];
-      items.forEach(function(it){ if(it.el.getBoundingClientRect().top+window.scrollY<=y) pick=it; });
+      // current = the last section that reached its jump-landing line (90px + its own scroll-margin)
+      items.forEach(function(it){ var m=parseFloat(getComputedStyle(it.el).scrollMarginTop)||0; if(it.el.getBoundingClientRect().top-m<=92) pick=it; });
       if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) pick=items[items.length-1];
       setActive(pick);
     }
