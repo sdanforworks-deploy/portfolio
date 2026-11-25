@@ -41,6 +41,7 @@
     [['icon','assets/brand/favicon.png','512x512'],['icon','assets/brand/favicon-32.png','32x32'],['apple-touch-icon','assets/brand/apple-touch-icon.png']].forEach(function(a){
       var l=document.createElement('link'); l.rel=a[0]; l.href=a[1]; if(a[2]){l.type='image/png'; l.sizes=a[2];} h.appendChild(l); });
   }
+  if(h&&!document.title) document.title='FriendLi';   // the unpacked template has no <title> either
   if(++t>40) clearInterval(iv);
 },250);})();
 </script>

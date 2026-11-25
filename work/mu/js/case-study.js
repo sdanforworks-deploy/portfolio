@@ -64,7 +64,7 @@
       const th = thai.get(norm(el.innerHTML));
       if (th) targets.push({ el, en: el.innerHTML, th });
     });
-    const titles = { en: document.title, th: 'MU — กรณีศึกษา' };
+    const titles = { en: 'MU', th: 'MU' };   // tab shows the project name only, like the other case pages
     const setLang = lang => {
       for (const t of targets) t.el.innerHTML = lang === 'th' ? t.th : t.en;
       document.documentElement.lang = lang;
