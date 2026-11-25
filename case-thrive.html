@@ -31,7 +31,20 @@
       This page requires JavaScript to display.
     </div>
   </noscript>
-<style>footer{display:none!important}</style></head>
+<style>footer{display:none!important}</style><link rel="icon" href="assets/brand/favicon.png" type="image/png" sizes="512x512" />
+<link rel="icon" href="assets/brand/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+<script>
+/* packed page: unpacking swaps the whole <html>, dropping the icons above. Put them back. */
+(function(){var t=0,iv=setInterval(function(){
+  var h=document.head; if(h&&!h.querySelector('link[rel=icon]')){
+    [['icon','assets/brand/favicon.png','512x512'],['icon','assets/brand/favicon-32.png','32x32'],['apple-touch-icon','assets/brand/apple-touch-icon.png']].forEach(function(a){
+      var l=document.createElement('link'); l.rel=a[0]; l.href=a[1]; if(a[2]){l.type='image/png'; l.sizes=a[2];} h.appendChild(l); });
+  }
+  if(++t>40) clearInterval(iv);
+},250);})();
+</script>
+</head>
 <body>
   <div id="__bundler_thumbnail">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
